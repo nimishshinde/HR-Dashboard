@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+
+.login {
+    background: #0f172a;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.log{
+    color: #252733;
+    font-weight: 600;
+    font-size: 2.5rem;
+    margin-bottom: 1.8rem;
+}
+
+.label {
+    color: #0f172a;
+    font-size: 1rem;
+}
+
+.container {
+    background-color: aliceblue;
+    width: 23.75rem;
+    height: 31.25rem;
+    margin-top: 6.7rem;
+    margin-bottom: 6.6rem;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.cont1{
+    text-align: left;
+    margin-left: 1.6rem;
+}
+
+.cont2 {
+    width: 325px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-button {
+    width: 100%;
+    border-radius: 5px;
+    background-color: #0284c7;
+    color: white;
+    font-weight: 600;
+}
+
+.password {
+    display: flex;
+    justify-content: space-between;
+}
+
+.account {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.signup {
+    color: #1890ff;
+    font-weight: 600;
+    position: relative;
+}
+
+
+.signup::after {
+    content: '';
+    position: absolute;
+    background-color: #1890ff;
+    height: 0.1rem;
+    width: 0%;
+    left: 0;
+    transition: all 0.5s;
+    bottom: -0.1px;
+}
+
+
+.signup:hover::after{
+    width: 100%;
+}

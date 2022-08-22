@@ -1,0 +1,13 @@
+.mainSection{
+    margin-top: 2rem;
+    margin-left: 2rem;
+    height:100%;
+    width:100%;
+    background: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 1px solid red;
+}

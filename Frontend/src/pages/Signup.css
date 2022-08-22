@@ -1,0 +1,46 @@
+
+/* .signupcont {
+    overflow: hidden;
+    overflow-y: scroll;
+} */
+
+::-webkit-scrollbar {
+    width: 0.1rem;
+}
+
+.content {
+    height: 27rem;
+    overflow: auto;
+    padding: 1rem;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.2rem;
+    cursor: pointer;
+    margin-bottom: 0.8rem;
+}
+
+.names {
+    display: flex;
+    gap: 2rem;
+}
+
+.btn {
+    border: 2px solid #cbd5e1;
+    border-radius: 5px;
+    padding: 0.5rem 0.6rem;
+    font-weight: 600;
+    
+}
+
+.btn-active {
+    border-color: #0284c7;
+    color: #0284c7;
+    background-color: #bfdbfe;
+}
+
+.highlight {
+    color: #0284c7;
+}

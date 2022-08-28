@@ -108,7 +108,46 @@ let userSchema =
         }
     })
 
+let leaveModel = 
+    new mongoose.Schema({
+        employeName : {
+            type :String,
+        },
+        employeId: {
+            type : Number,
+        },
+        designation : {
+            type : String
+        },
+        deparatment : {
+            type : String
+        },
+        remainingLeaves : {
+            type : Number,
+        },
+        leavesTakenInMonth : {
+            type : Number,
+        },         
+        isApproved : {
+            type: Boolean,
+        },
+        isRejected : {
+            type: Boolean,
+        },
+        reasonOfLeave : {
+            type : String,
+        },
+        noofDaysLeaveRequired : {
+            type : Number,
+        },
+        dateOfLeave : {
+            type : Date,
+        }
+    })
+    
+    
 // creating model with name HR-Dashboard in cluster0
-const UserModel = mongoose.model('HR-Dashboard', userSchema)
+const LeaveModel = mongoose.model("Leave", leaveModel);
+const UserModel = mongoose.model('HR-Dashboard', userSchema);
 
-module.exports = UserModel;
+module.exports = {UserModel, LeaveModel};

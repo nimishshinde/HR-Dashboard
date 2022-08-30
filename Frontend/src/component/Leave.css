@@ -1,0 +1,12 @@
+.heading{
+    font-size: 2.5rem;
+    color: #6075fe;
+    font-weight: 600;
+}
+
+.mainstyle{
+    padding: 1.5rem;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+

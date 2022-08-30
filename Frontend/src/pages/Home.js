@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from '../component/Navbar';
 import "./Home.css";
-import Leave from '../component/Leave';
 import Sidebar from '../component/Sidebar';
-import {
-  Routes, Route, Outlet
-} from 'react-router-dom';
-import Section from '../component/Section';
-import Dashboard from "../component/Dashboard";
-
-
+import { Outlet } from 'react-router-dom';
 const Home = () => {
   
   return (

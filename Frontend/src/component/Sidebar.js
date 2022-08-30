@@ -12,7 +12,7 @@ const Siderbar = () => {
 
   return (
     <>
-      <div style={{ height: "100vh" }}>
+      <div style={{ height: "100vh",  }}>
         <aside className="sidebar">
           <div
             style={{

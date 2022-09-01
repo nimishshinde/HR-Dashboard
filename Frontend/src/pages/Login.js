@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import "antd/dist/antd.min.css";
 import "./Login.css";
 import { Form, Input, Button } from "antd";
@@ -11,27 +11,35 @@ const Login = () => {
   const [userEmail, setUseremail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userData, setUserData] = useState({ email: "", password: "" });
+  const user = React.createContext();
 
   const [highlight, setHighlight] = useState(false);
 
   const verifyLogin = async (userEmail, userPassword) => {
-    
-
     console.log(userEmail, userPassword, "fromFrontEnd");
     userData.email = userEmail;
     userData.password = userPassword;
     setUserData(userData);
     console.log(userData, "fromfrontend");
-    let response = await axios({
-      method: "post",
-      url: "http://localhost:5000/auth/login",
-      data: userData,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": "true",
-      },
-    });
-    console.log(response, "from frontend");
+    
+    
+    try {
+      let response = await axios({
+        method: "post",
+        url: "http://localhost:5000/auth/login",
+        data: userData,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      });
+      console.log(response, "from frontend");
+      
+    } catch (error) {
+      console.log("error while logging in ", error)
+    }
+
+
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import "antd/dist/antd.min.css";
 import { Button, Form, Input, Select } from "antd";
 import "./Signup.css";
@@ -8,80 +8,63 @@ import axios from "axios";
 
 const { Option } = Select;
 
-const Signup = () => {
+const reducerFn = (state, action) => {
+  switch (action.type) {
+    case "firstName":
+      return { ...state, firstName: action.value };
+    case "lastName":
+      return { ...state, lastName: action.value };
+    case "email":
+      return { ...state, email: action.value };
+    case "password":
+      return { ...state, password: action.value };
+    case "confirm":
+      return { ...state, confirmPassword: action.value };
+    case "address":
+      return { ...state, address: action.value };
+    case "phone":
+      return { ...state, phoneNumber: action.value };
+    case "type":
+      return { ...state, employeeType : action.value };
+    case "department":
+      return { ...state, department: action.value };
+  }
+};
 
+const userDataObj = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  address: "",
+  phoneNumber: "",
+  employeeType: "",
+  deparatment: "",
+  id: "",
+};
+
+const Signup = () => {
   const [btnactive, setBtnActive] = useState(false);
   const [highlight, setHighlight] = useState(false);
-
   const [form] = Form.useForm();
-  const [userData, setUserData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirm: "",
-    address: "",
-    phone: "",
-    type: "",
-    department: '',
-  });
 
-  const [userFirstName, setUserFirstName] = useState("");
-  const [userLastName, setUserLastName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [userAddress, setUserAddress] = useState("");
-  const [userPhone, setUserPhone] = useState("");
-  const [userType, setUserType] = useState(1);
-  const [userDepartment, setUserDepartment] = useState("");
+  const [signupData, dispatch] = useReducer(reducerFn, userDataObj);
 
-  const verifySignup = async (
-    userFirstName,
-    userLastName,
-    userEmail,
-    userPassword,
-    confirmPassword,
-    userAddress,
-    userPhone,
-    userType,
-    userDepartment,
-  ) => {
-    console.log(
-      userFirstName,
-      userLastName,
-      userEmail,
-      userPassword,
-      confirmPassword,
-      userAddress,
-      userPhone,
-      userType,
-      userDepartment,
-      "fromfrontendsignup"
-    );
-    userData.firstName = userFirstName;
-    userData.lastName = userLastName;
-    userData.email = userEmail;
-    userData.password = userPassword;
-    userData.confirm = confirmPassword;
-    userData.address = userAddress;
-    userData.phone = userPhone;
-    userData.type = userType;
-    userData.department = userDepartment;
-    setUserData(userData);
-    console.log(userData, "fromfrontendsignup");
+
+  const verifySignup = async (userDataObj) => {
+    console.log(userDataObj, "user Object ");
     let response = await axios({
       method: "post",
       url: "http://localhost:5000/auth/signup",
-      data: userData,
+      data: signupData,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": "true",
       },
     });
-    console.log(response);
+    console.log("comming from Backend" , response);
   };
-  
 
   return (
     <div className="login">
@@ -107,7 +90,7 @@ const Signup = () => {
         <div className="btnContainer">
           <div
             onClick={() => {
-              setUserType(1);
+              dispatch({type : "type" , value : 1})
               setBtnActive(!btnactive);
             }}
             className={`${btnactive ? "btn btn-active" : "btn"}`}
@@ -116,7 +99,7 @@ const Signup = () => {
           </div>
           <div
             onClick={() => {
-              setUserType(2);
+              dispatch({ type: "type", value: 2 });
               setBtnActive(!btnactive);
             }}
             className={`${btnactive ? "btn " : "btn btn-active"}`}
@@ -145,7 +128,9 @@ const Signup = () => {
                 >
                   <Input
                     placeholder="Enter your First Name"
-                    onChange={(e) => setUserFirstName(e.target.value)}
+                    onChange={(e) => {
+                      dispatch({type: "firstName", value : e.target.value})
+                    }}
                   />
                 </Form.Item>
               </div>
@@ -162,7 +147,10 @@ const Signup = () => {
                 >
                   <Input
                     placeholder="Enter your Last Name"
-                    onChange={(e) => setUserLastName(e.target.value)}
+                    onChange={(e) => {
+                        dispatch({type : "lastName", value : e.target.value})
+                      }
+                    } 
                   />
                 </Form.Item>
               </div>
@@ -184,7 +172,10 @@ const Signup = () => {
             >
               <Input
                 placeholder="Enter you Email"
-                onChange={(e) => setUserEmail(e.target.value)}
+                onChange={(e) =>{
+                    dispatch({type: "email", value:e.target.value})
+                  }
+                } 
               />
             </Form.Item>
 
@@ -201,7 +192,10 @@ const Signup = () => {
             >
               <Input.Password
                 placeholder="Enter your Password"
-                onChange={(e) => setUserPassword(e.target.value)}
+                onChange={(e) => {
+                    dispatch({type:"password" , value:e.target.value})
+                  }
+                }
               />
             </Form.Item>
 
@@ -232,7 +226,10 @@ const Signup = () => {
             >
               <Input.Password
                 placeholder="Confirm Password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => {
+                    dispatch({type : "confirm", value : e.target.value})
+                  }
+                }
               />
             </Form.Item>
 
@@ -248,7 +245,11 @@ const Signup = () => {
             >
               <Input
                 placeholder="Enter your department"
-                onChange={(e) => setUserDepartment(e.target.value)}
+                onChange={(e) =>{
+                  dispatch({type : "department", value : e.target.value})
+                } 
+                  
+                }
               />
             </Form.Item>
 
@@ -264,7 +265,9 @@ const Signup = () => {
             >
               <Input
                 placeholder="Enter your address"
-                onChange={(e) => setUserAddress(e.target.value)}
+                onChange={(e) => {
+                  dispatch({type : "address", value:e.target.value})
+                }}
               />
             </Form.Item>
 
@@ -280,32 +283,26 @@ const Signup = () => {
             >
               <Input
                 placeholder="Enter your Phone Number"
-                onChange={(e) => setUserPhone(e.target.value)}
+                onChange={(e) => {
+                  dispatch({type : "phone", value : e.target.value})
+                }}
               />
             </Form.Item>
 
             <Form.Item>
               <motion.div whileTap={{ scale: 1.05 }}>
-                <Link to={'/home/dashboard'}><Button
-                  style={{ width: "100%" }}
-                  type="primary"
-                  htmlType="submit"
-                  onClick={() => {
-                    verifySignup(
-                      userFirstName,
-                      userLastName,
-                      userEmail,
-                      userPassword,
-                      confirmPassword,
-                      userAddress,
-                      userPhone,
-                      userType,
-                      userDepartment,
-                    );
-                  }}
-                >
-                  <motion.div whileTap={{ scale: 1.1 }}>Sign up</motion.div>
-                </Button></Link>
+                <Link to={"/home/dashboard"}>
+                  <Button
+                    style={{ width: "100%" }}
+                    type="primary"
+                    htmlType="submit"
+                    onClick={() => {
+                      verifySignup(signupData);
+                    }}
+                  >
+                    <motion.div whileTap={{ scale: 1.1 }}>Sign up</motion.div>
+                  </Button>
+                </Link>
               </motion.div>
             </Form.Item>
           </Form>

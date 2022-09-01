@@ -1,6 +1,3 @@
-// All imports
-const {UserModel, LeaveModel} = require('./UserModel');
-
 const express = require('express');
 const app = express();
 

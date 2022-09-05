@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../component/Navbar';
+import Navbar from "../BusinessComponent/Navbar";
 import "./Home.css";
-import Sidebar from '../component/Sidebar';
+import Sidebar from "../BusinessComponent/Sidebar";
 import { Outlet } from 'react-router-dom';
 const Home = () => {
   

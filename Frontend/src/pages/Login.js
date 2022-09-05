@@ -11,8 +11,6 @@ const Login = () => {
   const [userEmail, setUseremail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userData, setUserData] = useState({ email: "", password: "" });
-  const user = React.createContext();
-
   const [highlight, setHighlight] = useState(false);
 
   const verifyLogin = async (userEmail, userPassword) => {

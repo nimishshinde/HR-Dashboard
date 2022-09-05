@@ -1,15 +1,17 @@
 .namestyle{
     display: flex;
-    justify-content:flex-start;
+    justify-content:space-between;
     align-items: center;
+    /* border: 1px solid red; */
 }
 
 .cardmainstyle{
     width: 100%;
     margin-top: 1rem;
-    height: 26vh;
+    height: 30vh;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    /* padding: 1rem; */
 }
 
 .card{
@@ -18,7 +20,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem;
+    /* border: 1px solid red; */
+
 }
 
 .btn{
@@ -38,6 +41,8 @@
     justify-content: space-around;
     align-items: center;
     width: 35%;
+    margin-right: 2rem;
+    /* border: 1px solid green; */
 }
 
 .btntext{
@@ -65,7 +70,7 @@
 }
 
 .name{
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 500;
     color: rgb(53, 66, 89);
     margin-bottom: 0.5rem;
@@ -73,7 +78,7 @@
 
 .smalltext{
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-overflow: ellipsis;
 }
 

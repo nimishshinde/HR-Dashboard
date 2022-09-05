@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Card from './Card';
+import Card from '../SmallComponents/Card';
 import "./Leave.css";
 import axios from "axios";
 

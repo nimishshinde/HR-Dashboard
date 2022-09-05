@@ -27,7 +27,14 @@ function Card({ Obj }) {
     <>
       <div className="cardmainstyle">
         <div className="card" onClick={showModal}>
-          <div style={{ color: "rgb(53, 66, 89)", width: "60%" }}>
+          <div
+            style={{
+              color: "rgb(53, 66, 89)",
+              width: "50%",
+              // border: "1px solid black",
+              marginLeft:"2rem",
+            }}
+          >
             <div className="name">
               <div className="namestyle">
                 <div>{Obj.employeName} </div>
@@ -36,14 +43,12 @@ function Card({ Obj }) {
                   className="smalltext"
                   style={{
                     marginLeft: "1rem",
-                    fontSize: "1.2rem",
-                    fontWeight: "400",
                   }}
                 >
                   {" "}
-                  {"( " +
+                  {"" +
                     moment(Obj.dateOfLeave).format("MMMM Do YYYY") +
-                    " )"}{" "}
+                    ""}{" "}
                 </div>
               </div>
 
@@ -112,9 +117,12 @@ function Card({ Obj }) {
               Leaves Taken this Month : {Obj.leavesTakenInMonth} and Remaining
               Leaves : {Obj.remainingLeaves}
             </div>
-            <div className="smalltext">Date of Leave :{Obj.dateOfLeave}</div>
             <div className="smalltext">
-              Number of days :{Obj.noofDaysLeaveRequired}
+              Date of Leave :
+              {" " + moment(Obj.dateOfLeave).format("MMMM Do YYYY")}
+            </div>
+            <div className="smalltext">
+              Number of days :{" " + Obj.noofDaysLeaveRequired}
             </div>
           </div>
         </Modal>

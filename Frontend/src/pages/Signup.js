@@ -1,56 +1,18 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import "antd/dist/antd.min.css";
 import { Button, Form, Input, Select } from "antd";
 import "./Signup.css";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useDataLayerValue } from "../DataLayer/DataLayer";
 import axios from "axios";
 
 const { Option } = Select;
 
-const reducerFn = (state, action) => {
-  switch (action.type) {
-    case "firstName":
-      return { ...state, firstName: action.value };
-    case "lastName":
-      return { ...state, lastName: action.value };
-    case "email":
-      return { ...state, email: action.value };
-    case "password":
-      return { ...state, password: action.value };
-    case "confirm":
-      return { ...state, confirmPassword: action.value };
-    case "address":
-      return { ...state, address: action.value };
-    case "phone":
-      return { ...state, phoneNumber: action.value };
-    case "type":
-      return { ...state, employeeType : action.value };
-    case "department":
-      return { ...state, department: action.value };
-  }
-};
-
-const userDataObj = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  address: "",
-  phoneNumber: "",
-  employeeType: "",
-  deparatment: "",
-  id: "",
-};
-
 const Signup = () => {
-  const [btnactive, setBtnActive] = useState(false);
   const [highlight, setHighlight] = useState(false);
   const [form] = Form.useForm();
-
-  const [signupData, dispatch] = useReducer(reducerFn, userDataObj);
-
+  const [signupData, dispatch] = useDataLayerValue();
 
   const verifySignup = async (userDataObj) => {
     console.log(userDataObj, "user Object ");
@@ -91,18 +53,16 @@ const Signup = () => {
           <div
             onClick={() => {
               dispatch({type : "type" , value : 1})
-              setBtnActive(!btnactive);
             }}
-            className={`${btnactive ? "btn btn-active" : "btn"}`}
+            className={`${signupData.employeeType == 1 ? "btn btn-active" : "btn"}`}
           >
             Admin
           </div>
           <div
             onClick={() => {
               dispatch({ type: "type", value: 2 });
-              setBtnActive(!btnactive);
             }}
-            className={`${btnactive ? "btn " : "btn btn-active"}`}
+            className={`${signupData.employeeType == 1 ? "btn " : "btn btn-active"}`}
           >
             Employee
           </div>
@@ -291,7 +251,7 @@ const Signup = () => {
 
             <Form.Item>
               <motion.div whileTap={{ scale: 1.05 }}>
-                <Link to={"/home/dashboard"}>
+                <Link to={ signupData.employeeType == 1 ? "/home/dashboard" : "/home/employee/dashboard"}>
                   <Button
                     style={{ width: "100%" }}
                     type="primary"

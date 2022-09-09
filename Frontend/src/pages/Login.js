@@ -1,5 +1,5 @@
-import React, { useState, createContext } from "react";
-import "antd/dist/antd.min.css";
+import React, { useState } from "react";
+import "antd/dist/antd.css";
 import "./Login.css";
 import { Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
@@ -11,6 +11,7 @@ const Login = () => {
   const [userEmail, setUseremail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userData, setUserData] = useState({ email: "", password: "" });
+
   const [highlight, setHighlight] = useState(false);
 
   const verifyLogin = async (userEmail, userPassword) => {
@@ -19,8 +20,7 @@ const Login = () => {
     userData.password = userPassword;
     setUserData(userData);
     console.log(userData, "fromfrontend");
-    
-    
+
     try {
       let response = await axios({
         method: "post",
@@ -32,12 +32,9 @@ const Login = () => {
         },
       });
       console.log(response, "from frontend");
-      
     } catch (error) {
-      console.log("error while logging in ", error)
+      console.log("error while logging in ", error);
     }
-
-
   };
 
   return (
@@ -95,7 +92,7 @@ const Login = () => {
             <Form.Item>
               <Link to="/home/dashboard">
                 {" "}
-                <Button 
+                <Button
                   onClick={() => verifyLogin(userEmail, userPassword)}
                   className="login-button"
                   style={{ backgroundColor: "#0284c7", color: "white" }}

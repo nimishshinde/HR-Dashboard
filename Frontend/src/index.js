@@ -9,7 +9,7 @@ import reducerFn, { initialState } from "./DataLayer/ReducerFn";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <DataLayer initialState={initialState} reducerFn = { reducerFn }  >
+    <DataLayer initialState={initialState} reducerFn={reducerFn}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

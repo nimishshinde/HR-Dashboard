@@ -1,0 +1,15 @@
+.empdash{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 1rem 2rem ;
+}
+
+.cardstyle{
+    font-size: 1rem;
+    color: #6075fe;
+    font-weight: 600;
+    border: 1px solid red;
+    text-align: center;
+    padding: 10px;
+}

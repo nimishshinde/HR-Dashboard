@@ -8,6 +8,20 @@ export const initialState = {
   phoneNumber: "",
   deparatment: "",
   employeeType: 2,
+  // photo: String,
+  // leavesTakenInMonth: Number,
+  // leavesTakenInYear: Number,
+  // paidLeavesRemaining: Number,
+  // tasksOfTheMonth: Number,
+  // tasksCompletedInMonth: Number,
+  // performanceOfPerviousMonth: Number,
+  // performanceMessage: String,
+  // shiftOfCurrentMonth: String,
+  // PayrollMangement: {
+  //   halfDayTaken: Boolean,
+  //   monthsSalaryNotCredited: [[String]],
+  //   difference: Number,
+  // },
 };
 
 const reducerFn = (state, action) => {
@@ -31,7 +45,43 @@ const reducerFn = (state, action) => {
       return { ...state, employeeType: action.value };
     case "department":
       return { ...state, deparatment: action.value };
+    default:
+      return state;
   }
 };
+
+// export const reducerFnforLogin = (state, action) => {
+//   switch(action.type){
+//     case 'loginObj' :
+//       return action.value
+//   }
+// }
+
+// export const userObj = {
+//   employeeType: Number,
+//   deparatment: String,
+//   id: String,
+//   firstName: String,
+//   lastName: String,
+//   email: String,
+//   password: String,
+//   confirmPassword: String,
+//   phoneNumber: String,
+//   photo: String,
+//   address: String,
+//   leavesTakenInMonth: Number,
+//   leavesTakenInYear: Number,
+//   paidLeavesRemaining: Number,
+//   tasksOfTheMonth: Number,
+//   tasksCompletedInMonth: Number,
+//   performanceOfPerviousMonth: Number,
+//   performanceMessage: String,
+//   shiftOfCurrentMonth: String,
+//   PayrollMangement: {
+//     halfDayTaken: Boolean,
+//     monthsSalaryNotCredited: [[String]],
+//     difference: Number,
+//   },
+// };
 
 export default reducerFn;

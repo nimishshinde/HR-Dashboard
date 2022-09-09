@@ -3,6 +3,7 @@ import Navbar from "../BusinessComponent/Navbar";
 import "./Home.css";
 import Sidebar from "../BusinessComponent/Sidebar";
 import { Outlet } from 'react-router-dom';
+
 const Home = () => {
   
   return (

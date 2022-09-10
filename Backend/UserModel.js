@@ -10,7 +10,7 @@ mongoose
   .then(() => {
     console.log("Connected 🥳");
   })
-  .catch((err) => { ``
+  .catch((err) => {
     console.log(err, "Not Connected 😢");
   });
 
@@ -146,9 +146,8 @@ let leaveModel = new mongoose.Schema({
 
 // creating model with name HR-Dashboard and Leave in cluster0
 // Using Leave to Manage leaves of employees.
-// HR-Dashboard is to manage all user data. 
+// HR-Dashboard is to manage all user data.
 const LeaveModel = mongoose.model("Leave", leaveModel);
 const UserModel = mongoose.model("HR-Dashboard", userSchema);
-
 
 module.exports = { UserModel, LeaveModel };

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "antd/dist/antd.min.css";
+// import "antd/dist/antd.css";
 import { Button, Form, Input, Select } from "antd";
 import "./Signup.css";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useDataLayerValue } from "../DataLayer/DataLayer";
+// import { useDataLayerValue } from "../DataLayer/DataLayer";
 import axios from "axios";
 
 const { Option } = Select;
@@ -12,7 +12,7 @@ const { Option } = Select;
 const Signup = () => {
   const [highlight, setHighlight] = useState(false);
   const [form] = Form.useForm();
-  const [signupData, dispatch] = useDataLayerValue();
+  // const [signupData, dispatch] = useDataLayerValue();
 
   const verifySignup = async (userDataObj) => {
     console.log(userDataObj, "user Object ");
@@ -25,7 +25,8 @@ const Signup = () => {
         "Access-Control-Allow-Credentials": "true",
       },
     });
-    console.log("comming from Backend" , response);
+    // let res = await axios.post(`http://localhost:5000/auth/signup`, signupData);
+    console.log("comming from Backend", response);
   };
 
   return (
@@ -52,17 +53,21 @@ const Signup = () => {
         <div className="btnContainer">
           <div
             onClick={() => {
-              dispatch({type : "type" , value : 1})
+              // dispatch({ type: "type", value: 1 });
             }}
-            className={`${signupData.employeeType == 1 ? "btn btn-active" : "btn"}`}
+            className={`${
+              signupData.employeeType == 1 ? "btn btn-active" : "btn"
+            }`}
           >
             Admin
           </div>
           <div
             onClick={() => {
-              dispatch({ type: "type", value: 2 });
+              // dispatch({ type: "type", value: 2 });
             }}
-            className={`${signupData.employeeType == 1 ? "btn " : "btn btn-active"}`}
+            className={`${
+              signupData.employeeType == 1 ? "btn " : "btn btn-active"
+            }`}
           >
             Employee
           </div>
@@ -89,7 +94,7 @@ const Signup = () => {
                   <Input
                     placeholder="Enter your First Name"
                     onChange={(e) => {
-                      dispatch({type: "firstName", value : e.target.value})
+                      // dispatch({ type: "firstName", value: e.target.value });
                     }}
                   />
                 </Form.Item>
@@ -108,9 +113,8 @@ const Signup = () => {
                   <Input
                     placeholder="Enter your Last Name"
                     onChange={(e) => {
-                        dispatch({type : "lastName", value : e.target.value})
-                      }
-                    } 
+                      // dispatch({ type: "lastName", value: e.target.value });
+                    }}
                   />
                 </Form.Item>
               </div>
@@ -132,10 +136,9 @@ const Signup = () => {
             >
               <Input
                 placeholder="Enter you Email"
-                onChange={(e) =>{
-                    dispatch({type: "email", value:e.target.value})
-                  }
-                } 
+                onChange={(e) => {
+                  // dispatch({ type: "email", value: e.target.value });
+                }}
               />
             </Form.Item>
 
@@ -153,9 +156,8 @@ const Signup = () => {
               <Input.Password
                 placeholder="Enter your Password"
                 onChange={(e) => {
-                    dispatch({type:"password" , value:e.target.value})
-                  }
-                }
+                  // dispatch({ type: "password", value: e.target.value });
+                }}
               />
             </Form.Item>
 
@@ -187,9 +189,8 @@ const Signup = () => {
               <Input.Password
                 placeholder="Confirm Password"
                 onChange={(e) => {
-                    dispatch({type : "confirm", value : e.target.value})
-                  }
-                }
+                  // dispatch({ type: "confirm", value: e.target.value });
+                }}
               />
             </Form.Item>
 
@@ -205,11 +206,9 @@ const Signup = () => {
             >
               <Input
                 placeholder="Enter your department"
-                onChange={(e) =>{
-                  dispatch({type : "department", value : e.target.value})
-                } 
-                  
-                }
+                onChange={(e) => {
+                  // dispatch({ type: "department", value: e.target.value });
+                }}
               />
             </Form.Item>
 
@@ -226,7 +225,7 @@ const Signup = () => {
               <Input
                 placeholder="Enter your address"
                 onChange={(e) => {
-                  dispatch({type : "address", value:e.target.value})
+                  // dispatch({ type: "address", value: e.target.value });
                 }}
               />
             </Form.Item>
@@ -244,14 +243,20 @@ const Signup = () => {
               <Input
                 placeholder="Enter your Phone Number"
                 onChange={(e) => {
-                  dispatch({type : "phone", value : e.target.value})
+                  // dispatch({ type: "phone", value: e.target.value });
                 }}
               />
             </Form.Item>
 
             <Form.Item>
               <motion.div whileTap={{ scale: 1.05 }}>
-                <Link to={ signupData.employeeType == 1 ? "/home/dashboard" : "/home/employee/dashboard"}>
+                <Link
+                  to={
+                    signupData.employeeType == 1
+                      ? "/home/dashboard"
+                      : "/home/employee/dashboard"
+                  }
+                >
                   <Button
                     style={{ width: "100%" }}
                     type="primary"

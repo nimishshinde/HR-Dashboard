@@ -24,7 +24,7 @@ export const initialState = {
   // },
 };
 
-const reducerFn = (state, action) => {
+const reducerFn = (state = initialState, action) => {
   console.log(action, "from the reducerFn file");
   switch (action.type) {
     case "firstName":

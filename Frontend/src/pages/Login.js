@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
 import "./Login.css";
 import { Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";

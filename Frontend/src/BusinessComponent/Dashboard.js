@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useDataLayerValue } from "../DataLayer/DataLayer";
+// import { useDataLayerValue } from "../DataLayer/DataLayer";
 import EmployeeDashboard from "./Employee/EmployeeDashboard";
 import "./Dashboard.css";
 
 function Dashboard() {
   const [clickStyle, setClickStyle] = useState(1);
-  const [{ employeeType }, dispatch] = useDataLayerValue();
+  const [employeeType, setEmp] = useState(1);
   return (
     <>
       {employeeType == 1 ? (
@@ -52,7 +52,7 @@ function Dashboard() {
         </div>
       ) : (
         <div>
-          <EmployeeDashboard/>
+          <EmployeeDashboard />
         </div>
       )}
     </>

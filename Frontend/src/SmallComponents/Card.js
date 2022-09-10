@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "antd";
 import moment from "moment";
 import "./Card.css";
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
 
 function Card({ Obj }) {
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ function Card({ Obj }) {
               color: "rgb(53, 66, 89)",
               width: "50%",
               // border: "1px solid black",
-              marginLeft:"2rem",
+              marginLeft: "2rem",
             }}
           >
             <div className="name">

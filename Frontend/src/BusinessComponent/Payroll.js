@@ -1,20 +1,69 @@
-import React, { useState } from 'react';
-import Section from "../SmallComponents/Section";
-import "./Payroll.css";
-
+import React, { useState } from "react";
+import "./Dashboard.css";
+import { Link, Outlet } from "react-router-dom";
 
 const Payroll = () => {
   const [clickStyle, setClickStyle] = useState(1);
+  const [small, setSmall] = useState(false);
   return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", flexWrap: "wrap" }}>
-        <div className={` ${clickStyle == 1 ? "activeSection sections" : "sections"}`} onClick={() => setClickStyle(1)} >Engineering</div>
-        <div className={` ${clickStyle == 2 ? "activeSection sections" : "sections"}`} onClick={() => setClickStyle(2)} >Operations</div>
-        <div className={` ${clickStyle == 3 ? "activeSection sections" : "sections"}`} onClick={() => setClickStyle(3)} >Accounts</div>
-        <div className={` ${clickStyle == 4 ? "activeSection sections" : "sections"}`} onClick={() => setClickStyle(4)} >Supply Chain</div>
+    <>
+      <div className="dashItems">
+        <Link to="/home/dashboard/Engineering">
+          <div
+            className={` ${clickStyle == 1 ? "activeSection" : ""} ${
+              small ? " sections" : " section"
+            } `}
+            onClick={() => {
+              setClickStyle(1);
+              setSmall(true);
+            }}
+          >
+            Engineering
+          </div>
+        </Link>
+        <Link to="/home/dashboard/Operations">
+          <div
+            className={` ${clickStyle == 2 ? "activeSection" : ""} ${
+              small ? " sections" : " section"
+            }`}
+            onClick={() => {
+              setClickStyle(2);
+              setSmall(true);
+            }}
+          >
+            Operations
+          </div>
+        </Link>
+        <Link to="/home/dashboard/Accounts">
+          <div
+            className={` ${clickStyle == 3 ? "activeSection" : ""} ${
+              small ? " sections" : " section"
+            } `}
+            onClick={() => {
+              setClickStyle(3);
+              setSmall(true);
+            }}
+          >
+            Accounts
+          </div>
+        </Link>
+        <Link to="/home/dashboard/SupplyChain">
+          <div
+            className={` ${clickStyle == 4 ? "activeSection" : ""} ${
+              small ? " sections" : " section"
+            } `}
+            onClick={() => {
+              setClickStyle(4);
+              setSmall(true);
+            }}
+          >
+            Supply Chain
+          </div>
+        </Link>
       </div>
-    </div>
-  )
-}
+      <Outlet />
+    </>
+  );
+};
 
-export default Payroll;
+export default Dashboard;

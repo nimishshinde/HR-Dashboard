@@ -15,10 +15,6 @@ import Engineering from './BusinessComponent/Engineering';
 function App() {
   return (
     <div className="App">
-<<<<<<< HEAD
-=======
-      {/* <div>hello app</div> */}
->>>>>>> 4bdef7f15329f9d14da1e73db9a0c02fd2b3791d
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="signup" element={<Signup />} />

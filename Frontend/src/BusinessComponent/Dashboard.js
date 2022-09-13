@@ -2,8 +2,11 @@ import React, { useState } from "react";
 // import { useDataLayerValue } from "../DataLayer/DataLayer";
 import EmployeeDashboard from "./Employee/EmployeeDashboard";
 import "./Dashboard.css";
+import { Link, Outlet } from 'react-router-dom';
+
 
 function Dashboard() {
+  // console.log();
   const [clickStyle, setClickStyle] = useState(1);
   const [employeeType, setEmp] = useState(1);
   return (
@@ -17,6 +20,7 @@ function Dashboard() {
             flexWrap: "wrap",
           }}
         >
+          <Link to='/home/dashboard/Engineering'>
           <div
             className={` ${
               clickStyle == 1 ? "activeSection sections" : "sections"
@@ -25,6 +29,7 @@ function Dashboard() {
           >
             Engineering
           </div>
+          </Link>
           <div
             className={` ${
               clickStyle == 2 ? "activeSection sections" : "sections"
@@ -49,6 +54,7 @@ function Dashboard() {
           >
             Supply Chain
           </div>
+          <Outlet/>
         </div>
       ) : (
         <div>

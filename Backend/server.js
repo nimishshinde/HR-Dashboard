@@ -14,6 +14,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+// app.use(cors()); suggestion by Amaan
 
 // Setting up server and middlewares.
 app.use(express.json());

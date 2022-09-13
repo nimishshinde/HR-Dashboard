@@ -14,7 +14,6 @@ import Test from "./BusinessComponent/Test";
 function App() {
   return (
     <div className="App">
-      <div>hello app</div>
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="signup" element={<Signup />} />

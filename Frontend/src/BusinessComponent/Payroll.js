@@ -66,4 +66,4 @@ const Payroll = () => {
   );
 };
 
-export default Dashboard;
+export default Payroll;

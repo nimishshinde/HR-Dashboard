@@ -8,18 +8,21 @@ import Payroll from "./BusinessComponent/Payroll";
 import Dashboard from "./BusinessComponent/Dashboard";
 import Leave from "./BusinessComponent/Leave";
 import Test from "./BusinessComponent/Test";
+import Engineering from './BusinessComponent/Engineering';
 
 // import "antd/dist/antd.css";
 
 function App() {
   return (
     <div className="App">
-      <div>hello app</div>
+      {/* <div>hello app</div> */}
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="signup" element={<Signup />} />
         <Route exact path="home" element={<Home />}>
-          <Route exact path="dashboard" element={<Dashboard />} />
+          <Route exact path="dashboard" element={<Dashboard />}>
+            <Route exact path="Engineering" element={<Engineering />} />
+          </Route>
           <Route exact path="employee/dashboard" element={<Dashboard />} />
           <Route exact path="payroll" element={<Payroll />} />
           <Route exact path="leave" element={<Leave />} />

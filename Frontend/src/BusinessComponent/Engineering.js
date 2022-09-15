@@ -156,6 +156,9 @@ const updateDetails = () => {
               },
             };
           }}
+          
+
+
         ></Table>
       </div>
 
@@ -169,7 +172,7 @@ const updateDetails = () => {
             <div className="btnmodal approve">
               <div onClick={updateDetails} className="btntext"> Update </div>
             </div>
-          </div>,
+          </div>
         ]}
       >
         <div className="empDetails">

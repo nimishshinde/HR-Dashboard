@@ -8,7 +8,7 @@ import { Link, Outlet } from 'react-router-dom';
 function Dashboard() {
   // console.log();
   const [clickStyle, setClickStyle] = useState(1);
-  const [employeeType, setEmp] = useState(1);
+  const [employeeType, setEmp] = useState(2);
   return (
     <>
       {employeeType == 1 ? (

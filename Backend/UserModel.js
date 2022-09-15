@@ -142,6 +142,9 @@ let leaveModel = new mongoose.Schema({
   dateOfLeave: {
     type: Date,
   },
+  endOfLeave : {
+    type : Date,
+  }
 });
 
 // creating model with name HR-Dashboard and Leave in cluster0

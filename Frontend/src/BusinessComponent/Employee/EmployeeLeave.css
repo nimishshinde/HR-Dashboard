@@ -1,0 +1,63 @@
+.emplev {
+  /* margin: 1rem 2rem; */
+  margin: 1rem;
+  padding: 0.7rem;
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.levdate {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid red; */
+  margin-left: 0.8rem;
+  padding: 0.5rem;
+  border-right: 1px solid grey;
+  /* border: 1px solid red; */
+}
+
+.applybtn {
+  width: 20%;
+  border: 1px solid #6075fe;
+  color: #6075fe;
+  text-align: center;
+  padding: 5px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+.applybtn:hover {
+  background-color: #6075fe;
+  font-weight: 600;
+  color: white;
+}
+
+.hightxt {
+  font-weight: 600;
+  /* color: #7bd4fb; */
+  color: #6075fe;
+  margin-bottom: 0.6rem;
+  font-size: 1.2rem;
+
+}
+
+.modaltxt {
+  font-weight: 400;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.infotxt {
+  margin-right: 2rem;
+  text-align: right;
+  font-weight: 400;
+}

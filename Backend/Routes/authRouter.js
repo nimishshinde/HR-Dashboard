@@ -2,6 +2,7 @@ const express = require("express");
 const { UserModel } = require("../UserModel");
 
 const authRouter = express.Router();
+
 authRouter.route("/signup").post(userSign);
 authRouter.route("/login").post(userLogin);
 

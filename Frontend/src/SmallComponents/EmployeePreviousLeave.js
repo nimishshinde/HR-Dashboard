@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import "./EmployeePreviousLeave.css";
@@ -10,6 +10,9 @@ function EmployeePreviousLeave({ pendingObj }) {
     "from employee previous Leave"
   );
 
+  const [data, setData] = useState([]);
+  // setData(prev=> [...prev, pendingObj])
+
   useEffect(()=>{
     (async ()=>{
       try {
@@ -19,7 +22,9 @@ function EmployeePreviousLeave({ pendingObj }) {
         url: `http://localhost:5000/admin/leave/8`,
       });
 
-      console.log(response);
+
+
+      console.log(response.data);
 
     } catch (error) {
       console.log(error);
@@ -34,6 +39,7 @@ function EmployeePreviousLeave({ pendingObj }) {
           <div className="pendingtxt"> No Pending Leave Request </div>
         ) : (
           <div>
+            Actions Pending 
             <div className="">
               <div className="datesDisplay">
                 <IoMdReturnRight fontSize="1.5rem" color="#6075fe" />{" "}

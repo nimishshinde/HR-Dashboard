@@ -11,7 +11,6 @@ adminRouter.route("/leave/:id").get(getLeavesFromEmpId);
 adminRouter.route("/deparatment/:id").get(getDeparatmentbyId);
 async function getDeparatmentbyId(req, res){
     // localhost:5000/admin/deparatment/Engineering(Department Name)
-
     let departmentName = req.params.id;
     console.log(req.params.id)
 

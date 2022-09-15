@@ -66,7 +66,7 @@ const Signup = () => {
               // dispatch({ type: "type", value: 2 });
             }}
             className={`${
-              signupData.employeeType == 1 ? "btn " : "btn btn-active"
+              signupData.employeeType == 2 ? "btn " : "btn btn-active"
             }`}
           >
             Employee

@@ -8,7 +8,9 @@ import Payroll from "./BusinessComponent/Payroll";
 import Dashboard from "./BusinessComponent/Dashboard";
 import Leave from "./BusinessComponent/Leave";
 import Test from "./BusinessComponent/Test";
-import Engineering from './BusinessComponent/Engineering';
+// import DashboardTable from './BusinessComponent/DashboardTable';
+// import PreDashTable from "./BusinessComponent/Employee/PreDashTable";
+import DashboardTableOne from "./SmallComponents/DashboardTableOne";
 
 // import "antd/dist/antd.css";
 
@@ -20,12 +22,14 @@ function App() {
         <Route exact path="signup" element={<Signup />} />
         <Route exact path="home" element={<Home />}>
           <Route exact path="dashboard" element={<Dashboard />}>
-            <Route exact path="Engineering" element={<Engineering />} />
+            {/* <Route exact path="DashboardTable" element={<PreDashTable />} /> */}
+            {/* <Route exact path="DashboardTable" element={<DashboardTable />} /> */}
+            {/* <Route exact path="DashboardTableOne" element={<DashboardTableOne />} /> */}
           </Route>
           <Route exact path="employee/dashboard" element={<Dashboard />} />
           <Route exact path="payroll" element={<Payroll />} />
           <Route exact path="leave" element={<Leave />} />
-          <Route exact path="test" element={<Test />} />
+          <Route exact path="test" element={<Test />} /> 
         </Route>
       </Routes>
     </div>

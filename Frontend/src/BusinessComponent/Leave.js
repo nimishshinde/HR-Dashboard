@@ -1,37 +1,43 @@
 import React, { useEffect, useState } from "react";
 import Card from "../SmallComponents/Card";
+import EmployeeLeave from "./Employee/EmployeeLeave";
 import "./Leave.css";
 import axios from "axios";
 
 const Leave = () => {
   const [allrequest, setAllRequest] = useState([]);
+  const [employeeType, setEmployeeType] = useState(2);
 
-  const fetchRequest = async () => {
-    let response = await axios({
-      method: "get",
-      url: "http://localhost:5000/admin/leave",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": "true",
-      },
-    }).then(() => {
-      console.log("from frontend leave", response.data);
-      setAllRequest(response.data);
-    });
-  };
+  async function fetchReq () {
+    try {
+      let response = await axios({
+        method: "get",
+        url: "http://localhost:5000/admin/leave",
+      });
 
-  useEffect(() => {
-    fetchRequest();
+      console.log(response);
+      setAllRequest(response?.data);
+
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  useEffect(()=>{
+    fetchReq();
   }, []);
 
   return (
-    <div className="mainstyle">
-      <div className="heading"> Leave Management </div>
-      {allrequest?.map((obj) => (
-        <Card Obj={obj} />
-      ))}
-      {/* <Card/> */}
-    </div>
+    <>
+      {employeeType == 1 ? (
+        <div className="mainstyle">
+          <div className="heading"> Leave Management </div>
+          {allrequest != [] && allrequest?.map((obj) => <Card Obj={obj} />)}
+        </div>
+      ) : (
+        <EmployeeLeave />
+      )}
+    </>
   );
 };
 

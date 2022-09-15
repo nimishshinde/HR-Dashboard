@@ -83,7 +83,7 @@ function Card({ Obj }) {
 
         <Modal
           visible={visible}
-          title="Title"
+          title="Request For Leaves"
           onOk={handleOk}
           onCancel={handleCancel}
           footer={[
@@ -120,6 +120,15 @@ function Card({ Obj }) {
             <div className="smalltext">
               Date of Leave :
               {" " + moment(Obj.dateOfLeave).format("MMMM Do YYYY")}
+            </div>
+
+            <div className="smalltext">
+              End of Leave :
+              {" " + moment(Obj?.dateOfLeave).format("MMMM Do YYYY")}
+            </div>
+
+            <div className="smalltext">
+              of Leave :{" " + moment(Obj.dateOfLeave).format("MMMM Do YYYY")}
             </div>
             <div className="smalltext">
               Number of days :{" " + Obj.noofDaysLeaveRequired}

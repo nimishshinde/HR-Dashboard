@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import Logo1 from "../assests/logo1.png";
@@ -6,13 +6,44 @@ import { MdDashboard } from "react-icons/md";
 import { MdWorkOff } from "react-icons/md";
 import { BsNewspaper } from "react-icons/bs";
 import { RiMoneyDollarBoxFill } from "react-icons/ri";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Siderbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [clickStyle, setClickStyle] = useState(1);
+  
+
+  const handleLocation = (num, pathName) => {
+    setClickStyle(num);
+    navigate(`/home/${pathName}`);
+  };
+
+  
+
+  useEffect(() => {
+    let locationName = location?.pathname.split("/")[2];
+    switch (locationName) {
+      case "dashboard":
+        return handleLocation(1, "dashboard");
+
+      case "payroll":
+        return handleLocation(2, "payroll");
+
+      case "leave":
+        return handleLocation(3, "leave");
+
+      case "test":
+        return handleLocation(4, "test");
+
+      default:
+        return handleLocation(1, "dashboard");
+    }
+  },[]);
 
   return (
     <>
-      <div style={{ height: "100vh",  }}>
+      <div style={{ height: "100vh" }}>
         <aside className="sidebar">
           <div
             style={{
@@ -131,26 +162,3 @@ const Siderbar = () => {
 };
 
 export default Siderbar;
-
-// export const Sidebar = [
-//   {
-//     title: 'Payroll Management',
-//     path: '/payroll',
-//     cName: 'item',
-//   },
-//   {
-//     title: 'Leave',
-//     path: '/leave',
-//     cName: 'item',
-//   },
-//   {
-//     title: 'Test',
-//     path: '/test',
-//     cName: 'item',
-//   },
-//   {
-//     title: 'Performance',
-//     path: '/performance',
-//     cName: 'item',
-//   },
-// ]

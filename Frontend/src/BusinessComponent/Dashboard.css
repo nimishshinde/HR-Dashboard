@@ -43,7 +43,8 @@
 .dashItems {
     display: flex;
     flex-wrap: wrap;
-    gap: 3rem;
+    row-gap: 1rem;
+    column-gap: 3rem;
     justify-content: center;
     align-items: center;
     margin-top: 2rem;

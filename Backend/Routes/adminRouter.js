@@ -10,8 +10,20 @@ adminRouter.route("/leave").post(addLeave);
 adminRouter.route("/deparatment/:id").get(getDeparatmentbyId);
 
 async function getDeparatmentbyId(req, res){
-    conosle.log("Hello from Deparatment");
-    res.end("request came");
+    let departmentName = req.params.id;
+    console.log(req.params.id)
+
+    console.log("Hello from Deparatment", departmentName);
+    
+
+    try {
+        let allUser = await UserModel.find({ deparatment : departmentName });
+        console.log(allUser);
+        res.json( allUser );
+
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 

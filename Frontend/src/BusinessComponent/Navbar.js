@@ -45,7 +45,7 @@ const Navbar = () => {
           marginRight : '1rem'
         }}
       >
-        {userObj.firstName}
+        {userObj?.firstName}
       </div>
     </nav>
   );

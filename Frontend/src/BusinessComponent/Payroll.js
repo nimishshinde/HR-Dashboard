@@ -20,7 +20,7 @@ const Payroll = () => {
 
   return (
     <>
-      {userObj.employeeType == 1 ? (
+      {userObj?.employeeType == 1 ? (
         <>
           <div className="dashItems">
             <div

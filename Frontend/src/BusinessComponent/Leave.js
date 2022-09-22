@@ -6,11 +6,11 @@ import "./Leave.css";
 import axios from "axios";
 
 const Leave = () => {
-  const [allrequest, setAllRequest] = useState([]);
-  const [employeeType, setEmployeeType] = useState();
-  const userObj = useSelector((state) => state);
-  const dispatch = useDispatch();
+    const userObj = useSelector((state) => state);
+    const dispatch = useDispatch();
 
+  const [allrequest, setAllRequest] = useState([]);
+  const [employeeType, setEmployeeType] = useState(userObj.employeeType);
 
 
   async function fetchReq() {
@@ -29,6 +29,7 @@ const Leave = () => {
 
   useEffect(() => {
     fetchReq();
+    console.log('user obj from leave.js --> ', userObj);
     setEmployeeType(userObj.employeeType);
   }, []);
 

@@ -10,7 +10,9 @@ const Home = () => {
       <div className="sidnav">
         <Sidebar />
         <div>
-          <Navbar />
+          <div style={{marginLeft : '2vw', marginTop:'1rem',width:'78vw', display:'flex', justifyContent:'center'}} >
+            <Navbar />
+          </div>
           <Outlet />
         </div>
       </div>

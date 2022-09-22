@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-// import "antd/dist/antd.css";
-import "./Login.css";
-import { Form, Input, Button } from "antd";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { Link, Navigate } from "react-router-dom";
+
+import { Form, Input, Button } from "antd";
+import "./Login.css";
 import { motion } from "framer-motion";
 
 const Login = () => {
@@ -11,8 +12,12 @@ const Login = () => {
   const [userEmail, setUseremail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userData, setUserData] = useState({ email: "", password: "" });
-
   const [highlight, setHighlight] = useState(false);
+
+  const [responseToNext, setResponseToNext] = useState(false);
+
+  const userObj = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const verifyLogin = async (userEmail, userPassword) => {
     console.log(userEmail, userPassword, "fromFrontEnd");
@@ -30,8 +35,21 @@ const Login = () => {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": "true",
         },
-      });
-      console.log(response, "from frontend");
+      })
+        .then((res) => {
+          if (res.status == 200) {
+
+            if (res.data?.errorMessage?.length == 0 || res.data?.errorMessage?.length == undefined ) setResponseToNext(true);
+            dispatch({
+              type: "login",
+              payload: res.data,
+            });
+            console.log(res, "from line no 46 response");
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
     } catch (error) {
       console.log("error while logging in ", error);
     }
@@ -90,16 +108,22 @@ const Login = () => {
               />
             </Form.Item>
             <Form.Item>
-              <Link to="/home/dashboard">
-                {" "}
-                <Button
-                  onClick={() => verifyLogin(userEmail, userPassword)}
-                  className="login-button"
-                  style={{ backgroundColor: "#0284c7", color: "white" }}
-                >
-                  <motion.div whileTap={{ scale: 1.1 }}>Log In</motion.div>
-                </Button>
-              </Link>
+              {responseToNext == true && (
+                <Navigate
+                  to={
+                    userObj.employeeType == 1
+                      ? "/home/dashboard"
+                      : "/home/employee/dashboard"
+                  }
+                />
+              )}
+              <Button
+                onClick={() => verifyLogin(userEmail, userPassword)}
+                className="login-button"
+                style={{ backgroundColor: "#0284c7", color: "white" }}
+              >
+                <motion.div whileTap={{ scale: 1.1 }}>Log In</motion.div>
+              </Button>
             </Form.Item>
           </Form>
         </div>

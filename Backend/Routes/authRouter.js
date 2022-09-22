@@ -1,5 +1,8 @@
+const { response } = require("express");
 const express = require("express");
 const { UserModel } = require("../UserModel");
+
+let NEWEMPID = 120; 
 
 const authRouter = express.Router();
 
@@ -9,10 +12,14 @@ authRouter.route("/login").post(userLogin);
 async function userSign(req, res) {
   console.log(req.body, "data recieved");
   let data = req.body;
-  data.id = 001; //
+  data.id = ++NEWEMPID;
+
+  console.log("new User ---> " ,data);
+
   let newUser = await UserModel.create(data);
   console.log(newUser);
-  res.end("Data has came");
+  // res.end("Data has came");
+  res.json(newUser);
 }
 
 async function userLogin(req, res) {

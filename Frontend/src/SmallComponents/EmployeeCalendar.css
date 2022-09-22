@@ -1,0 +1,12 @@
+.calendarmain {
+   display: flex;
+   justify-content: center;
+   height: 44vh;
+   padding: 0.4rem;
+   /* border: 1px solid blue; */
+   overflow: scroll;
+   scroll-behavior: smooth;
+   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+}
+
+

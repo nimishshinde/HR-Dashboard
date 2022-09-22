@@ -1,0 +1,43 @@
+.empupdate {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   border: 1px solid red;
+   margin: 1rem 2rem;
+}
+
+.empflex {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 0.8rem;
+   margin-right: 1rem;
+}
+
+.updatetxt {
+   color: #7bd4fb;
+   font-weight: 600;
+   width: 40%;
+}
+
+.sendbtnctn {
+   margin-top: 0.8rem;
+   margin-right: 1rem;
+   display: flex;
+   justify-content: flex-end;
+}
+
+
+.sendbtn {
+   text-align: center;
+   border-radius: 8px;
+   border: 1px solid #7bd4fb;
+   padding: 0.4rem;
+   width: 20%;
+   cursor: pointer;
+}
+
+.sendbtn:hover{
+   background-color: #7bd4fb;
+   color: white;
+}

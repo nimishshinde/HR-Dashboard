@@ -43,7 +43,9 @@ const Siderbar = () => {
 
   return (
     <>
-      <div style={{ height: "100vh" }}>
+      <div style={{ height: "100vh",
+      //  position:'fixed', top:'0', left:'0'
+       }}>
         <aside className="sidebar">
           <div
             style={{

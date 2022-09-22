@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Radio, Space, Modal, Button, Dropdown, Menu } from "antd";
 import axios from "axios";
 import { DownOutlined } from "@ant-design/icons";
+import "./PayrollTable.css";
 
 function PayrollTable({ clickedBtn }) {
   let Obj = [];
@@ -12,7 +13,7 @@ function PayrollTable({ clickedBtn }) {
   const [getValue, setGetValue] = useState("");
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [employeeDetails, setEmployeeDetails] = useState({});
+  const [employeeDetails, setEmployeeDetails] = useState([]);
 
   const getDepartmentName = (clickedBtn) => {
     switch (clickedBtn) {
@@ -48,14 +49,16 @@ function PayrollTable({ clickedBtn }) {
           obj.email,
           obj.PayrollMangement?.halfDayTaken,
           obj.leavesTakenInMonth,
-          obj.PayrollMangement?.salaryCreditedThisMonth == '' ? 'Not Credited' : `${obj.PayrollMangement?.salaryCreditedThisMonth}` ,
+          obj.PayrollMangement?.salaryCreditedThisMonth == ""
+            ? "Not Credited"
+            : `${obj.PayrollMangement?.salaryCreditedThisMonth}`,
         ],
       ]);
     });
+    console.log(mainData[0][1], "from PayrollTable maindata01");
   };
 
   useEffect(() => {
-
     setMainData([]);
 
     fetchRequest();
@@ -73,7 +76,7 @@ function PayrollTable({ clickedBtn }) {
     setVisible(false);
   };
 
-  const showModal = (record) => {
+  const showModal = (record, rowIndex) => {
     setVisible(true);
     setEmployeeDetails(record);
   };
@@ -138,22 +141,22 @@ function PayrollTable({ clickedBtn }) {
     },
     {
       title: "Salary Credited",
-      dataIndex: '5',
+      dataIndex: "5",
       key: "key",
     },
   ];
 
   return (
-    <div>
+    <div className="dtoc">
       <div>
         <Table
           style={{ padding: "5px" }}
           dataSource={mainData}
           columns={columns}
-          align = {'center'}
+          align={"center"}
           onRow={(record, rowIndex) => {
             return {
-              onClick: () => showModal(record),
+              onClick: () => showModal(record, rowIndex),
             };
           }}
         ></Table>
@@ -166,7 +169,10 @@ function PayrollTable({ clickedBtn }) {
         onCancel={handleCancel}
         footer={[
           <div className="btncontainermodal">
-            <div className="btnmodal approve">
+            <div
+              style={{ border: "1px solid #6075fe" }}
+              className="btnmodal approve"
+            >
               <div onClick={updateDetails} className="btntext">
                 {" "}
                 Update{" "}
@@ -177,37 +183,41 @@ function PayrollTable({ clickedBtn }) {
       >
         <div className="empDetails">
           <div>
-            <p>
-              <strong>Name:</strong> <br /> {employeeDetails.firstName}
+            <p className="detail">
+              <strong>Name:</strong>{" "}
+              <div className="blue">{employeeDetails[1]}</div>
             </p>
-            <p>
-              <strong>ID: </strong> <br />
-              {employeeDetails.id}
+            <p className="detail">
+              <strong>ID: </strong>
+              <div className="blue">{employeeDetails[0]}</div>
             </p>
-            <p>
-              <strong>Email: </strong> <br />
-              {employeeDetails.email}
+            <p className="detail">
+              <strong>Email: </strong>
+              <div className="blue">{employeeDetails[2]}</div>
             </p>
           </div>
           <div>
-            <p>
-              <strong>Half Days Taken:</strong> <br />
-              {employeeDetails.address}
+            <p className="detail">
+              <strong>Half Days Taken: </strong>
+              <div className="blue">{employeeDetails[3]}</div>
             </p>
-            <p>
-              <strong>Salary Credited:</strong> <br />
-              {employeeDetails.performanceOfPerviousMonth}
+            <p className="detail">
+              <strong>Salary Credited: </strong>
+              <div className="blue">{employeeDetails[5]}</div>
             </p>
-            <p>
-              <strong>Leaves Taken In Month:</strong>
-              <br /> {employeeDetails.leavesTakenInMonth}
+            <p className="detail">
+              <strong>Leaves Taken In Month: </strong>
+              <div className="blue">{employeeDetails[4]}</div>
             </p>
           </div>
         </div>
 
         <div>
-          <div className="mcontainer">
-            <strong>Performance</strong>
+          <div className="pmcontainer">
+            <span className="material-symbols-outlined performanceIcon">
+              insert_chart
+            </span>
+            <strong> Performance</strong>
           </div>
           <div className="econtainer">
             <div style={{ padding: "1rem" }}>
@@ -226,14 +236,24 @@ function PayrollTable({ clickedBtn }) {
         </div>
 
         <div>
-          <div className="mcontainer">
+          
+          <div className="pmcontainer">
+          <span style={{color: '#6075fe', marginRight: '5px'}} className="material-symbols-outlined">
+work_history
+</span>
             <strong>Select Shift Hours</strong>
           </div>
           <div className="econtainer">
             <div>
               <div>
                 {" "}
-                Shift Hours : <input readOnly type="text" value={getValue} />
+                Shift Hours :{" "}
+                <input
+                  className="inputShift"
+                  readOnly
+                  type="text"
+                  value={getValue}
+                />
               </div>
               <br />
               <Dropdown overlay={menu}>

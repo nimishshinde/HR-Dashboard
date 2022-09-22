@@ -5,6 +5,7 @@ import "./Dashboard.css";
 import { Link, Outlet } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import DashboardTableOne from "../SmallComponents/DashboardTableOne";
+import Chat from "./Chat";
 
 
 function Dashboard() {
@@ -22,17 +23,18 @@ function Dashboard() {
           <div className={` ${clickStyle === 2 ? "activeSection" : ""} ${small ? " sections" : " section"}`} onClick={() => {setClickStyle(2);setSmall(true)}} ><motion.div whileHover={{ scale: 1.2}}>Operations</motion.div></div>
           <div className={` ${clickStyle === 3 ? "activeSection" : ""} ${small ? " sections" : " section"} `} onClick={() => {setClickStyle(3); setSmall(true)}} ><motion.div whileHover={{ scale: 1.2}}>Accounts</motion.div></div>
           <div className={` ${clickStyle === 4 ? "activeSection" : ""} ${small ? " sections" : " section"} `} onClick={() => {setClickStyle(4); setSmall(true)}} ><motion.div whileHover={{ scale: 1.2}}>Supply Chain</motion.div></div>
+          </div>
           {
             clickStyle != 0 && <DashboardTableOne clickedBtn = { clickStyle }/>
           }
           
-        </div>
       </> 
       ) : (
         <div>
           <EmployeeDashboard />
         </div>
       )}
+      
     </>
   );
 }

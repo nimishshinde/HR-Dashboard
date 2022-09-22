@@ -8,6 +8,7 @@ import Payroll from "./BusinessComponent/Payroll";
 import Dashboard from "./BusinessComponent/Dashboard";
 import Leave from "./BusinessComponent/Leave";
 import Test from "./BusinessComponent/Test";
+import Chat from "./BusinessComponent/Chat";
 // import DashboardTable from './BusinessComponent/DashboardTable';
 // import PreDashTable from "./BusinessComponent/Employee/PreDashTable";
 import DashboardTableOne from "./SmallComponents/DashboardTableOne";
@@ -32,6 +33,7 @@ function App() {
           <Route exact path="test" element={<Test />} /> 
         </Route>
       </Routes>
+      
     </div>
   );
 }

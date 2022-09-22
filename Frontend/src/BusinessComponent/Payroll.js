@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import "./Dashboard.css";
+import "./Payroll.css";
 import { Link, Outlet } from "react-router-dom";
 import PayrollTable from "../SmallComponents/PayrollTable";
+import { motion } from "framer-motion";
 
 const Payroll = () => {
   const [clickStyle, setClickStyle] = useState(0);
   const [small, setSmall] = useState(false);
   return (
     <>
-      <div className="dashItems">
+      <div style={{ margin:'1rem'}}>
+      <div className="dashItems" >
         <div
           className={` ${clickStyle == 1 ? "activeSection" : ""} ${
             small ? " sections" : " section"
@@ -17,8 +19,9 @@ const Payroll = () => {
             setClickStyle(1);
             setSmall(true);
           }}
-        >
+        ><motion.div whileHover={{ scale: 1.2}}>
           Engineering
+          </motion.div>
         </div>
 
         <div
@@ -29,8 +32,8 @@ const Payroll = () => {
             setClickStyle(2);
             setSmall(true);
           }}
-        >
-          Operations
+        ><motion.div whileHover={{ scale: 1.2}}>
+          Operations</motion.div>
         </div>
 
         <div
@@ -41,8 +44,8 @@ const Payroll = () => {
             setClickStyle(3);
             setSmall(true);
           }}
-        >
-          Accounts
+        ><motion.div whileHover={{ scale: 1.2}}>
+          Accounts</motion.div>
         </div>
 
         <div
@@ -53,13 +56,14 @@ const Payroll = () => {
             setClickStyle(4);
             setSmall(true);
           }}
-        >
-          Supply Chain
+        ><motion.div whileHover={{ scale: 1.2}}>
+          Supply Chain</motion.div>
         </div>
       </div>
       {
         clickStyle !== 0 && <PayrollTable clickedBtn = { clickStyle } />
       }
+      </div>
     </>
   );
 };

@@ -1,9 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Table, Radio, Space, Modal, Button, Dropdown, Menu } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import {
+  Table,
+  Tooltip,
+  Radio,
+  Space,
+  Modal,
+  Button,
+  Dropdown,
+  Menu,
+  Progress,
+} from "antd";
+import {
+  DownOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+  CaretUpOutlined,
+  CaretDownOutlined
+} from "@ant-design/icons";
 import axios from "axios";
-import "./DashboardTableOne.css";
+import { motion } from "framer-motion";
 import "antd/dist/antd.min.css";
+import "./DashboardTableOne.css";
 
 const DashboardTableOne = ({ clickedBtn }) => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +28,19 @@ const DashboardTableOne = ({ clickedBtn }) => {
   const [allrequest, setAllRequest] = useState([]);
   const [getValue, setGetValue] = useState("");
   const [employeeDetails, setEmployeeDetails] = useState({});
+  const [score, setScore] = useState(0);
+
+  const increaseScore = () => {
+    if (score < 10) {
+      setScore(score + 1);
+    }
+  };
+
+  const decreaseScore = () => {
+    if (score > 0) {
+      setScore(score - 1);
+    }
+  };
 
   const showModal = (record) => {
     console.log(record);
@@ -136,16 +166,7 @@ const DashboardTableOne = ({ clickedBtn }) => {
   }, [clickedBtn]);
 
   return (
-    <div
-      style={{
-        marginTop: "1rem",
-        marginLeft: "4rem",
-        marginRight: "4rem",
-        borderRadius: "5px",
-        boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px",
-        width: "100%",
-      }}
-    >
+    <div className="dtoc">
       <div>
         <Table
           style={{ padding: "5px" }}
@@ -162,12 +183,12 @@ const DashboardTableOne = ({ clickedBtn }) => {
 
       <Modal
         visible={visible}
-        title="Request For Leaves"
+        title="Employee Details"
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
           <div className="btncontainermodal">
-            <div className="btnmodal approve">
+            <div className="dbtnmodal approve">
               <div onClick={updateDetails} className="btntext">
                 {" "}
                 Update{" "}
@@ -176,74 +197,148 @@ const DashboardTableOne = ({ clickedBtn }) => {
           </div>,
         ]}
       >
-        <div className="empDetails">
-          <div>
-            <p>
-              <strong>Name:</strong> <br /> {employeeDetails.firstName}
-            </p>
-            <p>
-              <strong>ID: </strong> <br />
-              {employeeDetails.id}
-            </p>
-            <p>
-              <strong>Phone: </strong> <br />
-              {employeeDetails.phoneNumber}
-            </p>
-          </div>
-          <div>
-            <p>
-              <strong>Address:</strong> <br />
-              {employeeDetails.address}
-            </p>
-            <p>
-              <strong>Performance:</strong> <br />
+        <div className="empdetails">
+          <p id="name" className="parad">
+            <strong>Name:</strong>{" "}
+            <div className="blue">
+              {employeeDetails.firstName + " " + employeeDetails.lastName}
+            </div>
+          </p>
+          <p id="id" className="parad">
+            <strong>ID: </strong>
+            <div className="blue">{employeeDetails.id}</div>
+          </p>
+          <p id="department" className="parad">
+            <Tooltip
+              placement="leftTop"
+              className="tooltip"
+              title="Department And Designation"
+              color={true ? "#6075fe" : "red"}
+            >
+              <div style={{ display: "flex", margin: "0", padding: "0" }}>
+                <strong>D&D: </strong>
+                <div className="blue">{employeeDetails.deparatment}</div>
+              </div>
+            </Tooltip>
+          </p>
+          <p id="phone" className="parad">
+            <strong>Phone: </strong>
+            <div className="blue">{employeeDetails.phoneNumber}</div>
+          </p>
+          <p id="address" className="parad">
+            <strong>Address:</strong>
+            <div className="blue">{employeeDetails.address}</div>
+          </p>
+          <p id="performance" className="parad">
+            <strong>Performance:</strong>
+            <div className="blue">
               {employeeDetails.performanceOfPerviousMonth}
-            </p>
-            <p>
-              <strong>Shift:</strong>
-              <br /> {getValue}
-            </p>
-          </div>
+            </div>
+          </p>
+          <p id="shift" className="parad">
+            <strong>Shift:</strong>
+            <div className="blue">{getValue}</div>
+          </p>
         </div>
 
         <div>
           <div className="mcontainer">
+            <span className="material-symbols-outlined performanceIcon">
+              insert_chart
+            </span>
             <strong>Performance</strong>
           </div>
-          <div className="econtainer">
-            <div style={{ padding: "1rem" }}>
-              <label>Label 1</label>
-              <input style={{ borderRadius: "5px" }} type="text" />
+          <div className="econtainer progress">
+            <div className="progressContainer">
+              <p className="parad">
+                <strong>Leaves Taken In Month: </strong>
+                <div className="blue">{employeeDetails.leavesTakenInMonth}</div>
+              </p>
+              <p className="parad">
+                <strong>Tasks of the Month: </strong>
+                <div className="blue">{employeeDetails.tasksOfTheMonth}</div>
+              </p>
+              <div className="progressBar">
+                {" "}
+                <strong>Perfomance</strong>
+                <div className="progress">
+                  <Progress
+                    type="circle"
+                    percent={35}
+                    width={120}
+                    status={35 < 35 ? "exception " : ""}
+                  />
+                </div>
+              </div>
             </div>
-            <div style={{ padding: "1rem" }}>
-              <label>Label 2</label>
-              <input style={{ borderRadius: "5px" }} type="text" />
-            </div>
-            <div style={{ padding: "1rem" }}>
-              <label>Label 3</label>
-              <input style={{ borderRadius: "5px" }} type="text" />
+            <div className="progressContainer">
+              <p className="parad" style={{marignBottom: '12px'}}>
+                <strong>Rate {employeeDetails.firstName}: </strong>
+                
+
+                <input
+                  className="inputRate"
+                  value={score}
+                  type="number"
+                  readOnly
+                />
+                <div className="upsdowns"  >
+                <button className="ups">< CaretUpOutlined onClick={increaseScore} style={{ height:'1.2rem',fontSize:'20px', textAlign:'center', color:'#6ff16f', cursor: 'default' }} /></button>
+                <button className="downs"><CaretDownOutlined onClick={decreaseScore} style={{ height:'1.2rem' , fontSize:'20px', textAlign:'center', color:'red', cursor: 'default'}} /></button>
+                </div>
+                {/* <div className="upDown">
+                  <motion.button
+                    whileTap={{ scale: 1.1 }}
+                    onClick={increaseScore}
+                    className="up"
+                  >
+                    <ArrowUpOutlined style={{ color: "#6ff16f" }} />
+                  </motion.button>{" "}
+                  <motion.button
+                    whileTap={{ scale: 1.1 }}
+                    onClick={decreaseScore}
+                    className="down"
+                  >
+                    <ArrowDownOutlined style={{ color: "red" }} />
+                  </motion.button>
+                </div> */}
+              </p>
+
+              <p className="parad">
+                <strong>Tasks completed: </strong>{" "}
+                <div className="blue">
+                  {employeeDetails.tasksCompletedInMonth}
+                </div>
+              </p>
+              <p style={{marginBottom: '0'}}>
+                <strong>Performance message:</strong>{" "}
+                <textarea className="inputMessage" type="text" />
+              </p>
             </div>
           </div>
         </div>
 
         <div>
           <div className="mcontainer">
+            <span
+              style={{ color: "#6075fe", marginRight: "5px" }}
+              className="material-symbols-outlined"
+            >
+              work_history
+            </span>
             <strong>Select Shift Hours</strong>
           </div>
           <div className="econtainer">
-            {/* <Radio.Group onChange={onRadioBtnChange}>
-              <Space direction="vertical">
-                <Radio value={"First"}>First Shift</Radio>
-                <Radio value={"Second"}>Second Shift</Radio>
-                <Radio value={"Third"}>Third Shift</Radio>
-                <Radio value={"Fourth"}>Fourth Shift</Radio>
-                <input type="text" />
-              </Space>
-            </Radio.Group> */}
             <div>
               <div>
                 {" "}
-                Shift Hours : <input readOnly type="text" value={getValue} />
+                Shift Hours :{" "}
+                <input
+                  className="dinput"
+                  readOnly
+                  type="text"
+                  value={getValue}
+                />
               </div>
               <br />
               <Dropdown overlay={menu}>

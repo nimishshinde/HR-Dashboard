@@ -1,3 +1,7 @@
 .sidnav {
     display: flex;
 }
+
+.chat .km-sidemodal {
+    left: 0 !important;
+}

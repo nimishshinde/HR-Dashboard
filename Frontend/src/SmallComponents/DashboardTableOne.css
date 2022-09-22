@@ -7,6 +7,15 @@
     font-weight: 500;
 }
 
+.dtoc{
+    margin-top: 1rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    width: 74vw;
+}
+
 .ps:hover{
 color: white;
 background-color:#6075fe;
@@ -17,10 +26,46 @@ background-color:#6075fe;
     padding: 0.5rem;
 }
 
-.empDetails {
-    display: flex;
-    gap: 10rem;
+.empdetails {
+    display: grid;
+    gap: 1rem;
+    word-wrap: break-word;
     padding: 0.937rem;
+    grid-template-areas: 
+    'name name id'
+    'department department phone'
+    'address address address'
+    'performance performance shift'
+    ;
+    cursor: default;
+}
+
+#name {
+    grid-area: name;
+}
+
+#id {
+    grid-area: id;
+}
+
+#phone {
+    grid-area: phone;
+}
+
+#address {
+    grid-area: address;
+}
+
+#performance {
+    grid-area: performance;
+}
+
+#shift {
+    grid-area: shift;
+}
+
+#department {
+    grid-area: department;
 }
 
 .econtainer {
@@ -28,6 +73,175 @@ background-color:#6075fe;
     padding: 0.937rem;
 }
 
+.progress {
+    display: flex;
+    justify-content: space-between;
+}
+
 .mcontainer {
     margin-top: 1rem;
+    display: flex;
+}
+
+
+
+.blue {
+    color: #6075fe; 
+    font-weight: 500;
+    padding-left: 0.2rem;
+ }
+
+ .dinput {
+    border: 2px solid #00b2f3;
+    border-radius: 4px;
+    color: #6075fe;
+    font-weight: 500;
+    text-align: center;
+ }
+
+ .dbtnmodal {
+    width: 25%;
+    height: 3rem;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0.5rem;
+    border: 1px solid #6075fe;
+}
+
+.upDown {
+    font-size: 3rem;
+    display: flex;
+    margin-left: 2rem;
+}
+
+.up {
+    margin-right: 1rem;
+    height: 48px;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    border-radius: 5px;
+    max-width: 3.3rem;
+    border-style: none;
+    background-color: white;
+}
+
+.up:hover {
+    
+}
+
+.upsdowns {
+    height:3rem;
+    width:1rem;
+    margin-top:-8px;
+    padding:0px;
+    display: flex ; 
+    flex-direction : column;
+    cursor:default !important;  
+    justify-content:'';
+    height:12px;
+    align-items: center;
+    gap: 0.1rem;
+    margin-left: 0.5rem;
+}
+
+button.ups {
+    text-rendering: none;
+    word-spacing: none;
+    border-width: none !important;
+    border-style: none !important;
+    border-color: none !important;
+    border-image: none !important;
+    height: 1rem !important;
+    background-color: transparent;
+    cursor: default !important;
+    padding-top: 3px;
+}
+
+/* button.ups:hover {
+    scale: 1.8;
+} */
+
+button.downs {
+    text-rendering: none;
+    word-spacing: none;
+    border-width: none !important;
+    border-style: none !important;
+    border-color: none !important;
+    border-image: none !important;
+    height: -1rem !important;
+    background-color: transparent;
+    cursor: default !important;
+    font-size: 10px;
+}
+
+/* button.downs:hover {
+    scale: 1.8;
+} */
+
+.down {
+    margin-right: 1rem;
+    height: 48px;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    border-radius: 5px;
+    max-width: 3.3rem;
+    border-style: none;
+    background-color: white;
+}
+
+.down:hover {
+    box-shadow: red 0px 0px 2px 1.5px;
+
+}
+
+.inputRate {
+    width: 3rem;
+    border: 2px solid #00b2f3;
+    border-radius: 4px;
+    color: #6075fe;
+    font-weight: 500;
+    text-align: center;
+    padding-left: 14px;
+    margin-left: 0.4rem;
+    height: 1.5rem;
+}
+
+.inputMessage {
+    width: 11rem;
+    margin-top: 1.2rem;
+    border: 2px solid #00b2f3;
+    border-radius: 4px;
+    color: #6075fe;
+    font-weight: 500;
+    max-height: 11rem;
+    min-height: 7rem;
+    outline: #00b2f3;
+}
+
+.parad {
+    display: flex;
+    cursor: default;
+}
+
+.progressContainer {
+    max-width: 180px;
+    cursor: default;
+}
+
+.progressBar {
+    min-width: 12vw;
+    font-size: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
 }

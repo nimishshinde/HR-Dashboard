@@ -6,7 +6,9 @@ import axios from "axios";
 
 const Leave = () => {
   const [allrequest, setAllRequest] = useState([]);
-  const [employeeType, setEmployeeType] = useState(2);
+  const [employeeType, setEmployeeType] = useState(1);
+
+  console.log(allrequest, 'from leaves');
 
   async function fetchReq () {
     try {

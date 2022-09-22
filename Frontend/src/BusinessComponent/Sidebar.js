@@ -45,6 +45,8 @@ const Siderbar = () => {
     <>
       <div style={{ height: "100vh",
       //  position:'fixed', top:'0', left:'0'
+        boxShadow: "rgba(0, 0, 0, 0.08) 0px 4px 12px",
+        padding:'0.5rem'
        }}>
         <aside className="sidebar">
           <div
@@ -69,6 +71,7 @@ const Siderbar = () => {
               {"  "} Office HR
             </div>
           </div>
+          
           <div className="sidebarContainer">
             <ul style={{ marginLeft: "2px", marginTop: "0.8rem" }}>
               <Link to="/home/dashboard">

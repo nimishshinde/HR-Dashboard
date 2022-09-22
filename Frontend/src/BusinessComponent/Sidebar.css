@@ -19,6 +19,8 @@
    padding-top: 1rem;
    padding-bottom: 1rem;
    cursor: pointer;
+   /* border: 1px solid #6075fe; */
+   width: 95%;
 }
 
 /* .item:hover {

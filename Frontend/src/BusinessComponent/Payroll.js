@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import "./Payroll.css";
+import { Link, Outlet } from "react-router-dom";
+import PayrollTable from "../SmallComponents/PayrollTable";
+import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import "./Dashboard.css";
 import { Link, Outlet } from "react-router-dom";
-import PayrollTable from "../SmallComponents/PayrollTable";
 import EmployeePayroll from "./Employee/EmployeePayroll";
 
 const Payroll = () => {

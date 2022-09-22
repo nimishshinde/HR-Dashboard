@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EmployeeDashboard from "./Employee/EmployeeDashboard";
 import DashboardTableOne from "../SmallComponents/DashboardTableOne";
+import Chat from "./Chat";
 import { useDispatch, useSelector } from "react-redux";
 
 import { motion } from "framer-motion";
@@ -77,6 +78,7 @@ function Dashboard() {
           <EmployeeDashboard />
         </div>
       )}
+      
     </>
   );
 }

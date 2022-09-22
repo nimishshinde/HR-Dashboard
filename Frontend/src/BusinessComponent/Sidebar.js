@@ -62,11 +62,12 @@ const Siderbar = () => {
                 fontWeight: "600",
                 // color: "#748DA6",
                 color: "#354259",
+                cursor:'default'
               }}
             >
               <img
                 src={Logo1}
-                style={{ width: "4rem", marginLeft: "0.8rem" }}
+                style={{ width: "4rem", marginLeft: "0.8rem", cursor: 'default' }}
               />
               {"  "} Office HR
             </div>

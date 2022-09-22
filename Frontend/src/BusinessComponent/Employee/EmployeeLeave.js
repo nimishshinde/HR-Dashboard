@@ -7,7 +7,7 @@ import EmployeePreviousLeave from "../../SmallComponents/EmployeePreviousLeave";
 
 import { Input, DatePicker, Modal, notification } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "./EmployeeLeave.css";
 
 const { TextArea } = Input;
@@ -167,9 +167,9 @@ function EmployeeLeave() {
           data: leaveObj,
         });
 
-        console.log((await response).status == 200, "response from backend");
+        console.log((await response).status === 200, "response from backend");
 
-        (await response).status == 200 && openNotification("bottomLeft");
+        (await response).status === 200 && openNotification("bottomLeft");
         setResponseObj((await response).data);
 
         setTimeout(() => {
@@ -236,21 +236,21 @@ function EmployeeLeave() {
           {" "}
           Requesting Leave From{" "}
           <span className="hightxt">
-            {leaveObj.dateOfLeave == ""
+            {leaveObj.dateOfLeave === ""
               ? "( Please select a date )"
               : leaveObj.dateOfLeave}
           </span>{" "}
           for{" "}
           <span className="hightxt">
             {" "}
-            {leaveObj.noofDaysLeaveRequired == ""
+            {leaveObj.noofDaysLeaveRequired === ""
               ? "( Please select a start and end date ) "
               : leaveObj.noofDaysLeaveRequired}{" "}
           </span>{" "}
           that will be till{" "}
           <span className="hightxt">
             {" "}
-            {leaveObj.endOfLeave == ""
+            {leaveObj.endOfLeave === ""
               ? "( Please select a date )"
               : leaveObj.endOfLeave}{" "}
           </span>

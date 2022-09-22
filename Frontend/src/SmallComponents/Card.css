@@ -40,9 +40,10 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 35%;
+    width: 30%;
     margin-right: 2rem;
     /* border: 1px solid green; */
+    padding: 10px;
 }
 
 .btntext{
@@ -72,8 +73,9 @@
 .name{
     font-size: 1.5rem;
     font-weight: 500;
-    color: rgb(53, 66, 89);
+    /* color: rgb(53, 66, 89); */
     margin-bottom: 0.5rem;
+    /* color: #6075fe; */
 }
 
 .smalltext{
@@ -103,3 +105,7 @@
     margin: 0.5rem;
 }
 
+.spantg{
+    color: #6075fe;
+    font-weight: 600;
+}

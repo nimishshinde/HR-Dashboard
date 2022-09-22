@@ -4,10 +4,14 @@
     padding: 1rem;
     display: flex;
     /* background-color: aqua; */
-    height: 3rem;
-    width: 82vw;
+    height: 4rem;
+    /* width: 76vw; */
+    width: 100%;
     font-weight: 600;
     text-align: center;
     align-items: center;
     cursor: default;
+    /* border: 1px solid red; */
+    border-radius: 14px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }

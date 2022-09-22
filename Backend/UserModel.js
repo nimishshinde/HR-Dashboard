@@ -25,7 +25,7 @@ let userSchema = new mongoose.Schema({
     required: true,
   },
   id: {
-    type: String,
+    type: Number,
     required: true,
   },
   firstName: {
@@ -89,7 +89,7 @@ let userSchema = new mongoose.Schema({
     type: String,
   },
   shiftOfCurrentMonth: {
-    type: Number,
+    type: String,
   },
   PayrollMangement: {
     salaryCreditedThisMonth: {
@@ -142,8 +142,17 @@ let leaveModel = new mongoose.Schema({
   dateOfLeave: {
     type: Date,
   },
-  endOfLeave : {
-    type : Date,
+  endOfLeave: {
+    type: Date,
+  },
+  reasonOfRejection: {
+    type: String,
+  },
+  leaveId: {
+    type: String,
+  },
+  isPending : {
+    type : Boolean,
   }
 });
 

@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import './Navbar.css'
 
 const Navbar = () => {
+
+  // const [title, setTitle] = useState('Dashboard');
+  const userObj = useSelector(state=>state);
 
   let location = useLocation();
   let title;
@@ -26,13 +30,20 @@ const Navbar = () => {
   }
 
   return (
-    <nav className='navbar'>
-    <div>
-      {title}
-    </div>
-    <div>Admin</div>
+    <nav className="navbar">
+      <div>{title}</div>
+      <div
+        style={{
+          fontSize: "1.2rem",
+          color: "#6075fe",
+          fontWeight : '600',
+          marginRight : '1rem'
+        }}
+      >
+        {userObj.firstName}
+      </div>
     </nav>
-  )
+  );
 }
 
 export default Navbar;

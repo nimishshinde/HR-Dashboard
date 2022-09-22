@@ -22,4 +22,4 @@ app.listen(5000, () => {
 
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
-app.use("employee", employeeRouter);
+app.use("/employee", employeeRouter);

@@ -1,32 +1,68 @@
-import React, { useState } from "react";
-// import "antd/dist/antd.css";
-import { Button, Form, Input, Select } from "antd";
-import "./Signup.css";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-// import { useDataLayerValue } from "../DataLayer/DataLayer";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, Navigate } from "react-router-dom";
+import {
+  SIGNIN,
+  ID,
+  EMPTYP,
+  DEP,
+  FNAME,
+  LNAME,
+  EMAIL,
+  PASSWORD,
+  CPASSWORD,
+  ADDRESS,
+  PHONENO
+} from "../redux/types";
+
+import { Button, Form, Input, Select } from "antd";
+import { motion } from "framer-motion";
+import "./Signup.css";
 
 const { Option } = Select;
 
 const Signup = () => {
   const [highlight, setHighlight] = useState(false);
   const [form] = Form.useForm();
-  // const [signupData, dispatch] = useDataLayerValue();
 
+  const [ responseToNext, setResponseToNext ] = useState (false);
+
+  const userObj = useSelector(state => state);
+  const dispatch = useDispatch();
+  console.log("From signUp useSelector", userObj);
+
+  useEffect(()=>{
+    dispatch({
+      type: SIGNIN,
+    });
+  }, [])
+
+  // useEffect(() => {}, [responseToNext]);
+  
   const verifySignup = async (userDataObj) => {
-    console.log(userDataObj, "user Object ");
+    console.log(userDataObj, "<--- user Object ");
+    
     let response = await axios({
       method: "post",
       url: "http://localhost:5000/auth/signup",
-      data: signupData,
+      data: userObj,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": "true",
       },
     });
-    // let res = await axios.post(`http://localhost:5000/auth/signup`, signupData);
+
     console.log("comming from Backend", response);
+
+    dispatch({
+      type : ID,
+      id : response.data.id
+    })
+
+    if(response.status == 200){
+      setResponseToNext(true);
+    }
   };
 
   return (
@@ -53,20 +89,26 @@ const Signup = () => {
         <div className="btnContainer">
           <div
             onClick={() => {
-              // dispatch({ type: "type", value: 1 });
+              dispatch({
+                type: EMPTYP,
+                employeeType: 1,
+              });
             }}
             className={`${
-              signupData.employeeType == 1 ? "btn btn-active" : "btn"
+              userObj.employeeType == 1 ? "btn btn-active" : "btn"
             }`}
           >
             Admin
           </div>
           <div
             onClick={() => {
-              // dispatch({ type: "type", value: 2 });
+              dispatch({
+                type: EMPTYP,
+                employeeType: 2,
+              });
             }}
             className={`${
-              signupData.employeeType == 2 ? "btn " : "btn btn-active"
+              userObj.employeeType == 1 ? "btn " : "btn btn-active"
             }`}
           >
             Employee
@@ -92,9 +134,10 @@ const Signup = () => {
                   ]}
                 >
                   <Input
-                    placeholder="Enter your First Name"
+                    required={true}
+                    placeholder="First Name"
                     onChange={(e) => {
-                      // dispatch({ type: "firstName", value: e.target.value });
+                      dispatch({ type: FNAME, firstName: e.target.value });
                     }}
                   />
                 </Form.Item>
@@ -111,9 +154,10 @@ const Signup = () => {
                   ]}
                 >
                   <Input
-                    placeholder="Enter your Last Name"
+                    required={true}
+                    placeholder="Last Name"
                     onChange={(e) => {
-                      // dispatch({ type: "lastName", value: e.target.value });
+                      dispatch({ type: LNAME, lastName: e.target.value });
                     }}
                   />
                 </Form.Item>
@@ -135,9 +179,10 @@ const Signup = () => {
               ]}
             >
               <Input
-                placeholder="Enter you Email"
+                required={true}
+                placeholder="Email"
                 onChange={(e) => {
-                  // dispatch({ type: "email", value: e.target.value });
+                  dispatch({ type: EMAIL, email: e.target.value });
                 }}
               />
             </Form.Item>
@@ -154,9 +199,10 @@ const Signup = () => {
               hasFeedback
             >
               <Input.Password
-                placeholder="Enter your Password"
+                required={true}
+                placeholder="Password"
                 onChange={(e) => {
-                  // dispatch({ type: "password", value: e.target.value });
+                  dispatch({ type: PASSWORD, password: e.target.value });
                 }}
               />
             </Form.Item>
@@ -187,9 +233,13 @@ const Signup = () => {
               ]}
             >
               <Input.Password
+                required={true}
                 placeholder="Confirm Password"
                 onChange={(e) => {
-                  // dispatch({ type: "confirm", value: e.target.value });
+                  dispatch({
+                    type: CPASSWORD,
+                    confirmPassword: e.target.value,
+                  });
                 }}
               />
             </Form.Item>
@@ -205,9 +255,10 @@ const Signup = () => {
               ]}
             >
               <Input
+                required={true}
                 placeholder="Enter your department"
                 onChange={(e) => {
-                  // dispatch({ type: "department", value: e.target.value });
+                  dispatch({ type: DEP, deparatment: e.target.value });
                 }}
               />
             </Form.Item>
@@ -223,9 +274,10 @@ const Signup = () => {
               ]}
             >
               <Input
+                required={true}
                 placeholder="Enter your address"
                 onChange={(e) => {
-                  // dispatch({ type: "address", value: e.target.value });
+                  dispatch({ type: ADDRESS, address: e.target.value });
                 }}
               />
             </Form.Item>
@@ -241,33 +293,35 @@ const Signup = () => {
               ]}
             >
               <Input
+                required={true}
                 placeholder="Enter your Phone Number"
                 onChange={(e) => {
-                  // dispatch({ type: "phone", value: e.target.value });
+                  dispatch({ type: PHONENO, phoneNumber: e.target.value });
                 }}
               />
             </Form.Item>
 
             <Form.Item>
               <motion.div whileTap={{ scale: 1.05 }}>
-                <Link
-                  to={
-                    signupData.employeeType == 1
-                      ? "/home/dashboard"
-                      : "/home/employee/dashboard"
-                  }
+                <Button
+                  style={{ width: "100%" }}
+                  type="primary"
+                  htmlType="submit"
+                  onClick={() => {
+                    verifySignup(userObj);
+                  }}
                 >
-                  <Button
-                    style={{ width: "100%" }}
-                    type="primary"
-                    htmlType="submit"
-                    onClick={() => {
-                      verifySignup(signupData);
-                    }}
-                  >
-                    <motion.div whileTap={{ scale: 1.1 }}>Sign up</motion.div>
-                  </Button>
-                </Link>
+                  <motion.div whileTap={{ scale: 1.1 }}>Sign up</motion.div>
+                </Button>
+                {responseToNext == true && (
+                  <Navigate
+                    to={
+                      userObj.employeeType == 1
+                        ? "/home/dashboard"
+                        : "/home/employee/dashboard"
+                    }
+                  />
+                )}
               </motion.div>
             </Form.Item>
           </Form>

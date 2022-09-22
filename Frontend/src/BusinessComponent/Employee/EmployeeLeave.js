@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import EmployeePreviousLeave from "../../SmallComponents/EmployeePreviousLeave";
+import React, { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import moment from "moment";
+import { useSelector, useDispatch } from "react-redux";
+import EmployeePreviousLeave from "../../SmallComponents/EmployeePreviousLeave";
 
 import { Input, DatePicker, Modal, notification } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
@@ -26,12 +28,31 @@ function EmployeeLeave() {
     dateOfLeave: "",
     endOfLeave: "",
     isPending: true,
+    reasonOfRejection: "",
+    leaveId: "",
   };
 
   const [leaveObj, setLeaveObj] = useState(obj);
   const [responseObj, setResponseObj] = useState({});
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  const userObj = useSelector((state) => state);
+  console.log("consoling userObj", userObj);
+  const dispatch = useDispatch();
+
+  const updateUserDetails = async() => {
+    let updatedDetails = await axios.get(`http://localhost:5000/employee/details/${userObj.id}`);
+    dispatch({
+      type: "login",
+      payload: updatedDetails.data[0],
+    });
+    console.log(updatedDetails.data[0], 'from useEffect');
+  }
+
+  useEffect(()=>{
+    updateUserDetails();
+  }, [])
 
   const applyCliked = () => {
     showModal();
@@ -85,19 +106,37 @@ function EmployeeLeave() {
   };
 
   const handleReasoneOfLeave = (text) => {
+    // For Time Being Untill Project get integrated with reduxs
     setLeaveObj((prevObj) => ({ ...prevObj, reasonOfLeave: text }));
-    setLeaveObj((prevObj) => ({ ...prevObj, employeName: "Test" }));
-    setLeaveObj((prevObj) => ({ ...prevObj, designation: "TestDesignation" }));
-    setLeaveObj((prevObj) => ({ ...prevObj, deparatment: "TestDeparatment" }));
-    setLeaveObj((prevObj) => ({ ...prevObj, leavesTakenInMonth: 3 }));
+    setLeaveObj((prevObj) => ({
+      ...prevObj,
+      employeName: userObj.firstName + " " + userObj.lastName,
+    }));
+    setLeaveObj((prevObj) => ({
+      ...prevObj,
+      designation: userObj.designation,
+    }));
+    setLeaveObj((prevObj) => ({
+      ...prevObj,
+      deparatment: userObj.deparatment,
+    }));
+    setLeaveObj((prevObj) => ({ ...prevObj, employeId: userObj.id }));
+    setLeaveObj((prevObj) => ({
+      ...prevObj,
+      leavesTakenInMonth: userObj.leavesTakenInMonth,
+    }));
     setLeaveObj((prevObj) => ({ ...prevObj, isPending: true }));
+    setLeaveObj((prevObj) => ({
+      ...prevObj,
+      remainingLeaves: userObj.paidLeavesRemaining,
+    }));
   };
 
   const openNotification = (placement) => {
     notification.open({
       message: "Leave Sent to Admin",
       description: `Your leave request of ${leaveObj.noofDaysLeaveRequired} days from ${leaveObj.dateOfLeave} to ${leaveObj.endOfLeave} is send to admin. Please wait until Admin Responses`,
-      placement : 'bottomright',
+      placement: "bottomLeft",
       icon: (
         <CheckCircleOutlined
           style={{
@@ -110,13 +149,18 @@ function EmployeeLeave() {
 
   const handleApplyLeave = async () => {
     console.log(leaveObj, "from handle Leave Fn");
-    if (
-      leaveObj.reasonOfLeave !== "" &&
-      leaveObj.dateOfLeave !== "" &&
-      leaveObj.endOfLeave !== "" &&
-      leaveObj.noofDaysLeaveRequired !== ""
-    ) {
-      try {
+
+    try {
+      let uniqueLeaveId = uuidv4();
+      setLeaveObj((prevObj) => ({ ...prevObj, leaveId: uniqueLeaveId }));
+      console.log(leaveObj.leaveId, "after clicking on the apply leave");
+      if (
+        leaveObj.reasonOfLeave != "" &&
+        leaveObj.dateOfLeave != "" &&
+        leaveObj.endOfLeave != "" &&
+        leaveObj.noofDaysLeaveRequired != "" &&
+        leaveObj.leaveId != ""
+      ) {
         let response = axios({
           method: "post",
           url: "http://localhost:5000/admin/leave",
@@ -131,33 +175,39 @@ function EmployeeLeave() {
         setTimeout(() => {
           setVisible(false);
         }, 1000);
-      } catch (error) {
-        console.log(error.message);
       }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
   return (
     <>
-      <div className="emplev">
-        <div className="levdate">
-          <RangePicker
-            bordered={false}
-            format="YYYY-MM-DD"
-            onCalendarChange={(start, end) => handleCalendarChange(start, end)}
-          />
-          <div className="applybtn" onClick={applyCliked}>
-            {" "}
-            Apply{" "}
+      <div style={{width:'100%', display:'flex', justifyContent:'center'}} >
+        <div className="emplev">
+          <div className="levdate">
+            <RangePicker
+              bordered={false}
+              format="YYYY-MM-DD"
+              onCalendarChange={(start, end) =>
+                handleCalendarChange(start, end)
+              }
+            />
+            <div className="applybtn" onClick={applyCliked}>
+              {" "}
+              Apply{" "}
+            </div>
           </div>
-        </div>
 
-        <div className="infotxt">
-          <div>
-            Remaining Leaves - <span className="hightxt"> {" 5"} </span>{" "}
-          </div>
-          <div>
-            Leaves Taken This Month - <span className="hightxt"> {" 5"} </span>
+          <div className="infotxt">
+            <div>
+              Remaining Leaves -{" "}
+              <span className="hightxt"> {userObj.paidLeavesRemaining} </span>{" "}
+            </div>
+            <div>
+              Leaves Taken This Month -{" "}
+              <span className="hightxt"> {userObj.leavesTakenInMonth} </span>
+            </div>
           </div>
         </div>
       </div>

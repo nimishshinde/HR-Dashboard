@@ -5,3 +5,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.chat {
+    position: fixed;
+    top: 40rem;
+    left: 52rem;
+}

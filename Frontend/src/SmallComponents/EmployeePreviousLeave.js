@@ -34,7 +34,7 @@ function EmployeePreviousLeave({ pendingObj }) {
       try {
         let response = await axios({
           method: "get",
-          url: `http://localhost:5000/admin/leave/${userObj.id}`,
+          url: `https://hr-dashboard-nimish.herokuapp.com/admin/leave/${userObj.id}`,
         });
 
         setData(response.data);

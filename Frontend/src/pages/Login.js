@@ -29,7 +29,7 @@ const Login = () => {
     try {
       let response = await axios({
         method: "post",
-        url: "http://localhost:5000/auth/login",
+        url: "https://hr-dashboard-nimish.herokuapp.com/auth/login",
         data: userData,
         headers: {
           "Content-Type": "application/json",
@@ -38,8 +38,11 @@ const Login = () => {
       })
         .then((res) => {
           if (res.status == 200) {
-
-            if (res.data?.errorMessage?.length == 0 || res.data?.errorMessage?.length == undefined ) setResponseToNext(true);
+            if (
+              res.data?.errorMessage?.length == 0 ||
+              res.data?.errorMessage?.length == undefined
+            )
+              setResponseToNext(true);
             dispatch({
               type: "login",
               payload: res.data,

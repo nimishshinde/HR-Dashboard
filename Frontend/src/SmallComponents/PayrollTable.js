@@ -35,7 +35,7 @@ function PayrollTable({ clickedBtn }) {
     let departmentName = getDepartmentName(clickedBtn);
     let response = await axios({
       method: "get",
-      url: `http://localhost:5000/admin/deparatment/${departmentName}`,
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/deparatment/${departmentName}`,
     });
     console.log("from frontend payroll engineering", response.data);
     setAllRequest(response.data);

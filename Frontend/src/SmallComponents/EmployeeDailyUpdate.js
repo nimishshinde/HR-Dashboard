@@ -15,7 +15,7 @@ function EmployeeDailyUpdate() {
         <div
           className="sendbtnctn"
           style={{
-            color: "#A4A6B3",
+            color: "#7bd4fb",
             fontSize: "1.2rem",
             justifyContent: "flex-start",
           }}

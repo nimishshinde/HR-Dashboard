@@ -45,7 +45,7 @@ const Signup = () => {
     
     let response = await axios({
       method: "post",
-      url: "http://localhost:5000/auth/signup",
+      url: "https://hr-dashboard-nimish.herokuapp.com/auth/signup",
       data: userObj,
       headers: {
         "Content-Type": "application/json",

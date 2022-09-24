@@ -17,7 +17,7 @@ const Leave = () => {
     try {
       let response = await axios({
         method: "get",
-        url: `http://localhost:5000/admin/leave`,
+        url: `https://hr-dashboard-nimish.herokuapp.com/admin/leave`,
       });
 
       console.log(response);

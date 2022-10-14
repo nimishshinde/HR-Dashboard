@@ -57,7 +57,7 @@ function EmployeeDailyUpdate() {
     if(updateTaskObj.taskHeading !== '' && updateTaskObj.taskDescription !== '' && updateTaskObj.taskCompletedDate !== ''){
       let res = await axios({
         method: "post",
-        url: `http://localhost:5000/employee/updatetask/${userObj.id}`,
+        url: `https://hr-dashboard-nimish.herokuapp.com/employee/updatetask/${userObj.id}`,
         data: updateTaskObj,
       });
       console.log(res.status === 200);

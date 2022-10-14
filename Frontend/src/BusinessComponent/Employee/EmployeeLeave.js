@@ -166,8 +166,8 @@ function EmployeeLeave() {
       ) {
         let response = axios({
           method: "post",
-          // url: "https://hr-dashboard-nimish.herokuapp.com/admin/leave",
-          url: "http://localhost:5000/admin/leave",
+          url: "https://hr-dashboard-nimish.herokuapp.com/admin/leave",
+          // url: "http://localhost:5000/admin/leave",
           data: leaveObj,
         });
 

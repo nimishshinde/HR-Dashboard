@@ -59,11 +59,8 @@ function Card({ Obj, fetchReq }) {
     try {
       let response = await axios({
         method: "post",
-        url: `http://localhost:5000/admin/leave/${Obj.leaveId}`,
+        url: `https://hr-dashboard-nimish.herokuapp.com/admin/leave/${Obj.leaveId}`,
         data: { reasonOfRejection: rejectionMessage },
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
       if (response.status == 200) showNotification("Rejection");
@@ -76,7 +73,7 @@ function Card({ Obj, fetchReq }) {
     try {
       let response = await axios({
         method: "post",
-        url: `http://localhost:5000/admin/leave/approve/${Obj.leaveId}`,
+        url: `https://hr-dashboard-nimish.herokuapp.com/admin/leave/approve/${Obj.leaveId}`,
         data: { isApproved: true },
       });
 

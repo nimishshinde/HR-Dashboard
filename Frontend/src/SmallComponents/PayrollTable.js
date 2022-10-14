@@ -87,7 +87,7 @@ function PayrollTable({ clickedBtn }) {
   async function updateSalary(salary) {
     let responseObj = await axios({
       method: "post",
-      url: `http://localhost:5000/admin/salary/${currentEmpId}`,
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/salary/${currentEmpId}`,
       data: {
         salary: salary,
       },

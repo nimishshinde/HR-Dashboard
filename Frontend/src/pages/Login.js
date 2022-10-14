@@ -40,10 +40,6 @@ const Login = () => {
         method: "post",
         url: "https://hr-dashboard-nimish.herokuapp.com/auth/login",
         data: userData,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": "true",
-        },
       })
         .then((res) => {
           if (res.status == 200) {

@@ -22,10 +22,13 @@ function Dashboard() {
       return;
     }
     let totalscore = num1 + num2 + num3 + num4;
-    let responseObj =await axios.post({
+    let responseObj = await axios.post({
       method: "post",
-      url: `http://localhost:5000/admin/performance/${userObj.id}`,
-      data: { performanceMessage: performanceMessage, performanceScore: totalscore},
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/performance/${userObj.id}`,
+      data: {
+        performanceMessage: performanceMessage,
+        performanceScore: totalscore,
+      },
     });
 
     responseObj.status == 200 &&
@@ -43,12 +46,12 @@ function Dashboard() {
 
   async function updateShift(shift){
     let responseObj = await axios({
-      method: 'post',
-      url:`http://localhost:5000/admin/shift/${ userObj.id }`,
-      data : {
-        shift : shift
-      }
-    })
+      method: "post",
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/shift/${userObj.id}`,
+      data: {
+        shift: shift,
+      },
+    });
 
     dispatch({
       type : 'login',

@@ -22,7 +22,7 @@ function EmployeePayroll() {
     
     let responseObj = await axios({
       method: "post",
-      url: `http://localhost:5000/admin/salary/${userObj.id}`,
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/salary/${userObj.id}`,
       data: {
         salary: sal,
       },

@@ -53,12 +53,8 @@ const Signup = () => {
     let response = await axios({
       method: "post",
       // url: "https://hr-dashboard-nimish.herokuapp.com/auth/signup",
-      url: "http://localhost:5000/auth/signup",
+      url: "https://hr-dashboard-nimish.herokuapp.com/auth/signup",
       data: userObj,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": "true",
-      },
     });
 
     console.log("comming from Backend", response);

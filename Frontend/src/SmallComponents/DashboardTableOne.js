@@ -152,7 +152,7 @@ const DashboardTableOne = ({ clickedBtn }) => {
     let deparatmentName = getDeparatmentName(clickedBtn);
     let response = await axios({
       method: "get",
-      url: `http://localhost:5000/admin/deparatment/${deparatmentName}`,
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/deparatment/${deparatmentName}`,
     });
     console.log("from frontend Engineering", response.data);
     setAllRequest(response.data);
@@ -172,7 +172,7 @@ const DashboardTableOne = ({ clickedBtn }) => {
   async function updatePerformanceMessage(text) {
     let responseObj = await axios({
       method: "post",
-      url: `http://localhost:5000/admin/performance/${currentEmpId}`,
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/performance/${currentEmpId}`,
       data: {
         performanceMessage: text,
         performanceScore: 35,

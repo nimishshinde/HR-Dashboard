@@ -1,0 +1,124 @@
+.mainstyle {
+   margin: 1rem 2rem;
+   padding: 0.5rem;
+}
+
+.headingtxt{
+   font-size: 20px;
+   color: #7bd4fb;
+   font-weight: 600;
+}
+
+/*--Button style------------------------------------------------------------------------------------------------------------- */
+.btnctn {
+   display: flex;
+   justify-content: flex-end;
+   /* justify-content: flex-start; */
+   align-items: center;
+   width: 100%;
+   /* border: 1px solid red; */
+}
+
+.btnctnmain{
+   width: 40%;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+}
+
+.btnpr {
+   padding: 0.4rem;
+   border-radius: 6px;
+   margin-right: 0.6rem;
+   text-align: center;
+   width: 15%;
+   font-weight: 600;
+   font-size: 16px;
+   cursor: pointer;
+   margin-left: 1rem;
+}
+
+.editbtn {
+   color: #7bd4fb;
+   border: 1px solid #7bd4fb;
+}
+
+.editbtn:hover {
+   background-color: #7bd4fb;
+   color: white;
+}
+
+.raiseissuebtn {
+   color: #FF4646;
+   border: 1px solid #FF4646;
+}
+
+.raiseissuebtn:hover {
+   background-color: #FF4646;
+   color: white;
+}
+
+/* payroll details ---------------------------------------------------------------------------------------------------------- */
+.empprstyle {
+   display: flex;
+   justify-content: space-between;
+   margin-top: 0.8rem;
+   width: 100%;
+}
+
+.empprstyle>div>h2 {
+   color: #6075fe;
+}
+
+.empprstyle>div>h3 {
+   color: #6075fe;
+}
+
+.paymentdetails {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   padding: 0.6rem;
+   width: 100%;
+   /* border: 1px solid #6075fe; */
+}
+
+.cardpr {
+   border-radius: 8px;
+   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+   width: 42%;
+   padding: 0.8rem;
+   text-align: center;
+}
+
+.cardtxt {
+   font-weight: 400;
+   font-size: 15px;
+   color: #A4A6B3;
+}
+
+.cardamt {
+   color: #6075fe;
+   font-weight: 600;
+   width: 100%;
+   font-size: 16px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.longcardctn {
+   display: flex;
+   justify-content: space-around;
+   width: 100%;
+   padding: 0.8rem;
+}
+
+.longcardpr {
+   width: 80%;
+   padding: 0.8rem;
+   text-align: center;
+   border-radius: 8px;
+   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+}

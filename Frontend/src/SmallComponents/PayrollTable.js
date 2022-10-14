@@ -1,44 +1,65 @@
 import React, { useEffect, useState } from "react";
-import { Table, Radio, Space, Modal, Button, Dropdown, Menu } from "antd";
+import {
+  Table,
+  Space,
+  Modal,
+  Button,
+  Dropdown,
+  Menu,
+  notification,
+} from "antd";
+import { GiPayMoney, GiTakeMyMoney } from "react-icons/gi";
+import { MdOutlineAttachMoney } from "react-icons/md";
 import axios from "axios";
 import { DownOutlined } from "@ant-design/icons";
 import "./PayrollTable.css";
 
 function PayrollTable({ clickedBtn }) {
   let Obj = [];
-
   const [mainData, setMainData] = useState(Obj);
-
   const [allrequest, setAllRequest] = useState([]);
   const [getValue, setGetValue] = useState("");
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [employeeDetails, setEmployeeDetails] = useState([]);
 
+  const [salary, setSalary] = useState(0);
+  const [currentEmpId, setCurretEmpId] = useState();
+
   const getDepartmentName = (clickedBtn) => {
     switch (clickedBtn) {
       case 1:
         return "Engineering";
       case 2:
-        return "Product";
+        return "Operations";
       case 3:
-        return "HR";
+        return "Accounts";
       case 4:
-        return "Product";
-
+        return "Supply Chain";
       default:
         return "Engineering";
     }
   };
 
+  const openNotificationWithIcon = (type, mes, des) => {
+    notification[type]({
+      message: mes,
+      description: des,
+    });
+  };
+
   const fetchRequest = async () => {
+    setLoading(true);
+
     let departmentName = getDepartmentName(clickedBtn);
     let response = await axios({
       method: "get",
       url: `https://hr-dashboard-nimish.herokuapp.com/admin/deparatment/${departmentName}`,
     });
-    console.log("from frontend payroll engineering", response.data);
+    console.log("from payroll table", response.data);
     setAllRequest(response.data);
+
+    response.status == 200 && setLoading(false);
 
     response?.data.map((obj, idx) => {
       setMainData((mainData) => [
@@ -57,19 +78,35 @@ function PayrollTable({ clickedBtn }) {
     });
     console.log(mainData[0][1], "from PayrollTable maindata01");
   };
-
   useEffect(() => {
     setMainData([]);
 
     fetchRequest();
   }, [clickedBtn]);
 
+  async function updateSalary(salary) {
+    let responseObj = await axios({
+      method: "post",
+      url: `http://localhost:5000/admin/salary/${currentEmpId}`,
+      data: {
+        salary: salary,
+      },
+    });
+    openNotificationWithIcon(
+      "success",
+      "User Salary Updated",
+      ` Salary of Employee ${currentEmpId} is updated   `
+    );
+    handleCancel();
+    setAllRequest([]);
+  }
+
   const handleOk = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
       setVisible(false);
-    }, 3000);
+    }, 200);
   };
 
   const handleCancel = () => {
@@ -79,10 +116,9 @@ function PayrollTable({ clickedBtn }) {
   const showModal = (record, rowIndex) => {
     setVisible(true);
     setEmployeeDetails(record);
-  };
-
-  const updateDetails = () => {
-    // setEmployeeDetails({...employeeDetails, shift: getValue , remainingLeaves: 110});
+    setCurretEmpId(record[0]);
+    console.log(record[0]);
+    console.log(record, "record after click");
   };
 
   const onClick = ({ key }) => {
@@ -150,6 +186,7 @@ function PayrollTable({ clickedBtn }) {
     <div className="dtoc">
       <div>
         <Table
+          loading={loading}
           style={{ padding: "5px" }}
           dataSource={mainData}
           columns={columns}
@@ -164,19 +201,14 @@ function PayrollTable({ clickedBtn }) {
 
       <Modal
         visible={visible}
-        title="Request For Leaves"
+        title="Employee Details"
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
-          <div className="btncontainermodal">
-            <div
-              style={{ border: "1px solid #6075fe" }}
-              className="btnmodal approve"
-            >
-              <div onClick={updateDetails} className="btntext">
-                {" "}
-                Update{" "}
-              </div>
+          <div className="empdetailsmodel">
+            <div onClick={() => updateSalary(salary)} className="updateBtn">
+              {" "}
+              Update{" "}
             </div>
           </div>,
         ]}
@@ -184,84 +216,161 @@ function PayrollTable({ clickedBtn }) {
         <div className="empDetails">
           <div>
             <p className="detail">
-              <strong>Name:</strong>{" "}
-              <div className="blue">{employeeDetails[1]}</div>
+              <div>Name :</div> <div className="blue">{employeeDetails[1]}</div>
             </p>
             <p className="detail">
-              <strong>ID: </strong>
+              <div>Employee Id : </div>
               <div className="blue">{employeeDetails[0]}</div>
             </p>
             <p className="detail">
-              <strong>Email: </strong>
+              <div>Email : </div>
               <div className="blue">{employeeDetails[2]}</div>
             </p>
           </div>
           <div>
             <p className="detail">
-              <strong>Half Days Taken: </strong>
+              <div>Half Days Taken : </div>
               <div className="blue">{employeeDetails[3]}</div>
             </p>
             <p className="detail">
-              <strong>Salary Credited: </strong>
+              <div>Salary Credited : </div>
               <div className="blue">{employeeDetails[5]}</div>
             </p>
             <p className="detail">
-              <strong>Leaves Taken In Month: </strong>
-              <div className="blue">{employeeDetails[4]}</div>
+              <div>Leaves Taken In Month : </div>
+              <div className="blue"> {employeeDetails[4]}</div>
             </p>
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <div className="pmcontainer">
             <span className="material-symbols-outlined performanceIcon">
               insert_chart
             </span>
             <strong> Performance</strong>
           </div>
+
           <div className="econtainer">
-            <div style={{ padding: "1rem" }}>
-              <label>Label 1</label>
-              <input style={{ borderRadius: "5px" }} type="text" />
+            <div className="labelstyle">
+              <label>Communication</label>
+              <input
+                style={{
+                  borderRadius: "5px",
+                  border: "1px solid #A4A6B3",
+                  outline: "none",
+                  textAlign: "center",
+                  padding: "0.4rem",
+                  marginRight: "20%",
+                }}
+                type="number"
+                placeholder="0 - 9"
+              />
             </div>
-            <div style={{ padding: "1rem" }}>
-              <label>Label 2</label>
-              <input style={{ borderRadius: "5px" }} type="text" />
+
+            <div className="labelstyle">
+              <label style={{ display: "flex" }}>Leadership</label>
+              <input
+                style={{
+                  borderRadius: "5px",
+                  marginRight: "20%",
+                  border: "1px solid #A4A6B3",
+                  outline: "none",
+                  textAlign: "center",
+                  padding: "0.4rem",
+                }}
+                type="number"
+                placeholder="0 - 9"
+              />
             </div>
-            <div style={{ padding: "1rem" }}>
-              <label>Label 3</label>
-              <input style={{ borderRadius: "5px" }} type="text" />
+
+            <div className="labelstyle">
+              <label> Helping </label>
+              <input
+                style={{
+                  borderRadius: "5px",
+                  marginRight: "20%",
+                  border: "1px solid #A4A6B3",
+                  outline: "none",
+                  textAlign: "center",
+                  padding: "0.4rem",
+                }}
+                type="number"
+                placeholder="0 - 9"
+              />
             </div>
           </div>
         </div>
 
         <div>
-          
           <div className="pmcontainer">
-          <span style={{color: '#6075fe', marginRight: '5px'}} className="material-symbols-outlined">
-work_history
-</span>
+            <span className="material-symbols-outlined performanceIcon">
+              work_history
+            </span>
             <strong>Select Shift Hours</strong>
           </div>
+
           <div className="econtainer">
-            <div>
-              <div>
-                {" "}
-                Shift Hours :{" "}
-                <input
-                  className="inputShift"
-                  readOnly
-                  type="text"
-                  value={getValue}
-                />
-              </div>
-              <br />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                aligItem: "center",
+                width: "100%",
+              }}
+            >
               <Dropdown overlay={menu}>
-                <Space>
+                <Space style={{ fontSize: "1rem" }}>
                   Select shift hours
                   <DownOutlined />
                 </Space>
               </Dropdown>
+              <input
+                className="inputShift"
+                readOnly
+                type="text"
+                value={getValue}
+              />
+            </div>
+          </div>
+        </div> */}
+
+        <div>
+          <div className="pmcontainer">
+            <span className="material-symbols-outlined performanceIcon">
+              {/* work_history */}
+              <GiPayMoney />
+              {/* <GiTakeMyMoney />
+            <MdOutlineAttachMoney /> */}
+            </span>
+            <strong> Update Salary </strong>
+          </div>
+          <div className="econtainer">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                aligItem: "center",
+                width: "100%",
+                marginTop: "0.4rem",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "1.2rem",
+                  marginTop: "0.3rem",
+                  // color: "#A4A6B3",
+                  fontWeight: "400",
+                }}
+              >
+                Enter in Lakhs
+              </span>
+              <input
+                placeholder="  "
+                className="inputShift"
+                type="number"
+                onChange={(e) => setSalary(e.target.value)}
+              />
             </div>
           </div>
         </div>

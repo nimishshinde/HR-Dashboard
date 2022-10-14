@@ -4,9 +4,11 @@ import axios from "axios";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import EmployeePreviousLeave from "../../SmallComponents/EmployeePreviousLeave";
+import RaiseIssueModal from "../../SmallComponents/RaiseIssueModal";
 
 import { Input, DatePicker, Modal, notification } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
+import { VscWorkspaceUntrusted } from "react-icons/vsc";
 import "antd/dist/antd.min.css";
 import "./EmployeeLeave.css";
 
@@ -20,7 +22,7 @@ function EmployeeLeave() {
     designation: "",
     deparatment: "",
     remainingLeaves: "",
-    leavesTakenInMonth: "",
+    leavesTakenInMonth: Number,
     isApproved: false,
     isRejected: false,
     reasonOfLeave: "",
@@ -36,12 +38,13 @@ function EmployeeLeave() {
   const [responseObj, setResponseObj] = useState({});
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [raiseIssueModal, setRaiseIssueModal] = useState(false);
 
   const userObj = useSelector((state) => state);
   console.log("consoling userObj", userObj);
   const dispatch = useDispatch();
 
-  const updateUserDetails = async() => {
+  const updateUserDetails = async () => {
     let updatedDetails = await axios.get(
       `https://hr-dashboard-nimish.herokuapp.com/employee/details/${userObj.id}`
     );
@@ -49,12 +52,13 @@ function EmployeeLeave() {
       type: "login",
       payload: updatedDetails.data[0],
     });
-    console.log(updatedDetails.data[0], 'from useEffect');
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     updateUserDetails();
-  }, [])
+  }, [responseObj]);
+
+  useEffect(() => {}, [leaveObj]);
 
   const applyCliked = () => {
     showModal();
@@ -70,7 +74,7 @@ function EmployeeLeave() {
     setTimeout(() => {
       setLoading(false);
       setVisible(false);
-    }, 3000);
+    }, 200);
   };
 
   const handleCancel = () => {
@@ -78,8 +82,6 @@ function EmployeeLeave() {
   };
 
   const handleCalendarChange = (start, end) => {
-    console.log(moment(start[0]?._d).format("Do MM YYYY"), "from moment");
-    console.log(moment(start[1]?._d).format("Do MM YYYY"), "from moment");
     setLeaveObj((leaveObj) => ({
       ...leaveObj,
       dateOfLeave: moment(start[0]?._d).format("DD MMM YYYY"),
@@ -108,7 +110,6 @@ function EmployeeLeave() {
   };
 
   const handleReasoneOfLeave = (text) => {
-    // For Time Being Untill Project get integrated with reduxs
     setLeaveObj((prevObj) => ({ ...prevObj, reasonOfLeave: text }));
     setLeaveObj((prevObj) => ({
       ...prevObj,
@@ -165,7 +166,8 @@ function EmployeeLeave() {
       ) {
         let response = axios({
           method: "post",
-          url: "https://hr-dashboard-nimish.herokuapp.com/admin/leave",
+          // url: "https://hr-dashboard-nimish.herokuapp.com/admin/leave",
+          url: "http://localhost:5000/admin/leave",
           data: leaveObj,
         });
 
@@ -173,19 +175,19 @@ function EmployeeLeave() {
 
         (await response).status === 200 && openNotification("bottomLeft");
         setResponseObj((await response).data);
-
-        setTimeout(() => {
-          setVisible(false);
-        }, 1000);
       }
     } catch (error) {
       console.log(error.message);
     }
+
+    setTimeout(() => {
+      setVisible(false);
+    }, 100);
   };
 
   return (
     <>
-      <div style={{width:'100%', display:'flex', justifyContent:'center'}} >
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <div className="emplev">
           <div className="levdate">
             <RangePicker
@@ -202,17 +204,41 @@ function EmployeeLeave() {
           </div>
 
           <div className="infotxt">
-            <div>
-              Remaining Leaves -{" "}
-              <span className="hightxt"> {userObj.paidLeavesRemaining} </span>{" "}
+            <div
+              className="raiseIssueBtn"
+              onClick={() => setRaiseIssueModal(true)}
+            >
+              <span>
+                {" "}
+                <VscWorkspaceUntrusted
+                  style={{
+                    paddingTop: "7px",
+                    fontSize: "20px",
+                    fontWeight: "800",
+                  }}
+                />{" "}
+              </span>
+              Raise Issue{" "}
             </div>
+
             <div>
-              Leaves Taken This Month -{" "}
-              <span className="hightxt"> {userObj.leavesTakenInMonth} </span>
+              <div>
+                Remaining Leaves -{" "}
+                <span className="hightxt"> {userObj.paidLeavesRemaining} </span>{" "}
+              </div>
+              <div>
+                Leaves Taken This Month -{" "}
+                <span className="hightxt"> {userObj.leavesTakenInMonth} </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <RaiseIssueModal
+        raiseIssueModal={raiseIssueModal}
+        setRaiseIssueModal={setRaiseIssueModal}
+      />
 
       <Modal
         visible={visible}
@@ -247,7 +273,8 @@ function EmployeeLeave() {
             {" "}
             {leaveObj.noofDaysLeaveRequired === ""
               ? "( Please select a start and end date ) "
-              : leaveObj.noofDaysLeaveRequired}{" "}
+              : leaveObj.noofDaysLeaveRequired}
+            {" days"}
           </span>{" "}
           that will be till{" "}
           <span className="hightxt">
@@ -276,7 +303,7 @@ function EmployeeLeave() {
         />
       </Modal>
 
-      <div>
+      <div className="previousLeaveEMp">
         <EmployeePreviousLeave pendingObj={responseObj} />
       </div>
     </>

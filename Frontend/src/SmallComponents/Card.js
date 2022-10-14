@@ -11,7 +11,7 @@ import "antd/dist/antd.css";
 
 const { TextArea } = Input;
 
-function Card({ Obj }) {
+function Card({ Obj, fetchReq }) {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [rejectedModalVisible, setRejectedModalVisible] = useState(false);
@@ -52,9 +52,9 @@ function Card({ Obj }) {
       );
     }
 
-    setTimeout(()=>{
+    setTimeout(() => {
       setRejectedModalVisible(false);
-    }, 200)
+    }, 200);
 
     try {
       let response = await axios({
@@ -62,7 +62,7 @@ function Card({ Obj }) {
         url: `http://localhost:5000/admin/leave/${Obj.leaveId}`,
         data: { reasonOfRejection: rejectionMessage },
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
       });
 
@@ -82,13 +82,14 @@ function Card({ Obj }) {
 
       console.log(response.status == 200);
       if (response.status == 200) showNotification("Approve");
+      fetchReq();
     } catch (error) {
       console.log(error);
     }
   };
 
   const showNotification = async (result) => {
-    notification['success']({
+    notification["success"]({
       message: "Leave Request",
       description: `Your Action of ${result} is completed from Backend 👍 `,
       icon: (

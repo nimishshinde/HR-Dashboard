@@ -33,8 +33,8 @@ const Siderbar = () => {
       case "leave":
         return handleLocation(3, "leave");
 
-      case "test":
-        return handleLocation(4, "test");
+      // case "test":
+      //   return handleLocation(4, "test");
 
       default:
         return handleLocation(1, "dashboard");
@@ -138,7 +138,7 @@ const Siderbar = () => {
                   </div>
                 </li>
               </Link>
-              <Link to="/home/test">
+              {/* <Link to="/home/test">
                 <li
                   onClick={() => {
                     setClickStyle(4);
@@ -158,7 +158,7 @@ const Siderbar = () => {
                     Quarterly Assessment{" "}
                   </div>
                 </li>
-              </Link>
+              </Link> */}
             </ul>
           </div>
         </aside>

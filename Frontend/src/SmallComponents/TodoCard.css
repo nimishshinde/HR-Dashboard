@@ -1,0 +1,86 @@
+.singleTodoMainContainer {
+    margin-top: 0.8rem ;
+    /* background-color: #dee4eb; */
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #A4A6B3;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
+    /* justify-content: space-between; */
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; */
+    /* box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px; */
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px; */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+.singleTodo {
+    /* display: flex;
+    justify-content: space-between; */
+    margin-top: 1rem;
+    max-width: 28.8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    /* border: 2px solid black; */
+}
+
+.titleDate{
+    display: flex;
+    justify-content: space-between;
+    max-width: 28.75rem;
+    min-width: 28.75rem;
+}
+
+.maintxt{
+    font-size: 1rem;
+    color: #6075fe;
+    font-weight:600;
+}
+
+
+
+
+.todoButtons {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    /* margin-left: 1rem; */
+    margin:1rem;
+    align-items: center;
+    /* border: 2px solid black; */
+    /* visibility:hidden; */
+}
+
+
+.todoButtons:hover {
+    visibility: visible;
+}
+
+.deleteTodo {
+    /* margin-right: 1rem; */
+    padding: 0 0.5rem 0 0.5rem;
+    /* min-width: 4rem; */
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: transparent;
+    color: red;
+}
+
+.deleteTodo:hover {
+    background-color: red;
+    color: white;
+}
+
+.editTodo {
+    padding: 0 0.5rem 0 0.5rem;
+    /* min-width: 4rem; */
+    border: 1px solid rgb(82, 196, 26);
+    border-radius: 5px;
+    background-color: transparent;
+    color: rgb(82, 196, 26);
+}

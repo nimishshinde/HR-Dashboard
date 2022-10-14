@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { Link, Navigate } from "react-router-dom";
 
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Spin, notification } from "antd";
 import "./Login.css";
 import { motion } from "framer-motion";
 
@@ -14,12 +14,21 @@ const Login = () => {
   const [userData, setUserData] = useState({ email: "", password: "" });
   const [highlight, setHighlight] = useState(false);
 
+  const [ spinner, setSpinner ] = useState(false);
   const [responseToNext, setResponseToNext] = useState(false);
 
   const userObj = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const openNotificationWithIcon = (type, mes, des) => {
+    notification[type]({
+      message: mes,
+      description: des,
+    });
+  };
+
   const verifyLogin = async (userEmail, userPassword) => {
+    setSpinner(true);
     console.log(userEmail, userPassword, "fromFrontEnd");
     userData.email = userEmail;
     userData.password = userPassword;
@@ -41,13 +50,22 @@ const Login = () => {
             if (
               res.data?.errorMessage?.length == 0 ||
               res.data?.errorMessage?.length == undefined
-            )
+            ){
+              setSpinner(false);
               setResponseToNext(true);
-            dispatch({
-              type: "login",
-              payload: res.data,
-            });
+              dispatch({
+                type: "login",
+                payload: res.data,
+              });
+            }else{
+              openNotificationWithIcon("error", "Please try again", "Incorrect user credentials");
+              setSpinner(false);
+            }
             console.log(res, "from line no 46 response");
+          }else{
+            //Notification of somethin went wrong please try again
+            openNotificationWithIcon("error", "Please try again", " Something went wrong ")
+            setSpinner(false);
           }
         })
         .catch((err) => {
@@ -125,7 +143,16 @@ const Login = () => {
                 className="login-button"
                 style={{ backgroundColor: "#0284c7", color: "white" }}
               >
-                <motion.div whileTap={{ scale: 1.1 }}>Log In</motion.div>
+                <motion.div whileTap={{ scale: 1.1 }}>
+                  {spinner == false ? (
+                    "Log In"
+                  ) : (
+                    <>
+                      {" "}
+                      <Spin tip="Logging In..." />{" "}
+                    </>
+                  )}
+                </motion.div>
               </Button>
             </Form.Item>
           </Form>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./EmployeeCalendar.css";
 import { Calendar, Modal } from "antd";
 import "antd/dist/antd.css";
@@ -6,8 +6,11 @@ import "antd/dist/antd.css";
 function EmployeeCalendar() {
   const [visible, setVisible] = useState(false);
   const [modal, contextHolder] = Modal.useModal();
+  const dateRef = useRef('');
 
-  const onSelect = () => {
+  const onSelect = (datefromCalendar) => {
+    dateRef.current = datefromCalendar;
+    alert(dateRef)
     setVisible(true);
     modal.info(config);
   };
@@ -17,10 +20,10 @@ function EmployeeCalendar() {
   };
 
   const config = {
-    title: "On click date",
+    title: `Schedules for ${ dateRef.current }`,
     content: (
       <>
-        <div> Holaaa </div>
+        <div> No Updates for now { dateRef.current }</div>
       </>
     ),
   };
@@ -31,9 +34,7 @@ function EmployeeCalendar() {
         <Calendar
           fullscreen={false}
           style={{ width: "100%" }}
-          //  value={value}
-          onSelect={onSelect}
-          //  onPanelChange={onPanelChange}
+          onSelect={(date)=>onSelect(date)}
         />
       </div>
       {contextHolder}

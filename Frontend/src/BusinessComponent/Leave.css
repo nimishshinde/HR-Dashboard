@@ -2,10 +2,16 @@
     font-size: 2rem;
     color: #6075fe;
     font-weight: 600;
+    padding-bottom: 0.5rem;
 }
 
 .mainstyle{
     padding: 0.8rem;
+    
+}
+
+.leaveCardsContainer {
+    max-height: 78vh;
     overflow-y: scroll;
     scroll-behavior: smooth;
 }

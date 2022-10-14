@@ -1,0 +1,95 @@
+.mainTodoContainer {
+    /* display: flex; */
+    /* justify-content: space-between; */
+    width: 45vw;
+    border: 2px solid black;
+}
+
+.tasksContainer{
+    max-width: 21rem;
+    /* border: 2px solid black; */
+    min-width: 40vw;
+}
+
+.todos {
+    overflow-y: scroll;
+    /* max-height: 10rem; */
+    width: 77vw;
+}
+
+.empupdates {
+    margin: 1rem 4rem;
+    display: flex;
+    width: 92%;
+    justify-content: space-between;
+ }
+
+ .updatetxts {
+    color: #A4A6B3;
+    font-weight: 600;
+    width: 40%;
+    padding: 0.5rem;
+ }
+
+.tasksAssigned {
+    width: 21rem;
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0 1rem 0;
+}
+
+.tasksCompleted {
+    /* border: 2px solid black; */
+    min-width: 21rem;
+}
+
+.date {
+    margin: 1rem 0 1rem 0;
+
+}
+
+.todoInput {
+    width: 25rem;
+    text-align: center;
+}
+
+.todoCardsContainer{
+    width: 54%;
+    height: 20rem;
+    overflow-y: scroll;
+    /* margin: 1rem; */
+    padding: 1rem;
+    /* border: 1px solid black; */
+}
+
+.sendbtnctns {
+    display: flex;
+    justify-content: center;
+    color: #7bd4fb;
+    font-size: 1.2rem;
+    justify-content: flex-start;
+    width: 22rem;
+ }
+
+.addButton {
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #7bd4fb;
+    padding: 0.6rem;
+    width: 50%;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #7bd4fb;
+    background-color: transparent;
+    margin: 1rem;
+}
+
+.addButton:hover {
+    background-color: #7bd4fb;
+    color: white;
+}
+
+.material-symbols-outlined {
+    font-size: 30px;
+}

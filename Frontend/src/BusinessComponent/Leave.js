@@ -4,14 +4,15 @@ import Card from "../SmallComponents/Card";
 import EmployeeLeave from "./Employee/EmployeeLeave";
 import "./Leave.css";
 import axios from "axios";
+import { Spin } from "antd";
 
 const Leave = () => {
-    const userObj = useSelector((state) => state);
-    const dispatch = useDispatch();
+  const userObj = useSelector((state) => state);
+  const dispatch = useDispatch();
 
+  const [stopSpinner, setStopSpinner] = useState(false);
   const [allrequest, setAllRequest] = useState([]);
   const [employeeType, setEmployeeType] = useState(userObj.employeeType);
-
 
   async function fetchReq() {
     try {
@@ -22,6 +23,7 @@ const Leave = () => {
 
       console.log(response);
       setAllRequest(response?.data);
+      response && setStopSpinner(true);
     } catch (error) {
       console.log(error.message);
     }
@@ -29,17 +31,44 @@ const Leave = () => {
 
   useEffect(() => {
     fetchReq();
-    console.log('user obj from leave.js --> ', userObj);
+    console.log("user obj from leave.js --> ", userObj);
     setEmployeeType(userObj.employeeType);
-  }, []);
-
+  }, [allrequest]);
 
   return (
     <>
-      {employeeType == 1 ? (
+      {employeeType === 1 ? (
         <div className="mainstyle">
           <div className="heading"> Leave Management </div>
-          {allrequest != [] && allrequest?.map((obj) => <Card Obj={obj} />)}
+          {stopSpinner == false ? (
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  height: "40vh",
+                }}
+              >
+                <h1 style={{ color: "#6075fe", fontWeight: "600" }}>
+                  {" "}
+                  Loading Leaves{" "}
+                  <span>
+                    <Spin size="large" />
+                  </span>
+                </h1>
+                {/* <Spin size="large" /> */}
+              </div>
+            </>
+          ) : (
+            <div style={{ height: "65vh", overflow : 'scroll'}}>
+              {allrequest != [] &&
+                allrequest?.map((obj) => (
+                  <Card Obj={obj} fetchReq={fetchReq} />
+                ))}
+            </div>
+          )}
         </div>
       ) : (
         <EmployeeLeave />

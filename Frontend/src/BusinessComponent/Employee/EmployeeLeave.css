@@ -12,6 +12,14 @@
   width: 90%;
 }
 
+.previousLeaveEMp {
+  /* border: 1px solid grey; */
+  height: 68vh;
+  /* max-width: 75vw; */
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
 .levdate {
   width: 50%;
   display: flex;
@@ -62,4 +70,26 @@
   margin-right: 2rem;
   text-align: right;
   font-weight: 400;
+  display: flex;
+  justify-content: space-between;
+  width: 45%;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------- */
+.raiseIssueBtn {
+  border: 1px solid #FF4646;
+  padding: 0.3rem;
+  width: 30%;
+  margin: 0.5rem 1rem;
+  text-align: center;
+  border-radius: 8px;
+  color: #FF4646;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.raiseIssueBtn:hover{
+  color: white;
+  background-color: #FF4646;
 }

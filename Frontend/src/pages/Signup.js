@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
+
 import {
   SIGNIN,
   ID,
@@ -13,10 +14,10 @@ import {
   PASSWORD,
   CPASSWORD,
   ADDRESS,
-  PHONENO
+  PHONENO,
 } from "../redux/types";
 
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, notification, Spin } from "antd";
 import { motion } from "framer-motion";
 import "./Signup.css";
 
@@ -26,26 +27,33 @@ const Signup = () => {
   const [highlight, setHighlight] = useState(false);
   const [form] = Form.useForm();
 
-  const [ responseToNext, setResponseToNext ] = useState (false);
+  const [responseToNext, setResponseToNext] = useState(false);
+   const [spinner, setSpinner] = useState(false);
 
-  const userObj = useSelector(state => state);
+  const userObj = useSelector((state) => state);
   const dispatch = useDispatch();
   console.log("From signUp useSelector", userObj);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch({
       type: SIGNIN,
     });
   }, [])
 
-  // useEffect(() => {}, [responseToNext]);
+  const openNotificationWithIcon = (type, mes, des) => {
+    notification[type]({
+      message: mes,
+      description: des,
+    });
+  };
   
   const verifySignup = async (userDataObj) => {
     console.log(userDataObj, "<--- user Object ");
-    
+
     let response = await axios({
       method: "post",
-      url: "https://hr-dashboard-nimish.herokuapp.com/auth/signup",
+      // url: "https://hr-dashboard-nimish.herokuapp.com/auth/signup",
+      url: "http://localhost:5000/auth/signup",
       data: userObj,
       headers: {
         "Content-Type": "application/json",
@@ -56,12 +64,19 @@ const Signup = () => {
     console.log("comming from Backend", response);
 
     dispatch({
-      type : ID,
-      id : response.data.id
-    })
+      type: ID,
+      id: response.data.id,
+    });
 
-    if(response.status == 200){
+    if (response.status === 200) {
       setResponseToNext(true);
+    } else {
+      openNotificationWithIcon(
+        "error",
+        "Please try again",
+        "Incorrect user credentials"
+      );
+      setSpinner(false);
     }
   };
 
@@ -95,7 +110,7 @@ const Signup = () => {
               });
             }}
             className={`${
-              userObj.employeeType == 1 ? "btn btn-active" : "btn"
+              userObj.employeeType === 1 ? "btn btn-active" : "btn"
             }`}
           >
             Admin
@@ -108,7 +123,7 @@ const Signup = () => {
               });
             }}
             className={`${
-              userObj.employeeType == 1 ? "btn " : "btn btn-active"
+              userObj.employeeType === 1 ? "btn " : "btn btn-active"
             }`}
           >
             Employee
@@ -254,13 +269,31 @@ const Signup = () => {
                 },
               ]}
             >
-              <Input
+              {/* <Input
                 required={true}
                 placeholder="Enter your department"
-                onChange={(e) => {
-                  dispatch({ type: DEP, deparatment: e.target.value });
+                
+              /> */}
+
+              <Select
+                required={true}
+                style={{
+                  width: "100%",
                 }}
-              />
+                // onChange={(e) => {
+                //   dispatch({ type: DEP, deparatment: e.target.value });
+                // }}
+                onChange={(e) => {
+                  console.log(e, "from inside select");
+                  dispatch({ type: DEP, deparatment: e });
+                }}
+                allowClear
+              >
+                <Option value="Engineering">Engineering</Option>
+                <Option value="Operations">Operations</Option>
+                <Option value="Accounts">Accounts</Option>
+                <Option value="Supply Chain">Supply Chain</Option>
+              </Select>
             </Form.Item>
 
             <Form.Item
@@ -311,12 +344,21 @@ const Signup = () => {
                     verifySignup(userObj);
                   }}
                 >
-                  <motion.div whileTap={{ scale: 1.1 }}>Sign up</motion.div>
+                  <motion.div whileTap={{ scale: 1.1 }}>
+                    {spinner == false ? (
+                      "Sign up"
+                    ) : (
+                      <>
+                        {" "}
+                        <Spin tip="Signing In..." />{" "}
+                      </>
+                    )}
+                  </motion.div>
                 </Button>
-                {responseToNext == true && (
+                {responseToNext === true && (
                   <Navigate
                     to={
-                      userObj.employeeType == 1
+                      userObj.employeeType === 1
                         ? "/home/dashboard"
                         : "/home/employee/dashboard"
                     }

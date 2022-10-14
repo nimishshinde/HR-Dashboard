@@ -1,4 +1,4 @@
-.ps{
+.ps {
     border: 1px solid #6075fe;
     color: #6075fe;
     background-color: white;
@@ -7,7 +7,7 @@
     font-weight: 500;
 }
 
-.dtoc{
+.dtoc {
     margin-top: 1rem;
     margin-left: 4rem;
     margin-right: 4rem;
@@ -16,9 +16,9 @@
     width: 74vw;
 }
 
-.ps:hover{
-color: white;
-background-color:#6075fe;
+.ps:hover {
+    color: white;
+    background-color: #6075fe;
 }
 
 .radioItem {
@@ -28,60 +28,114 @@ background-color:#6075fe;
 
 .empDetails {
     display: flex;
-    gap: 5rem;
-    padding: 0.937rem;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    padding: 0.8rem;
 }
+
+
 
 .econtainer {
     border-top: 1px solid rgb(224, 224, 233);
-    padding: 0.937rem;
+    padding: 0.6rem;
+}
+
+.labelstyle {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 400;
 }
 
 .pmcontainer {
-    margin-top: 1rem;
+    margin: 1rem;
     display: flex;
+    align-items: center;
 }
 
 .blue {
-   color: #6075fe; 
-   font-weight: 500;
-   padding-left: 0.2rem;
+    color: #6075fe;
+    font-weight: 600;
+    padding-left: 0.2rem;
 }
 
 .detail {
     display: flex;
+    font-weight: 400;
 }
 
 .inputShift {
-    border: 2px solid #a2adf3;
     border-radius: 5px;
-    color: #6075fe;
-    font-weight: 500;
-    text-align: center;
-}
-
-.btnmodal {
-    width: 25%;
-    height: 3rem;
-    text-align: center;
-    border-radius: 6px;
-    cursor: pointer;
-    border: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 0.5rem;
     border: 1px solid #6075fe;
-}
-
-.approve {
-    /* border: 1px solid #6075fe; */
     color: #6075fe;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    padding: 0.4rem;
+    font-size: 1rem;
+    margin-left: 1rem;
 }
 
 .performanceIcon {
-    background: #6075fe;
+    background: #7bd4fb;
     color: white;
     border-radius: 4px;
     margin-right: 5px;
+    padding: 4px;
+    margin-right: 0.5rem;
+}
+
+.empdetailsmodel {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.updateBtn {
+    width: 25%;
+    font-size: 1rem;
+    margin: 0.6rem;
+    padding: 0.6rem;
+    background-color: white;
+    color: #6075fe;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #6075fe;
+}
+
+.updateBtn:hover {
+    background-color: #6075fe;
+    color: white;
+}
+
+button.upspay {
+    text-rendering: none;
+    word-spacing: none;
+    border-width: none !important;
+    border-style: none !important;
+    border-color: none !important;
+    border-image: none !important;
+    height: 1rem !important;
+    background-color: transparent;
+    cursor: default !important;
+    padding-top: 3px;
+}
+
+.upsdowns {
+    height: 3rem;
+    width: 1rem;
+    margin-top: -8px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    cursor: default !important;
+    justify-content: '';
+    height: 12px;
+    align-items: center;
+    gap: 0.1rem;
+    margin-left: 0.2rem;
+    /* border: 1px solid green; */
 }

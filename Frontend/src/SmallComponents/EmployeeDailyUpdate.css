@@ -1,44 +1,50 @@
 .empupdate {
+   margin: 1rem 3rem;
    display: flex;
-   justify-content: space-between;
    align-items: center;
-   border: 1px solid red;
-   margin: 1rem 2rem;
+   justify-content: center;
+   width: 30vw; 
+   /* border: 1px solid blue; */
 }
 
 .empflex {
    display: flex;
+   /* justify-content: center; */
    justify-content: space-between;
    align-items: center;
-   margin-top: 0.8rem;
+   margin-top: 1rem;
    margin-right: 1rem;
+   width:100%;
+   /* border: 1px solid green; */
 }
 
 .updatetxt {
-   /* color: #7bd4fb; */
    color: #A4A6B3;
    font-weight: 600;
-   width: 40%;
+   width: 100%;
 }
 
 .sendbtnctn {
-   margin-top: 0.8rem;
-   margin-right: 1rem;
+   margin-top: 1rem;
    display: flex;
-   justify-content: flex-end;
+   justify-content: center;
 }
 
 
 .sendbtn {
    text-align: center;
-   border-radius: 8px;
+   border-radius: 10px;
    border: 1px solid #7bd4fb;
-   padding: 0.4rem;
-   width: 20%;
+   padding: 0.6rem;
+   width: 100%;
    cursor: pointer;
+   font-weight: 600;
+   font-size: 1rem;
+   color: #7bd4fb;
 }
 
 .sendbtn:hover {
    background-color: #7bd4fb;
    color: white;
+   font-weight: 600;
 }

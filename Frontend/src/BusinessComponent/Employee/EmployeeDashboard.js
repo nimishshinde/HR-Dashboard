@@ -1,34 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import EmployeeCalendar from "../../SmallComponents/EmployeeCalendar";
+import RaiseIssueModal from "../../SmallComponents/RaiseIssueModal";
 import EmployeeDailyUpdate from "../../SmallComponents/EmployeeDailyUpdate";
 
-import { Progress, Tooltip } from "antd";
+import { Progress, Tooltip, notification } from "antd";
 import { FcClock } from "react-icons/fc";
+import { TiTick } from "react-icons/ti";
 import "./EmployeeDashboard.css";
+import Todo from "../../SmallComponents/Todo";
 
 function EmployeeDashboard() {
   const userObj = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const [raiseIssueModal, setRaiseIssueModal] = useState(false);
   const handleRaiseIssue = () => {
-    alert("Raise Issue was clicked... !!");
+    setRaiseIssueModal(true)
   };
 
   return (
     <>
-      <div>
+      <div className="empdashboard">
         <div className="empdash">
-          <div style={{ width: "55%", marginTop: "1rem" }}>
-            {" "}
-            <EmployeeCalendar />{" "}
+          <div>
+            <EmployeeDailyUpdate />
           </div>
           <div style={{ display: "flex" }}>
             <Tooltip
               placement="leftTop"
               className="tooltip"
               title={
-                userObj.performanceMessage?.length == 0
+                userObj.performanceMessage == ""
                   ? "No Performance Message yet"
                   : userObj.performanceMessage
               }
@@ -56,8 +58,14 @@ function EmployeeDashboard() {
               <div className="shift">
                 <FcClock fontSize="3rem" />
                 <div className="shifttext">
-                  <div style={{ color: "rgb(23, 43, 77)" }}>1st Shift</div>
-                  <div style={{ color: "#7bd4fb" }}>4pm to 12pm</div>
+                  <div style={{ color: "rgb(23, 43, 77)" }}>
+                    {userObj.shiftOfCurrentMonth == ""
+                      ? "Not Allocated"
+                      : userObj.shiftOfCurrentMonth}
+                  </div>
+                  <div style={{ color: "#7bd4fb" }}>4pm to 12pm
+                    
+                  </div>
                 </div>
 
                 <div className="issuebtn" onClick={handleRaiseIssue}>
@@ -68,14 +76,39 @@ function EmployeeDashboard() {
           </div>
         </div>
 
-        <div> 
-          <EmployeeDailyUpdate />
+        <div>
+          <Todo />
         </div>
-        
       </div>
+
+      <RaiseIssueModal
+        raiseIssueModal={raiseIssueModal}
+        setRaiseIssueModal={setRaiseIssueModal}
+      />
+
+      {/* <Modal
+        title="This message will be sent to the admin"
+        visible={raiseIssueModal}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={[
+          <div className="footerctn" onClick={handleUpdate}>
+            {" "}
+            <div className="footerbtn"> Send </div>{" "}
+          </div>,
+        ]}
+      >
+        <TextArea
+          rows={5}
+          placeholder="Please write down the Issue"
+          maxLength={300}
+          onChange={(e) => handleIssue(e.target.value)}
+          minLength={60}
+        />
+      </Modal> */}
     </>
     // Add pay day in calendar
-    // Employee and admin dashboard should also show date
+    // Employee and admin dashboard should also show todays date
   );
 }
 

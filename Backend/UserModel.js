@@ -105,6 +105,10 @@ let userSchema = new mongoose.Schema({
       type: Number,
       default: 0,
     },
+    salary:{
+      type : Number,
+      default: 600000
+    }
   },
 });
 
@@ -156,10 +160,37 @@ let leaveModel = new mongoose.Schema({
   }
 });
 
+let userTaskUpdate = new mongoose.Schema([
+  {
+    employeId: {
+      type: String,
+    },
+    taskCompletedArr: {
+      type: Array,
+    },
+    taskAssignArr: {
+      type: Array,
+    },
+    todoArr : {
+      type: Array,
+    }
+  },
+]);
+
+let todoModale = new mongoose.Schema({
+  employeId : {
+    type: String,
+  },
+  todoArr : [{
+    isdone : Boolean
+  }]
+})
+
 // creating model with name HR-Dashboard and Leave in cluster0
 // Using Leave to Manage leaves of employees.
 // HR-Dashboard is to manage all user data.
 const LeaveModel = mongoose.model("Leave", leaveModel);
 const UserModel = mongoose.model("HR-Dashboard", userSchema);
+const UserTaskModel = mongoose.model("User-Task", userTaskUpdate);
 
-module.exports = { UserModel, LeaveModel };
+module.exports = { UserModel, LeaveModel, UserTaskModel };

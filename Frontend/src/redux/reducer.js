@@ -43,7 +43,7 @@ const initialState = JSON.parse(localStorage.getItem('User')) || {
     difference: Number,
   },
   
-  };
+};
 
 let signInObj = {
   employeeType: 2,

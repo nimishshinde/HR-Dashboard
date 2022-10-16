@@ -138,7 +138,7 @@ function EmployeeLeave() {
   const openNotification = (placement) => {
     notification.open({
       message: "Leave Sent to Admin",
-      description: `Your leave request of ${leaveObj.noofDaysLeaveRequired} days from ${leaveObj.dateOfLeave} to ${leaveObj.endOfLeave} is send to admin. Please wait until Admin Responses`,
+      description: `Your leave request of ${leaveObj.noofDaysLeaveRequired} days from ${leaveObj.dateOfLeave} to ${leaveObj.endOfLeave} is send to admin. Please wait until Admin Respond's`,
       placement: "bottomLeft",
       icon: (
         <CheckCircleOutlined
@@ -182,12 +182,12 @@ function EmployeeLeave() {
 
     setTimeout(() => {
       setVisible(false);
-    }, 100);
+    }, 50);
   };
 
   return (
     <>
-      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <div style={{ width: "100%", display: "flex", justifyContent: "center", marginLeft:'0.6rem' }}>
         <div className="emplev">
           <div className="levdate">
             <RangePicker
@@ -251,6 +251,18 @@ function EmployeeLeave() {
               <div
                 className="btntext"
                 style={{ fontSize: "1rem" }}
+                // onClick={() => handleApplyLeave()}
+                onClick={() => handleReasoneOfLeave("Due to work lately I feel exhausted and want to relax for a sometime, I hope you grant me leave")}
+              >
+                {" "}
+                Dummy Data{" "}
+              </div>
+            </div>
+
+            <div className="btnmodal approve">
+              <div
+                className="btntext"
+                style={{ fontSize: "1rem" }}
                 onClick={() => handleApplyLeave()}
               >
                 {" "}
@@ -300,6 +312,7 @@ function EmployeeLeave() {
           maxLength={300}
           onChange={(e) => handleReasoneOfLeave(e.target.value)}
           minLength={60}
+          value={leaveObj.reasonOfLeave}
         />
       </Modal>
 

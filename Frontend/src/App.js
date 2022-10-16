@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { Routes, Route } from "react-router-dom";
@@ -20,7 +20,11 @@ import "./App.css";
 // import "antd/dist/antd.css";
 
 function App() {
+  useEffect(()=>{
+    document.title = "HR-Dashboard";
+  })
   
+
   return (
     <>
       <Provider store={store}>

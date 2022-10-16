@@ -69,6 +69,12 @@ function Card({ Obj, fetchReq }) {
     }
   };
 
+  const fillDummyData = async() => {
+    setRejectionMessage(
+      "Sorry! Because of work load we can't grant you leave for this time, but as soon as the work load is reduced we promise to grant you leave, Thank You!"
+    );
+  }
+
   const approveRequest = async () => {
     try {
       let response = await axios({
@@ -120,7 +126,7 @@ function Card({ Obj, fetchReq }) {
                   <div
                     className="smalltext"
                     style={{
-                      marginRight: "15%",
+                      marginRight: "10%",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-around",
@@ -157,10 +163,10 @@ function Card({ Obj, fetchReq }) {
                 </div>
               </div>
               <div className="smalltext ">
-                {Obj.reasonOfLeave.length > 150
+                {Obj.reasonOfLeave.length > 40
                   ? "Subject : " +
-                    Obj.reasonOfLeave.substring(0, 150) +
-                    "...showmore"
+                    Obj.reasonOfLeave.substring(0, 40) +
+                    " ...showmore"
                   : "Subject : " + Obj.reasonOfLeave}
               </div>
               <div className="smalltext">
@@ -247,6 +253,9 @@ function Card({ Obj, fetchReq }) {
                 <div className="btnmodal approve" onClick={handleCancel}>
                   <div className="btntext"> Back </div>
                 </div>
+                <div className="btnmodal approve" onClick={ fillDummyData } >
+                  <div className="btntext"> Dummy Data </div>
+                </div>
                 <div className="btnmodal reject" onClick={rejectRequest}>
                   <div className="btntext"> Reject </div>
                 </div>
@@ -259,6 +268,7 @@ function Card({ Obj, fetchReq }) {
               maxLength={300}
               onChange={(e) => handleRejectionMesssage(e.target.value)}
               minLength={60}
+              value={rejectionMessage}
             />
           </Modal>
         </div>

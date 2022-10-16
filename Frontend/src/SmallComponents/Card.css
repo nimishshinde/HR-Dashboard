@@ -25,7 +25,7 @@
 }
 
 .btn{
-    width:35%;
+    width:40%;
     height:3rem;
     text-align: center;
     border-radius: 6px;
@@ -48,7 +48,7 @@
 
 .btntext{
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .approve:hover{ 
@@ -71,8 +71,8 @@
 }
 
 .name{
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: 1.3rem;
+    font-weight: 600;
     /* color: rgb(53, 66, 89); */
     margin-bottom: 0.5rem;
     /* color: #6075fe; */

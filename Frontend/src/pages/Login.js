@@ -15,6 +15,8 @@ const Login = () => {
   const [highlight, setHighlight] = useState(false);
 
   const [ spinner, setSpinner ] = useState(false);
+  const [ adminSpinner, setAdminSpinner ] = useState(false);
+  const [empSpinner, setEmpSpinner] = useState(false);
   const [responseToNext, setResponseToNext] = useState(false);
 
   const userObj = useSelector((state) => state);
@@ -71,6 +73,63 @@ const Login = () => {
       console.log("error while logging in ", error);
     }
   };
+
+  const guestLogin = async(em, pass) =>{
+    if(em == 'test@admin.com'){
+      setAdminSpinner(true)
+    }else{
+      setEmpSpinner(true)
+    }
+
+    try {
+      let response = await axios({
+        method: "post",
+        url: "https://hr-dashboard-nimish.herokuapp.com/auth/login",
+        data: { email: em, password: pass },
+      })
+        .then((res) => {
+          if (res.status == 200) {
+            if (
+              res.data?.errorMessage?.length == 0 ||
+              res.data?.errorMessage?.length == undefined
+            ) {
+              setSpinner(false);
+              setAdminSpinner(false);
+              setEmpSpinner(false);
+
+              setResponseToNext(true);
+              dispatch({
+                type: "login",
+                payload: res.data,
+              });
+            } else {
+              openNotificationWithIcon(
+                "error",
+                "Please try again",
+                "Incorrect user credentials"
+              );
+              setSpinner(false);
+            }
+            console.log(res, "from line no 46 response");
+          } else {
+            //Notification of somethin went wrong please try again
+            openNotificationWithIcon(
+              "error",
+              "Please try again",
+              " Something went wrong "
+            );
+            setSpinner(false);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+
+    } catch (error) {
+      console.log("error while logging in ", error);
+    }
+  }
+
 
   return (
     <div className="login">
@@ -142,6 +201,48 @@ const Login = () => {
                 <motion.div whileTap={{ scale: 1.1 }}>
                   {spinner == false ? (
                     "Log In"
+                  ) : (
+                    <>
+                      {" "}
+                      <Spin tip="Logging In..." />{" "}
+                    </>
+                  )}
+                </motion.div>
+              </Button>
+
+              <Button
+                onClick={() => guestLogin("test@admin.com", "test123")}
+                className="login-button"
+                style={{
+                  backgroundColor: "#0284c7",
+                  color: "white",
+                  marginTop: "1.4rem",
+                  marginBottom: "1.4rem",
+                }}
+              >
+                <motion.div whileTap={{ scale: 1.1 }}>
+                  {adminSpinner == false ? (
+                    "Guest Admin"
+                  ) : (
+                    <>
+                      {" "}
+                      <Spin tip="Logging In..." />{" "}
+                    </>
+                  )}
+                </motion.div>
+              </Button>
+
+              <Button
+                onClick={() => guestLogin('test@emp.com', 'test123')}
+                className="login-button"
+                style={{
+                  backgroundColor: "#0284c7",
+                  color: "white",
+                }}
+              >
+                <motion.div whileTap={{ scale: 1.1 }}>
+                  {empSpinner == false ? (
+                    "Guest Employee"
                   ) : (
                     <>
                       {" "}

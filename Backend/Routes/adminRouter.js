@@ -15,6 +15,8 @@ adminRouter.route("/leave").get(allLeaves);
 // Creates a new Leave
 adminRouter.route("/leave").post(addLeave);
 
+adminRouter.route("/leave/pending").get(getAllPendingLeaves);
+
 // get a particular leave by empId
 adminRouter.route("/leave/:id").get(getLeavesFromEmpId);
 
@@ -24,6 +26,18 @@ adminRouter.route("/leave/:id").post(updateRejectionMessage);
 // should approve and make changes in 
 // leaves taken in the month & leaves taken in the year 
 adminRouter.route("/leave/approve/:id").post(approveRequest);
+
+
+
+async function getAllPendingLeaves(req, res){
+  try {
+    let responseObj = await LeaveModel.find({ isPending : true })
+    res.json(responseObj);
+    // res.end('hola')
+  } catch (error) {
+    res.json( {commingFrom : 'getAllPendingLeaves'} ,error);
+  }
+}
 
 
 // Performance Message and shift update and bug of leave management.

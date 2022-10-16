@@ -96,11 +96,6 @@ const Todo = () => {
 
   
   const handleUpdateTodo = () => {
-    
-    
-
-    
-
     const copyUpdatedTodoList = storeAllTodo.map((todo) => {
       if (todo.id === storeSingleTodo.id) {
         

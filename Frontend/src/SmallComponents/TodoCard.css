@@ -23,7 +23,8 @@
     /* display: flex;
     justify-content: space-between; */
     margin-top: 1rem;
-    max-width: 28.8rem;
+    /* max-width: 28.8rem; */
+    width: 100%;
     font-size: 1rem;
     font-weight: 600;
     /* border: 2px solid black; */
@@ -32,8 +33,8 @@
 .titleDate{
     display: flex;
     justify-content: space-between;
-    max-width: 28.75rem;
-    min-width: 28.75rem;
+    /* max-width: 28.75rem;
+    min-width: 28.75rem; */
 }
 
 .maintxt{

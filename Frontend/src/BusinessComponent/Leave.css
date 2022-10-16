@@ -16,3 +16,14 @@
     scroll-behavior: smooth;
 }
 
+.nopendingleavectn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.emptyimg{
+    width: 30%;
+    height: 30%;
+}

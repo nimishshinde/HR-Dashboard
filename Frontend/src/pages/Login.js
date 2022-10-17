@@ -14,8 +14,8 @@ const Login = () => {
   const [userData, setUserData] = useState({ email: "", password: "" });
   const [highlight, setHighlight] = useState(false);
 
-  const [ spinner, setSpinner ] = useState(false);
-  const [ adminSpinner, setAdminSpinner ] = useState(false);
+  const [spinner, setSpinner] = useState(false);
+  const [adminSpinner, setAdminSpinner] = useState(false);
   const [empSpinner, setEmpSpinner] = useState(false);
   const [responseToNext, setResponseToNext] = useState(false);
 
@@ -48,21 +48,29 @@ const Login = () => {
             if (
               res.data?.errorMessage?.length == 0 ||
               res.data?.errorMessage?.length == undefined
-            ){
+            ) {
               setSpinner(false);
               setResponseToNext(true);
               dispatch({
                 type: "login",
                 payload: res.data,
               });
-            }else{
-              openNotificationWithIcon("error", "Please try again", "Incorrect user credentials");
+            } else {
+              openNotificationWithIcon(
+                "error",
+                "Please try again",
+                "Incorrect user credentials"
+              );
               setSpinner(false);
             }
             console.log(res, "from line no 46 response");
-          }else{
+          } else {
             //Notification of somethin went wrong please try again
-            openNotificationWithIcon("error", "Please try again", " Something went wrong ")
+            openNotificationWithIcon(
+              "error",
+              "Please try again",
+              " Something went wrong "
+            );
             setSpinner(false);
           }
         })
@@ -74,11 +82,11 @@ const Login = () => {
     }
   };
 
-  const guestLogin = async(em, pass) =>{
-    if(em == 'test@admin.com'){
-      setAdminSpinner(true)
-    }else{
-      setEmpSpinner(true)
+  const guestLogin = async (em, pass) => {
+    if (em == "test@admin.com") {
+      setAdminSpinner(true);
+    } else {
+      setEmpSpinner(true);
     }
 
     try {
@@ -124,12 +132,10 @@ const Login = () => {
         .catch((err) => {
           alert(err);
         });
-
     } catch (error) {
       console.log("error while logging in ", error);
     }
-  }
-
+  };
 
   return (
     <div className="login">
@@ -196,7 +202,11 @@ const Login = () => {
               <Button
                 onClick={() => verifyLogin(userEmail, userPassword)}
                 className="login-button"
-                style={{ backgroundColor: "#0284c7", color: "white" }}
+                style={{
+                  // backgroundColor: "#0284c7",
+                  backgroundColor: "#6075fe",
+                  color: "white",
+                }}
               >
                 <motion.div whileTap={{ scale: 1.1 }}>
                   {spinner == false ? (
@@ -214,7 +224,8 @@ const Login = () => {
                 onClick={() => guestLogin("test@admin.com", "test123")}
                 className="login-button"
                 style={{
-                  backgroundColor: "#0284c7",
+                  // backgroundColor: "#0284c7",
+                  backgroundColor: "#6075fe",
                   color: "white",
                   marginTop: "1.4rem",
                   marginBottom: "1.4rem",
@@ -233,10 +244,11 @@ const Login = () => {
               </Button>
 
               <Button
-                onClick={() => guestLogin('test@emp.com', 'test123')}
+                onClick={() => guestLogin("test@emp.com", "test123")}
                 className="login-button"
                 style={{
-                  backgroundColor: "#0284c7",
+                  // backgroundColor: "#0284c7",
+                  backgroundColor: "#6075fe",
                   color: "white",
                 }}
               >
@@ -251,6 +263,7 @@ const Login = () => {
                   )}
                 </motion.div>
               </Button>
+              
             </Form.Item>
           </Form>
         </div>

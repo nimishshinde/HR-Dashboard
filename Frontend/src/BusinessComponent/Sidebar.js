@@ -11,6 +11,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 const Siderbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const currentPath = location.pathname;
+
   const [clickStyle, setClickStyle] = useState(1);
   
 
@@ -23,6 +26,7 @@ const Siderbar = () => {
 
   useEffect(() => {
     let locationName = location?.pathname.split("/")[2];
+    console.log(currentPath)
     switch (locationName) {
       case "dashboard":
         return handleLocation(1, "dashboard");
@@ -32,9 +36,6 @@ const Siderbar = () => {
 
       case "leave":
         return handleLocation(3, "leave");
-
-      // case "test":
-      //   return handleLocation(4, "test");
 
       default:
         return handleLocation(1, "dashboard");

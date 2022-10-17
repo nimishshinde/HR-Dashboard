@@ -8,16 +8,19 @@ import DashboardTableOne from "../SmallComponents/DashboardTableOne";
 import { TiTick } from "react-icons/ti";
 import { motion } from "framer-motion";
 import "./Dashboard.css";
-import { notification } from 'antd';
+import { notification } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  const userObj = useSelector(state => state);
+  const userObj = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [returnToLoginPage, setReturnToLoginPage]= useState(false); 
 
-//_____this two functions only have the functionality no UI_______________________________________________________________
+  //_____this two functions only have the functionality no UI_______________________________________________________________
 
-  async function updatePerformance(num1, num2, num3, num4, performanceMessage){
-    if(performanceMessage.trim() != ""){
+  async function updatePerformance(num1, num2, num3, num4, performanceMessage) {
+    if (performanceMessage.trim() != "") {
       alert("Performance Message cant be blank");
       return;
     }
@@ -38,13 +41,12 @@ function Dashboard() {
       });
 
     dispatch({
-      type : 'login',
-      payload : responseObj.data
-    })
-  
+      type: "login",
+      payload: responseObj.data,
+    });
   }
 
-  async function updateShift(shift){
+  async function updateShift(shift) {
     let responseObj = await axios({
       method: "post",
       url: `https://hr-dashboard-nimish.herokuapp.com/admin/shift/${userObj.id}`,
@@ -54,16 +56,14 @@ function Dashboard() {
     });
 
     dispatch({
-      type : 'login',
-      payload : responseObj.data      
-    })
-
-
+      type: "login",
+      payload: responseObj.data,
+    });
   }
 
-// _______________________________________________________________________
-  
-  console.log('comming from use selector', userObj)
+  // _______________________________________________________________________
+
+  console.log("comming from use selector", userObj);
 
   const [clickStyle, setClickStyle] = useState(0);
 
@@ -75,13 +75,12 @@ function Dashboard() {
     console.log(userObj);
   }, []);
 
-  
-
   return (
     <>
+      { userObj == 'logout' && navigate("/") }
       {userObj.employeeType == 1 ? (
         <>
-          <div className="dashItems" >
+          <div className="dashItems">
             <div
               className={` ${clickStyle === 1 ? "activeSection" : ""} ${
                 small ? " sections" : " section"
@@ -130,11 +129,8 @@ function Dashboard() {
           </div>
         </>
       ) : (
-        <div>
-          <EmployeeDashboard />
-        </div>
+        <div>{userObj.employeeType == 2 && <EmployeeDashboard />}</div>
       )}
-      
     </>
   );
 }

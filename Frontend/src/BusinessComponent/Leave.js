@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Card from "../SmallComponents/Card";
 import EmployeeLeave from "./Employee/EmployeeLeave";
 import "./Leave.css";
@@ -11,6 +12,7 @@ import emptyimg from "../assests/emptystateforleave.png";
 const Leave = () => {
   const userObj = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [stopSpinner, setStopSpinner] = useState(false);
   const [allrequest, setAllRequest] = useState([]);
@@ -59,6 +61,7 @@ const Leave = () => {
 
   return (
     <>
+      {userObj == "logout" && navigate("/")}
       {employeeType === 1 ? (
         <div className="mainstyle">
           <div className="heading"> Leave Management </div>
@@ -84,23 +87,31 @@ const Leave = () => {
             </>
           ) : (
             <div style={{ height: "65vh", overflow: "scroll" }}>
-              {
-                noPendingLeaves == false ? (
-                  <>
-                    {allrequest != [] &&
-                      allrequest?.map((obj) => (
-                        <Card Obj={obj} fetchReq={fetchReq} />
-                      ))}
-                  </>
-                ) : (
-                  <div>
-                    <div className="nopendingleavectn" style={{ fontSize:'1.2rem', padding:'10px', fontWeight:'500', color:'#6075fe'}} >No more leaves remaining 🥳</div>
-                    <div className="nopendingleavectn">
-                      <img className="emptyimg" src={emptyimg}></img>
-                    </div>
+              {noPendingLeaves == false ? (
+                <>
+                  {allrequest != [] &&
+                    allrequest?.map((obj) => (
+                      <Card Obj={obj} fetchReq={fetchReq} />
+                    ))}
+                </>
+              ) : (
+                <div>
+                  <div
+                    className="nopendingleavectn"
+                    style={{
+                      fontSize: "1.2rem",
+                      padding: "10px",
+                      fontWeight: "500",
+                      color: "#6075fe",
+                    }}
+                  >
+                    No more leaves remaining 🥳
                   </div>
-                )
-              }
+                  <div className="nopendingleavectn">
+                    <img className="emptyimg" src={emptyimg}></img>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

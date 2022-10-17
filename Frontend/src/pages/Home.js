@@ -16,7 +16,7 @@ const Home = () => {
           </div>
           <Outlet />
         </div>
-        <div style={{display: 'flex', justifyContent: 'start'}} className='chat'><Chat /></div>
+        {/* <div style={{display: 'flex', justifyContent: 'start'}} className='chat'><Chat /></div> */}
         
       </div>
     </div>

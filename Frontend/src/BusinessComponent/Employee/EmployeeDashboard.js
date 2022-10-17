@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import RaiseIssueModal from "../../SmallComponents/RaiseIssueModal";
 import EmployeeDailyUpdate from "../../SmallComponents/EmployeeDailyUpdate";
 
@@ -12,6 +13,9 @@ import Todo from "../../SmallComponents/Todo";
 function EmployeeDashboard() {
   const userObj = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  console.log(userObj)
 
   const [raiseIssueModal, setRaiseIssueModal] = useState(false);
   const handleRaiseIssue = () => {
@@ -20,6 +24,7 @@ function EmployeeDashboard() {
 
   return (
     <>
+      {userObj == "logout" && navigate("/")}
       <div className="empdashboard">
         <div className="empdash">
           <div>
@@ -63,9 +68,7 @@ function EmployeeDashboard() {
                       ? "Not Allocated"
                       : userObj.shiftOfCurrentMonth}
                   </div>
-                  <div style={{ color: "#7bd4fb" }}>4pm to 12pm
-                    
-                  </div>
+                  <div style={{ color: "#7bd4fb" }}>4pm to 12pm</div>
                 </div>
 
                 <div className="issuebtn" onClick={handleRaiseIssue}>

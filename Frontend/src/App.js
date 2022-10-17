@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { Routes, Route } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";
@@ -20,9 +21,26 @@ import "./App.css";
 // import "antd/dist/antd.css";
 
 function App() {
+  const location = useLocation();
+  const navigate= useNavigate();
+
+
+
   useEffect(()=>{
     document.title = "HR-Dashboard";
   })
+
+  // useEffect(()=>{
+  //   switch (location?.pathname) {
+  //     case "home/dashboard":
+  //       navigate("home/dashboard");
+  //       return;
+
+  //     case "home/payroll":
+  //       navigate("home/payroll");
+  //       return;
+  //   }
+  // })
   
 
   return (

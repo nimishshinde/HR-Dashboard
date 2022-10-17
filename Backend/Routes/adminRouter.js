@@ -8,7 +8,6 @@ const adminRouter = express.Router();
 // Gives Employee Details on department
 adminRouter.route("/deparatment/:id").get(getDeparatmentbyId);
 
-
 // Gives all leaves
 adminRouter.route("/leave").get(allLeaves);
 
@@ -23,33 +22,29 @@ adminRouter.route("/leave/:id").get(getLeavesFromEmpId);
 //For Updating rejection message and making isRejected flag true
 adminRouter.route("/leave/:id").post(updateRejectionMessage);
 
-// should approve and make changes in 
-// leaves taken in the month & leaves taken in the year 
+// should approve and make changes in
+// leaves taken in the month & leaves taken in the year
 adminRouter.route("/leave/approve/:id").post(approveRequest);
 
-
-
-async function getAllPendingLeaves(req, res){
+async function getAllPendingLeaves(req, res) {
   try {
-    let responseObj = await LeaveModel.find({ isPending : true })
+    let responseObj = await LeaveModel.find({ isPending: true });
     res.json(responseObj);
     // res.end('hola')
   } catch (error) {
-    res.json( {commingFrom : 'getAllPendingLeaves'} ,error);
+    res.json({ commingFrom: "getAllPendingLeaves" }, error);
   }
 }
-
 
 // Performance Message and shift update and bug of leave management.
 adminRouter.route("/shift/:id").post(updateEmployeeShift);
 adminRouter.route("/performance/:id").post(updatePerformance);
 adminRouter.route("/performance/score/:id").post(updatePerformanceScore);
 
+// salary update
+adminRouter.route("/salary/:id").post(updateEmployeeSalary);
 
-// salary update 
-adminRouter.route("/salary/:id").post( updateEmployeeSalary );
-
-async function updateEmployeeSalary(req, res){
+async function updateEmployeeSalary(req, res) {
   let empId = req.params.id;
   let salary = req.body.salary * 100000;
 
@@ -57,18 +52,16 @@ async function updateEmployeeSalary(req, res){
     { id: empId },
     {
       $set: {
-        'PayrollMangement.salary' : salary
+        "PayrollMangement.salary": salary,
       },
     },
     { new: true }
   );
-  
-  res.json( responseObj );
 
+  res.json(responseObj);
 }
 
-
-async function updatePerformance(req, res){
+async function updatePerformance(req, res) {
   let empId = req.params.id;
   let dataObj = req.body;
 
@@ -85,8 +78,7 @@ async function updatePerformance(req, res){
     { new: true }
   );
 
-  res.json(responseObj)
-
+  res.json(responseObj);
 }
 
 async function updatePerformanceScore(req, res) {
@@ -139,7 +131,7 @@ async function allLeaves(req, res) {
 async function addLeave(req, res) {
   console.log("Data Came from post method Leave", req.body);
   let data = req.body;
-  let addnewLeave = await LeaveModel.create(data, { new : true });
+  let addnewLeave = await LeaveModel.create(data, { new: true });
   res.send(addnewLeave);
 }
 
@@ -191,54 +183,51 @@ async function updateRejectionMessage(req, res) {
 async function approveRequest(req, res) {
   try {
     let uniqueLeaveId = req.params.id;
-
-    let responseObj = await LeaveModel.findOneAndUpdate(
+    await LeaveModel.findOneAndUpdate(
       { leaveId: uniqueLeaveId },
       { $set: { isApproved: true, isPending: false } },
-      { new : true }
-    );
-
-    console.log( responseObj.noofDaysLeaveRequired );
-    console.log( responseObj);
-
-    console.log("approve reqest", responseObj);
-
-    const padilev =
-      responseObj.remainingLeaves - responseObj.noofDaysLeaveRequired <= 0
-        ? 0
-        : responseObj.remainingLeaves - responseObj.noofDaysLeaveRequired;  
-
-    const levInMonth =
-      responseObj.leavesTakenInMonth + responseObj.noofDaysLeaveRequired;
-
-    // leaves takend in the year remaining.....
-    let userObj = await UserModel.findOneAndUpdate(
-      { id: responseObj.employeId },
-      {
-        $set: {
-          // leavesTakenInMonth: levInMonth,
-          leavesTakenInMonth:
-            responseObj.leavesTakenInMonth + responseObj.noofDaysLeaveRequired,
-          // responseObj.leavesTakenInMonth + responseObj.noofDaysLeaveRequired,
-
-          // paidLeavesRemaining:  padilev,
-          // paidLeavesRemaining: responseObj.noofDaysLeaveRequired,
-          // responseObj.remainingLeaves - responseObj.noofDaysLeaveRequired,
-        },
-      },
       { new: true }
-    );
+    ).then((responseObj) => {
+      console.log("responseFromApproveRequest", responseObj.employeId);
+      UserModel.findOne({ id: responseObj.employeId }).then((ress) => {
+        let paidLeavesUpdate;
+        let leavesTakenInMonthUpdate;
+        let leavesTakenInYearUpdate;
 
-    console.log("approve req user", userObj);
 
-    res.json(responseObj);
+        if (ress.paidLeavesRemaining - responseObj.noofDaysLeaveRequired <= 0) {
+          paidLeavesUpdate = 0;
+        } else {
+          paidLeavesUpdate =
+            ress.paidLeavesRemaining - responseObj.noofDaysLeaveRequired;
+        }
 
-    console.log("userObject after updating the leave", userObj);
+        leavesTakenInMonthUpdate =
+          responseObj.noofDaysLeaveRequired + ress.leavesTakenInMonth;
+
+        leavesTakenInYearUpdate =
+          responseObj.noofDaysLeaveRequired + ress.leavesTakenInYear;
+
+        UserModel.findOneAndUpdate(
+          { id: responseObj.employeId },
+          {
+            $set: {
+              paidLeavesRemaining: paidLeavesUpdate,
+              leavesTakenInMonth: leavesTakenInMonthUpdate,
+              leavesTakenInYear: leavesTakenInYearUpdate,
+            },
+          },
+          { new: true }
+        ).then((updatedUserObj) => {
+          res.json(updatedUserObj);
+        });
+      });
+    });
   } catch (error) {
-    console.log(error);
+    res.json(error)
   }
-}
 
+}
 
 //<----------Update Employee Shift------------------------------------------------------------------------------------------------------->
 async function updateEmployeeShift(req, res) {
@@ -248,9 +237,9 @@ async function updateEmployeeShift(req, res) {
   let response = await UserModel.findOneAndUpdate(
     { id: empId },
     { $set: { shiftOfCurrentMonth: userShift } },
-    {new : true}
+    { new: true }
   );
-  
+
   res.json(response);
 }
 

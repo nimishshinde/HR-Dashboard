@@ -41,7 +41,7 @@ const Navbar = () => {
     setClicked(true);
     setTimeout(()=>{
       setClicked(false);
-    }, 3000)
+    }, 4000)
   }
 
   const handleLogout = () => {
@@ -76,7 +76,9 @@ const Navbar = () => {
         <div onClick={handleClick}>
           <Avatar
             size={34}
-            icon={<RiAdminFill />}
+            icon={
+              userObj.employeeType == 1 ? <RiAdminFill /> : <IoPersonSharp />
+            }
             // icon={<IoPersonSharp />}
             style={{
               color: "#6075fe",
@@ -87,11 +89,17 @@ const Navbar = () => {
           {clicked == true ? (
             <div className="avatardropctn">
               <div className="avataroptionsctn">
-                <div className="options" onClick={handleProfile} > Profile </div>
-                <div className="options" onClick={handleLogout} > Logout </div>
+                <div className="options" onClick={handleProfile}>
+                  {" "}
+                  Profile{" "}
+                </div>
+                <div className="options" onClick={handleLogout}>
+                  {" "}
+                  Logout{" "}
+                </div>
               </div>
             </div>
-          ) : ( null )}
+          ) : null}
         </div>
       </div>
     </nav>

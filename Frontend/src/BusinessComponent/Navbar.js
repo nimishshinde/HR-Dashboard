@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BsBorder } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import './Navbar.css'
@@ -37,7 +38,8 @@ const Navbar = () => {
           fontSize: "1.2rem",
           color: "#6075fe",
           fontWeight : '600',
-          marginRight : '1rem'
+          marginRight : '1rem',
+          padding:'0.5rem'
         }}
       >
         {userObj?.firstName}

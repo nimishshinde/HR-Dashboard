@@ -191,7 +191,7 @@ const DashboardTableOne = ({ clickedBtn }) => {
   }
 
   return (
-    <div className="dtoc">
+    <div className="dtoc" >
       <div>
         <Table
           loading={loading}

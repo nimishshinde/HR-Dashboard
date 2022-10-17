@@ -81,7 +81,7 @@ function Dashboard() {
     <>
       {userObj.employeeType == 1 ? (
         <>
-          <div className="dashItems">
+          <div className="dashItems" >
             <div
               className={` ${clickStyle === 1 ? "activeSection" : ""} ${
                 small ? " sections" : " section"

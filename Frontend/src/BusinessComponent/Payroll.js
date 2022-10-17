@@ -24,7 +24,7 @@ const Payroll = () => {
     <>
       {userObj?.employeeType == 1 ? (
         <>
-          <div className="dashItems">
+          <div className="dashItems"  >
             <div
               className={` ${clickStyle == 1 ? "activeSection" : ""} ${
                 small ? " sections" : " section"
@@ -72,8 +72,9 @@ const Payroll = () => {
             >
               Supply Chain
             </div>
-          </div>
+
           {clickStyle !== 0 && <PayrollTable clickedBtn={clickStyle} />}
+          </div>
         </>
       ) : (
         <EmployeePayroll />

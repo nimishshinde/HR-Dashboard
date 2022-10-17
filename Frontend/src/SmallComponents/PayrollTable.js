@@ -183,7 +183,7 @@ function PayrollTable({ clickedBtn }) {
   ];
 
   return (
-    <div className="dtoc">
+    <div className="dtoc" >
       <div>
         <Table
           loading={loading}
@@ -243,105 +243,10 @@ function PayrollTable({ clickedBtn }) {
           </div>
         </div>
 
-        {/* <div>
-          <div className="pmcontainer">
-            <span className="material-symbols-outlined performanceIcon">
-              insert_chart
-            </span>
-            <strong> Performance</strong>
-          </div>
-
-          <div className="econtainer">
-            <div className="labelstyle">
-              <label>Communication</label>
-              <input
-                style={{
-                  borderRadius: "5px",
-                  border: "1px solid #A4A6B3",
-                  outline: "none",
-                  textAlign: "center",
-                  padding: "0.4rem",
-                  marginRight: "20%",
-                }}
-                type="number"
-                placeholder="0 - 9"
-              />
-            </div>
-
-            <div className="labelstyle">
-              <label style={{ display: "flex" }}>Leadership</label>
-              <input
-                style={{
-                  borderRadius: "5px",
-                  marginRight: "20%",
-                  border: "1px solid #A4A6B3",
-                  outline: "none",
-                  textAlign: "center",
-                  padding: "0.4rem",
-                }}
-                type="number"
-                placeholder="0 - 9"
-              />
-            </div>
-
-            <div className="labelstyle">
-              <label> Helping </label>
-              <input
-                style={{
-                  borderRadius: "5px",
-                  marginRight: "20%",
-                  border: "1px solid #A4A6B3",
-                  outline: "none",
-                  textAlign: "center",
-                  padding: "0.4rem",
-                }}
-                type="number"
-                placeholder="0 - 9"
-              />
-            </div>
-          </div>
-        </div>
-
         <div>
           <div className="pmcontainer">
             <span className="material-symbols-outlined performanceIcon">
-              work_history
-            </span>
-            <strong>Select Shift Hours</strong>
-          </div>
-
-          <div className="econtainer">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                aligItem: "center",
-                width: "100%",
-              }}
-            >
-              <Dropdown overlay={menu}>
-                <Space style={{ fontSize: "1rem" }}>
-                  Select shift hours
-                  <DownOutlined />
-                </Space>
-              </Dropdown>
-              <input
-                className="inputShift"
-                readOnly
-                type="text"
-                value={getValue}
-              />
-            </div>
-          </div>
-        </div> */}
-
-        <div>
-          <div className="pmcontainer">
-            <span className="material-symbols-outlined performanceIcon">
-              {/* work_history */}
               <GiPayMoney />
-              {/* <GiTakeMyMoney />
-            <MdOutlineAttachMoney /> */}
             </span>
             <strong> Update Salary </strong>
           </div>

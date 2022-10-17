@@ -42,12 +42,14 @@
 
 .dashItems {
     display: flex;
-    flex-wrap: wrap;
-    row-gap: 1rem;
-    column-gap: 3rem;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    
+    row-gap: 1rem;
+    column-gap: 2rem;
     margin-top: 2rem;
+    max-width: 80vw;
 }
 
 .small {

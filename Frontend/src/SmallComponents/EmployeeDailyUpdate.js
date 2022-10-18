@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import axios from 'axios';
+import { v4 as uuidv4 } from "uuid";
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Input, DatePicker, Space, notification } from "antd";
+import { Input, DatePicker, notification, Spin } from "antd";
 import "./EmployeeDailyUpdate.css";
 import "antd/dist/antd.css";
 import {TiTick} from "react-icons/ti";
@@ -27,13 +28,15 @@ function EmployeeDailyUpdate() {
   };
 
   const [updateTaskObj, setupdateTaskObj] = useState({
-    taskHeading : '',
-    taskDescription : '',
-    taskCompletedDate : '',
+    taskHeading: "",
+    taskDescription: "",
+    taskCompletedDate: "",
 
     // <-future Scope----------------------------->
-    taskId : Number,
+    taskId: uuidv4(),
   });
+
+  const [spinner, setSpinner] = useState(false);
 
   useEffect(()=>{
     
@@ -54,7 +57,10 @@ function EmployeeDailyUpdate() {
   }
 
   async function updateTaskCompleted(){
-    if(updateTaskObj.taskHeading !== '' && updateTaskObj.taskDescription !== '' && updateTaskObj.taskCompletedDate !== ''){
+
+    setSpinner(true);
+    
+    if(updateTaskObj.taskHeading !== '' && updateTaskObj.taskDescription !== '' && updateTaskObj.taskCompletedDate !== '' && updateTaskObj.taskId){
       let res = await axios({
         method: "post",
         url: `https://hr-dashboard-nimish.herokuapp.com/employee/updatetask/${userObj.id}`,
@@ -72,6 +78,8 @@ function EmployeeDailyUpdate() {
     }else{
       alert('Please Enter all the details of update task')
     } 
+
+    setSpinner(false);
   }
 
   return (
@@ -130,8 +138,12 @@ function EmployeeDailyUpdate() {
 
         <div className="sendbtnctn">
           <div onClick={() => updateTaskCompleted()} className="sendbtn">
-            {" "}
-            Update{" "}
+            {
+              spinner == true ? <Spin tip='updating' /> : 'Update'
+            }
+            {/* {" "}
+            Update{" "} */}
+
           </div>
         </div>
       </div>

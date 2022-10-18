@@ -1,0 +1,43 @@
+.mainupdatectn {
+   margin: 1rem 2rem;
+}
+
+.dailyupdatestxt {
+   font-weight: 600;
+   font-size: 1.4rem;
+   color: #6075fe;
+}
+
+.imgctn{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+}
+
+.emptyimg{
+   width: 40%;
+   height: 50%
+}
+
+.nodatatxt{
+   text-align: center;
+   font-size: 1rem;
+   color: #6075fe;
+   font-weight: 600;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.cardflexwrap{
+   width: 100%;
+   height: 70vh;
+   overflow: scroll;
+   scroll-behavior: smooth;
+   /* border: 1px solid red; */
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   justify-content: space-around;
+}

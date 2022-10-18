@@ -4,9 +4,12 @@ const { UserModel, UserTaskModel } = require("../UserModel");
 const employeeRouter = express.Router();
 
 employeeRouter.route("/details/:id").get(getEmpByDetails);
+employeeRouter.route("/updates/:id").get(getDailyUpdatesFromId);
 employeeRouter.route("/updatetask/:id").post(updateUserTask);
 employeeRouter.route("/updatetodo/:id").post(updateTodo);
 
+
+// Employee Details from id -------------------------------------------------------------------------------------------------------------------------
 async function getEmpByDetails(req, res) {
   let empId = req.params.id;
   try {
@@ -14,6 +17,18 @@ async function getEmpByDetails(req, res) {
     res.json(updatedEmpObj);
   } catch (error) {
     console.log(error);
+  }
+}
+
+// get daily updates from id -------------------------------------------------------------------------------------------------------
+async function getDailyUpdatesFromId (req, res){
+  let empId = req.params.id;
+
+  try {
+    let responseObj = await UserTaskModel.findOne({ employeId: empId });
+    res.json(responseObj);
+  } catch (error) {
+    res.json(error);
   }
 }
 

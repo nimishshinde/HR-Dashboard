@@ -94,7 +94,8 @@
 }
 
 .updateBtn {
-    width: 25%;
+    cursor: pointer;
+    width: 35%;
     font-size: 1rem;
     margin: 0.6rem;
     padding: 0.6rem;

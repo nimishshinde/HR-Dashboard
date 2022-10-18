@@ -11,6 +11,7 @@ import Payroll from "./BusinessComponent/Payroll";
 import Dashboard from "./BusinessComponent/Dashboard";
 import Leave from "./BusinessComponent/Leave";
 import Test from "./BusinessComponent/Test";
+import Updates from "./BusinessComponent/Employee/Updates";
 import Chat from "./BusinessComponent/Chat";
 import PageNotFound from './PageNotFound';
 // import DashboardTable from './BusinessComponent/DashboardTable';
@@ -55,6 +56,7 @@ function App() {
               <Route exact path="dashboard" element={<Dashboard />} />
               <Route exact path="payroll" element={<Payroll />} />
               <Route exact path="leave" element={<Leave />} />
+              <Route exact path="update" element={<Updates />} />
               <Route exact path="test" element={<Test />} />
             </Route>
           </Routes>

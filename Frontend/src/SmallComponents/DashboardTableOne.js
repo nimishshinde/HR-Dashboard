@@ -26,22 +26,13 @@ const DashboardTableOne = ({ clickedBtn }) => {
   const [allrequest, setAllRequest] = useState([]);
   const [getValue, setGetValue] = useState("");
   const [employeeDetails, setEmployeeDetails] = useState({});
-  const [score, setScore] = useState(0);
+  const [score1, setScore1] = useState(1);
+  const [score3, setScore2] = useState(1);
+  const [score2, setScore3] = useState(1);
   const [currentEmpId, setCurrentEmpId] = useState("");
   const [performanceMessage, setPerformanceMessage] = useState("");
 
   // ------------------------------------------------------------------------------------------------------------------------------
-  const increaseScore = () => {
-    if (score < 10) {
-      setScore(score + 1);
-    }
-  };
-
-  const decreaseScore = () => {
-    if (score > 0) {
-      setScore(score - 1);
-    }
-  };
   // --------------------------------------------------------------------------------------------------------------
   const showModal = (record) => {
     console.log(record);
@@ -51,7 +42,14 @@ const DashboardTableOne = ({ clickedBtn }) => {
   };
 
   const updateDetails = () => {
-    updatePerformanceMessage(performanceMessage);
+    alert(score1, score2 , score3)
+
+    if( performanceMessage.trim() == "" ){
+      alert('Please enter Performance Message')
+    }else{
+      updatePerformanceMessage(performanceMessage);
+    }
+
     setVisible(false);
   };
 
@@ -99,7 +97,7 @@ const DashboardTableOne = ({ clickedBtn }) => {
     },
     {
       title: "Shift",
-      dataIndex: "leavesTakeInTheMonth",
+      dataIndex: "shiftOfCurrentMonth",
       key: "key",
     },
   ];
@@ -170,12 +168,18 @@ const DashboardTableOne = ({ clickedBtn }) => {
   };
 
   async function updatePerformanceMessage(text) {
+
+    let totalScore = score1 + score2 + score3;
+    alert( totalScore );
+    alert(currentEmpId);
+
     let responseObj = await axios({
       method: "post",
-      url: `https://hr-dashboard-nimish.herokuapp.com/admin/performance/${currentEmpId}`,
+      // url: `https://hr-dashboard-nimish.herokuapp.com/admin/performance/${currentEmpId}`,
+      url: `http://localhost:5000/admin/performance/${currentEmpId}`,
       data: {
         performanceMessage: text,
-        performanceScore: 35,
+        performanceScore: totalScore,
       },
     });
 
@@ -190,8 +194,39 @@ const DashboardTableOne = ({ clickedBtn }) => {
     );
   }
 
+  async function updateShiftHours() {
+    let responseObj = await axios({
+      method: "post",
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/shift/${currentEmpId}`,
+      data: { shift: getValue },
+    });
+
+    responseObj.status == 200 &&
+      openNotificationWithIcon(
+        "success",
+        "Shift Hours Updated",
+        `Shift hours of employee ${currentEmpId} has been updated`
+      );
+
+    setVisible(false);
+  }
+
+  function handleScore (num,score) {
+    if(score < 1 || score > 10){
+      alert("Please enter score between 1 to 10")
+    }else{
+      if(num == 1){
+        setScore1(+score)
+      }else if (num == 2){
+        setScore2(+score)
+      }else{
+        setScore3(+score)
+      }
+    }
+  }
+
   return (
-    <div className="dtoc" >
+    <div className="dtoc">
       <div>
         <Table
           loading={loading}
@@ -217,7 +252,13 @@ const DashboardTableOne = ({ clickedBtn }) => {
             <div className="dbtnmodal approve">
               <div onClick={updateDetails} className="btntext">
                 {" "}
-                Update{" "}
+                Update Perfomance{" "}
+              </div>
+            </div>
+            <div className="dbtnmodal approve">
+              <div onClick={updateShiftHours} className="btntext">
+                {" "}
+                Update Shift Hours{" "}
               </div>
             </div>
           </div>,
@@ -256,14 +297,14 @@ const DashboardTableOne = ({ clickedBtn }) => {
             <div className="blue">{employeeDetails.address}</div>
           </p>
           <p id="performance" className="parad">
-            <strong>Performance:</strong>
+            <strong>Performance {" "} : {" "} </strong>
             <div className="blue">
-              {employeeDetails.performanceOfPerviousMonth}
+              {employeeDetails.performanceOfPerviousMonth} {"%"}
             </div>
           </p>
           <p id="shift" className="parad">
-            <strong>Shift:</strong>
-            <div className="blue">{getValue}</div>
+            <strong>Shift {" "}: {" "}</strong>
+            <div className="blue">{ employeeDetails.shiftOfCurrentMonth }</div>
           </p>
         </div>
 
@@ -274,85 +315,90 @@ const DashboardTableOne = ({ clickedBtn }) => {
             </span>
             <strong>Performance</strong>
           </div>
-          <div className="econtainer progress">
-            <div className="progressContainer">
-              <p className="parad">
-                <strong>Leaves Taken In Month: </strong>
-                <div className="blue">{employeeDetails.leavesTakenInMonth}</div>
-              </p>
-              <p className="parad">
-                <strong>Tasks of the Month: </strong>
-                <div className="blue">{employeeDetails.tasksOfTheMonth}</div>
-              </p>
-              <div className="progressBar">
+          <div className="econtainer" style={{ marginTop: "5px" }}>
+            <div className="progress" style={{ margin: "0px" }}>
+              <lable style={{ fontWeight: "700", fontSize: "1rem" }}>
                 {" "}
-                <strong>Perfomance</strong>
-                <div className="progress">
-                  <Progress
-                    type="circle"
-                    percent={employeeDetails.performanceOfPerviousMonth}
-                    width={120}
-                    status={
-                      employeeDetails.performanceOfPerviousMonth < 35
-                        ? "exception "
-                        : ""
-                    }
-                  />
-                </div>
-              </div>
+                Communication{" "}
+              </lable>
+              <input
+                onChange={(e) => handleScore(1, e.target.value)}
+                min={1}
+                max={10}
+                placeholder="1 - 10"
+                style={{
+                  width: "40%",
+                  padding: "0.5rem",
+                  outline: "none",
+                  border: "1px solid #6075fe",
+                  borderRadius: "4px",
+                  marginRight: "3rem",
+                }}
+                type="number"
+              ></input>
             </div>
-            <div className="progressContainer">
-              <p className="parad" style={{ marignBottom: "12px" }}>
-                <strong>Rate {employeeDetails.firstName}: </strong>
-
-                <input
-                  className="inputRate"
-                  value={score}
-                  type="number"
-                  readOnly
-                />
-                <div className="upsdowns">
-                  <button className="ups">
-                    <CaretUpOutlined
-                      onClick={increaseScore}
-                      style={{
-                        height: "1.2rem",
-                        fontSize: "20px",
-                        textAlign: "center",
-                        color: "#6ff16f",
-                        cursor: "default",
-                      }}
-                    />
-                  </button>
-                  <button className="downs">
-                    <CaretDownOutlined
-                      onClick={decreaseScore}
-                      style={{
-                        height: "1.2rem",
-                        fontSize: "20px",
-                        textAlign: "center",
-                        color: "red",
-                        cursor: "default",
-                      }}
-                    />
-                  </button>
-                </div>
-              </p>
-
-              <p className="parad">
-                <strong>Tasks completed: </strong>{" "}
-                <div className="blue">
-                  {employeeDetails.tasksCompletedInMonth}
-                </div>
-              </p>
-              <p style={{ marginBottom: "0" }}>
-                <strong>Performance message:</strong>{" "}
-                <textarea
-                  className="inputMessage"
-                  type="text"
-                  onChange={(e) => setPerformanceMessage(e.target.value)}
-                />
-              </p>
+            <div className="progress" style={{ margin: "0px" }}>
+              <lable style={{ fontWeight: "700", fontSize: "1rem" }}>
+                {" "}
+                Leadership{" "}
+              </lable>
+              <input
+                onChange={(e) => handleScore(2, e.target.value)}
+                min={1}
+                max={10}
+                placeholder="1 - 10"
+                style={{
+                  width: "40%",
+                  padding: "0.5rem",
+                  outline: "none",
+                  border: "1px solid #6075fe",
+                  borderRadius: "4px",
+                  marginRight: "3rem",
+                }}
+                type="number"
+              ></input>
+            </div>
+            <div className="progress" style={{ margin: "0px" }}>
+              <lable style={{ fontWeight: "700", fontSize: "1rem" }}>
+                {" "}
+                Rating{" "}
+              </lable>
+              <input
+                onChange={(e) => handleScore(3, e.target.value)}
+                min={1}
+                max={10}
+                placeholder="1 - 10"
+                style={{
+                  width: "40%",
+                  padding: "0.5rem",
+                  outline: "none",
+                  border: "1px solid #6075fe",
+                  borderRadius: "4px",
+                  marginRight: "3rem",
+                }}
+                type="number"
+              ></input>
+            </div>
+            <div className="progress" style={{ margin: "0px" }}>
+              <lable style={{ fontWeight: "700", fontSize: "1rem" }}>
+                {" "}
+                Performance Message:{" "}
+              </lable>
+              <textarea
+                className="inputMessage"
+                type="text"
+                style={{
+                  width: "40%",
+                  padding: "0.5rem",
+                  outline: "none",
+                  border: "1px solid #6075fe",
+                  borderRadius: "4px",
+                  marginRight: "3rem",
+                  color: "black",
+                  fontWeight: "400",
+                }}
+                onChange={(e) => setPerformanceMessage(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -360,8 +406,8 @@ const DashboardTableOne = ({ clickedBtn }) => {
         <div>
           <div className="mcontainer">
             <span
-              style={{ color: "#6075fe", marginRight: "5px" }}
-              className="material-symbols-outlined"
+              style={{ color: "white", marginRight: "5px", marginBottom:'5px' }}
+              className="material-symbols-outlined performanceIcon "
             >
               work_history
             </span>

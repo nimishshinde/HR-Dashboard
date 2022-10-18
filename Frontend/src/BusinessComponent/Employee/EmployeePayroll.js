@@ -14,12 +14,10 @@ function EmployeePayroll() {
   const userObj = useSelector((state) => state);
   const dispatch = useDispatch();
 
-
   const monthlyPay = Math.ceil(userObj.PayrollMangement.salary / 12);
   const dayPay = Math.ceil(monthlyPay / 30);
 
   async function updateSalary(sal) {
-    
     let responseObj = await axios({
       method: "post",
       url: `https://hr-dashboard-nimish.herokuapp.com/admin/salary/${userObj.id}`,
@@ -29,9 +27,9 @@ function EmployeePayroll() {
     });
 
     dispatch({
-      type : 'login',
-      payload : responseObj.data
-    })
+      type: "login",
+      payload: responseObj.data,
+    });
   }
 
   return (
@@ -42,8 +40,9 @@ function EmployeePayroll() {
       </div>
 
       <div className="btnctn">
-        <div className="btnpr editbtn" 
-        // onClick={updateSalary(10)}
+        <div
+          className="btnpr editbtn"
+          // onClick={updateSalary(10)}
         >
           {" "}
           <span>
@@ -98,9 +97,9 @@ function EmployeePayroll() {
             <div className="cardpr">
               <div className="cardtxt"> Salary credited </div>
               <div className="cardamt">
-                {userObj.salaryCreditedThisMonth == "" ||
-                userObj.salaryCreditedThisMonth == undefined ||
-                userObj.salaryCreditedThisMonth == false
+                {userObj.PayrollMangement.salaryCreditedThisMonth == "" ||
+                userObj.PayrollMangement.salaryCreditedThisMonth == undefined ||
+                userObj.PayrollMangement.salaryCreditedThisMonth == false
                   ? "No"
                   : "Yes"}
               </div>

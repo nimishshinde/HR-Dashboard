@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
-import { Link, NavLink, Outlet } from "react-router-dom";
 import Logo1 from "../assests/logo1.png";
 import { MdDashboard } from "react-icons/md";
 import { MdWorkOff } from "react-icons/md";
 import { BsNewspaper } from "react-icons/bs";
 import { RiMoneyDollarBoxFill } from "react-icons/ri";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const Siderbar = () => {
+  const userObj = useSelector(state => state);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
   const currentPath = location.pathname;
-
   const [clickStyle, setClickStyle] = useState(1);
   
 
@@ -44,11 +45,14 @@ const Siderbar = () => {
 
   return (
     <>
-      <div style={{ height: "100vh",
-      //  position:'fixed', top:'0', left:'0'
-        boxShadow: "rgba(0, 0, 0, 0.08) 0px 4px 12px",
-        padding:'0.5rem'
-       }}>
+      <div
+        style={{
+          height: "100vh",
+          //  position:'fixed', top:'0', left:'0'
+          boxShadow: "rgba(0, 0, 0, 0.08) 0px 4px 12px",
+          padding: "0.5rem",
+        }}
+      >
         <aside className="sidebar">
           <div
             style={{
@@ -63,17 +67,21 @@ const Siderbar = () => {
                 fontWeight: "600",
                 // color: "#748DA6",
                 color: "#354259",
-                cursor:'default'
+                cursor: "default",
               }}
             >
               <img
                 src={Logo1}
-                style={{ width: "4rem", marginLeft: "0.8rem", cursor: 'default' }}
+                style={{
+                  width: "4rem",
+                  marginLeft: "0.8rem",
+                  cursor: "default",
+                }}
               />
               {"  "} Office HR
             </div>
           </div>
-          
+
           <div className="sidebarContainer">
             <ul style={{ marginLeft: "2px", marginTop: "0.8rem" }}>
               <Link to="/home/dashboard">
@@ -139,6 +147,32 @@ const Siderbar = () => {
                   </div>
                 </li>
               </Link>
+              {userObj.employeeType == 2 ? (
+                <div>
+                  <Link to="/home/update">
+                    <li
+                      onClick={() => {
+                        setClickStyle(4);
+                      }}
+                      className={`${clickStyle == 4 ? "item active" : "item "}`}
+                    >
+                      <div className="sidebarText">
+                        {" "}
+                        <BsNewspaper
+                          style={{
+                            color: "#A4A6B3",
+                            fontSize: "1rem",
+                            marginRight: "5px",
+                            color: `${clickStyle == 4 ? "white" : "#A4A6B3"}`,
+                          }}
+                        />{" "}
+                        Daily Updates{" "}
+                      </div>
+                    </li>
+                  </Link>
+                </div>
+              ) : null}
+
               {/* <Link to="/home/test">
                 <li
                   onClick={() => {

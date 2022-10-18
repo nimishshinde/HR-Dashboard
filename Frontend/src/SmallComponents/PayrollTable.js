@@ -85,6 +85,12 @@ function PayrollTable({ clickedBtn }) {
   }, [clickedBtn]);
 
   async function updateSalary(salary) {
+
+    if(salary.trim() == ""){
+      alert("Please Enter Salary");
+      return;
+    }
+
     let responseObj = await axios({
       method: "post",
       url: `https://hr-dashboard-nimish.herokuapp.com/admin/salary/${currentEmpId}`,
@@ -124,6 +130,24 @@ function PayrollTable({ clickedBtn }) {
   const onClick = ({ key }) => {
     setGetValue(key);
   };
+
+  async function crediteSalary () {
+    let monthlySalary = salary/12;
+    let responseObj = await axios({
+      method: "post",
+      url: `http://localhost:5000/admin/salary/credit/${currentEmpId}`,
+      data : {}
+    });
+
+    responseObj.status == 200 &&
+      openNotificationWithIcon(
+        "success",
+        "User salary has credited",
+        `Salary of Employee ${currentEmpId} is Credited`
+      );
+
+    handleCancel();
+  }
 
   const menu = (
     <Menu
@@ -183,7 +207,7 @@ function PayrollTable({ clickedBtn }) {
   ];
 
   return (
-    <div className="dtoc" >
+    <div className="dtoc">
       <div>
         <Table
           loading={loading}
@@ -209,6 +233,10 @@ function PayrollTable({ clickedBtn }) {
             <div onClick={() => updateSalary(salary)} className="updateBtn">
               {" "}
               Update{" "}
+            </div>
+            <div onClick={() => crediteSalary() } className="updateBtn">
+              {" "}
+              Credite Salary {" "}
             </div>
           </div>,
         ]}

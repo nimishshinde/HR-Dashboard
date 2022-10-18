@@ -26,15 +26,7 @@ adminRouter.route("/leave/:id").post(updateRejectionMessage);
 // leaves taken in the month & leaves taken in the year
 adminRouter.route("/leave/approve/:id").post(approveRequest);
 
-async function getAllPendingLeaves(req, res) {
-  try {
-    let responseObj = await LeaveModel.find({ isPending: true });
-    res.json(responseObj);
-    // res.end('hola')
-  } catch (error) {
-    res.json({ commingFrom: "getAllPendingLeaves" }, error);
-  }
-}
+
 
 // Performance Message and shift update and bug of leave management.
 adminRouter.route("/shift/:id").post(updateEmployeeShift);
@@ -43,7 +35,10 @@ adminRouter.route("/performance/score/:id").post(updatePerformanceScore);
 
 // salary update
 adminRouter.route("/salary/:id").post(updateEmployeeSalary);
+adminRouter.route("/salary/credit/:id").post(crediteSalaryForThisMonth);
 
+
+// <----------Salary----------------------------------------------------------------------------------------------------------------------
 async function updateEmployeeSalary(req, res) {
   let empId = req.params.id;
   let salary = req.body.salary * 100000;
@@ -61,18 +56,39 @@ async function updateEmployeeSalary(req, res) {
   res.json(responseObj);
 }
 
+async function crediteSalaryForThisMonth(req, res){
+  let empId = req.params.id;
+  let responseObj = await UserModel.findOneAndUpdate(
+    { id: empId },
+    {
+      $set: {
+        "PayrollMangement.salaryCreditedThisMonth": true,
+        leavesTakenInMonth : 0,
+      },
+    },
+    { new: true }
+  );
+
+  res.json(responseObj);
+
+}
+
+// <---------Employe Shift and performance Update--------------------------------------------------------------------------------------
 async function updatePerformance(req, res) {
   let empId = req.params.id;
   let dataObj = req.body;
 
-  // let performanceScore = Math.ceil((dataObj.performanceScore / 40) * 100);
+  console.log(dataObj.performanceMessage)
+  console.log(dataObj.performanceScore)
+
+  let performanceScore = Math.ceil((dataObj.performanceScore  / 30) * 100);
 
   let responseObj = await UserModel.findOneAndUpdate(
     { id: empId },
     {
       $set: {
         performanceMessage: dataObj.performanceMessage,
-        // performanceOfPerviousMonth : performanceScore
+        performanceOfPerviousMonth: performanceScore,
       },
     },
     { new: true }
@@ -115,6 +131,8 @@ async function getDeparatmentbyId(req, res) {
     console.log(error.message);
   }
 }
+
+
 
 // <--------All Leave Request---------------------------------------------------------------------------->
 async function allLeaves(req, res) {
@@ -227,6 +245,16 @@ async function approveRequest(req, res) {
     res.json(error)
   }
 
+}
+
+async function getAllPendingLeaves(req, res) {
+  try {
+    let responseObj = await LeaveModel.find({ isPending: true });
+    res.json(responseObj);
+    // res.end('hola')
+  } catch (error) {
+    res.json({ commingFrom: "getAllPendingLeaves" }, error);
+  }
 }
 
 //<----------Update Employee Shift------------------------------------------------------------------------------------------------------->

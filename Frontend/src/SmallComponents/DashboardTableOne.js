@@ -42,7 +42,6 @@ const DashboardTableOne = ({ clickedBtn }) => {
   };
 
   const updateDetails = () => {
-    alert(score1, score2 , score3)
 
     if( performanceMessage.trim() == "" ){
       alert('Please enter Performance Message')
@@ -168,15 +167,12 @@ const DashboardTableOne = ({ clickedBtn }) => {
   };
 
   async function updatePerformanceMessage(text) {
-
     let totalScore = score1 + score2 + score3;
-    alert( totalScore );
-    alert(currentEmpId);
 
     let responseObj = await axios({
       method: "post",
       // url: `https://hr-dashboard-nimish.herokuapp.com/admin/performance/${currentEmpId}`,
-      url: `http://localhost:5000/admin/performance/${currentEmpId}`,
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/performance/${currentEmpId}`,
       data: {
         performanceMessage: text,
         performanceScore: totalScore,

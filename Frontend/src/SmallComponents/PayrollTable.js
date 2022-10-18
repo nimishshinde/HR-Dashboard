@@ -135,8 +135,8 @@ function PayrollTable({ clickedBtn }) {
     let monthlySalary = salary/12;
     let responseObj = await axios({
       method: "post",
-      url: `http://localhost:5000/admin/salary/credit/${currentEmpId}`,
-      data : {}
+      url: `https://hr-dashboard-nimish.herokuapp.com/admin/salary/credit/${currentEmpId}`,
+      data: {},
     });
 
     responseObj.status == 200 &&

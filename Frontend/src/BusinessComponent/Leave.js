@@ -45,7 +45,7 @@ const Leave = () => {
     try {
       let responseObj = axios({
         method: "get",
-        url: "http://localhost:5000/admin/leave/pending",
+        url: "https://hr-dashboard-nimish.herokuapp.com/admin/leave/pending",
       }).then((res) => {
         console.log(res.data.length);
         if (res.data.length == 0) {

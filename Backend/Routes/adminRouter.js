@@ -26,8 +26,6 @@ adminRouter.route("/leave/:id").post(updateRejectionMessage);
 // leaves taken in the month & leaves taken in the year
 adminRouter.route("/leave/approve/:id").post(approveRequest);
 
-
-
 // Performance Message and shift update and bug of leave management.
 adminRouter.route("/shift/:id").post(updateEmployeeShift);
 adminRouter.route("/performance/:id").post(updatePerformance);
@@ -36,7 +34,6 @@ adminRouter.route("/performance/score/:id").post(updatePerformanceScore);
 // salary update
 adminRouter.route("/salary/:id").post(updateEmployeeSalary);
 adminRouter.route("/salary/credit/:id").post(crediteSalaryForThisMonth);
-
 
 // <----------Salary----------------------------------------------------------------------------------------------------------------------
 async function updateEmployeeSalary(req, res) {
@@ -56,21 +53,20 @@ async function updateEmployeeSalary(req, res) {
   res.json(responseObj);
 }
 
-async function crediteSalaryForThisMonth(req, res){
+async function crediteSalaryForThisMonth(req, res) {
   let empId = req.params.id;
   let responseObj = await UserModel.findOneAndUpdate(
     { id: empId },
     {
       $set: {
         "PayrollMangement.salaryCreditedThisMonth": true,
-        leavesTakenInMonth : 0,
+        leavesTakenInMonth: 0,
       },
     },
     { new: true }
   );
 
   res.json(responseObj);
-
 }
 
 // <---------Employe Shift and performance Update--------------------------------------------------------------------------------------
@@ -78,10 +74,10 @@ async function updatePerformance(req, res) {
   let empId = req.params.id;
   let dataObj = req.body;
 
-  console.log(dataObj.performanceMessage)
-  console.log(dataObj.performanceScore)
+  console.log(dataObj.performanceMessage);
+  console.log(dataObj.performanceScore);
 
-  let performanceScore = Math.ceil((dataObj.performanceScore  / 30) * 100);
+  let performanceScore = Math.ceil((dataObj.performanceScore / 30) * 100);
 
   let responseObj = await UserModel.findOneAndUpdate(
     { id: empId },
@@ -131,8 +127,6 @@ async function getDeparatmentbyId(req, res) {
     console.log(error.message);
   }
 }
-
-
 
 // <--------All Leave Request---------------------------------------------------------------------------->
 async function allLeaves(req, res) {
@@ -212,7 +206,6 @@ async function approveRequest(req, res) {
         let leavesTakenInMonthUpdate;
         let leavesTakenInYearUpdate;
 
-
         if (ress.paidLeavesRemaining - responseObj.noofDaysLeaveRequired <= 0) {
           paidLeavesUpdate = 0;
         } else {
@@ -242,9 +235,8 @@ async function approveRequest(req, res) {
       });
     });
   } catch (error) {
-    res.json(error)
+    res.json(error);
   }
-
 }
 
 async function getAllPendingLeaves(req, res) {

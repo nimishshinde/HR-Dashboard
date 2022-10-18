@@ -16,7 +16,7 @@ function Updates() {
   async function fetchUpdateObj() {
     let responseObj = await axios({
       method: "get",
-      url: `http://localhost:5000/employee/updates/${userObj.id}`,
+      url: `https://hr-dashboard-nimish.herokuapp.com/employee/updates/${userObj.id}`,
     });
 
     console.log(responseObj.data);

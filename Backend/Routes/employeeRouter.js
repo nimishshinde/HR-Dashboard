@@ -7,6 +7,7 @@ employeeRouter.route("/details/:id").get(getEmpByDetails);
 employeeRouter.route("/updates/:id").get(getDailyUpdatesFromId);
 employeeRouter.route("/updatetask/:id").post(updateUserTask);
 employeeRouter.route("/updatetodo/:id").post(updateTodo);
+employeeRouter.route("/deletetask/:id").delete(deleteTask);
 
 
 // Employee Details from id -------------------------------------------------------------------------------------------------------------------------
@@ -21,6 +22,33 @@ async function getEmpByDetails(req, res) {
 }
 
 // get daily updates from id -------------------------------------------------------------------------------------------------------
+async function deleteTask (req, res){
+  let userTaskId = req.params.id;
+  let userId = req.body.empId;
+  console.log(userTaskId, userId);
+
+  try {
+    let responseObj = await UserTaskModel.updateOne(
+      { employeId: userId },
+      {
+        $pull: {
+          taskCompletedArr: { taskId: userTaskId },
+        },
+      },
+      { new : true }
+    );
+      console.log(responseObj)
+    res.json( { status:200 } )
+
+  } catch (error) {
+    
+  }
+
+  // res.json({userTaskId, userId})
+
+
+}
+
 async function getDailyUpdatesFromId (req, res){
   let empId = req.params.id;
 

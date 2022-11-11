@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import emptyimg from "../../assests/emptystateforupdates.png";
 import axios from "axios";
 import { BiTaskX } from "react-icons/bi";
+import { Spin } from 'antd';
 
 import "./Updates.css";
 
@@ -12,8 +13,11 @@ function Updates() {
   const dispatch = useDispatch();
   const [updateArr, setUpdateArr] = useState([]);
   const [noData, setNoData] = useState(false);
+  const [reload, setReload] = useState(false);
 
   async function fetchUpdateObj() {
+    setNoData(true);
+
     let responseObj = await axios({
       method: "get",
       url: `https://hr-dashboard-nimish.herokuapp.com/employee/updates/${userObj.id}`,
@@ -26,7 +30,10 @@ function Updates() {
     } else {
       setNoData(true);
     }
+
+    setNoData(false);
   }
+
   useEffect(() => {
     fetchUpdateObj();
   }, []);
@@ -34,26 +41,39 @@ function Updates() {
   return (
     <div className="mainupdatectn">
       <div className="dailyupdatestxt"> Daily Updates </div>
-      {updateArr.length != 0 ? (
-        <div className="cardflexwrap" >
-          {" "}
-          {updateArr.map((el) => (
-            // <div style={{ width:'30%' }} >
-            // </div>
-               <EmployeeUpdatesCard  data={ el } />
-          ))}{" "}
-        </div>
-      ) : (
-        <div>
-          <div className="nodatatxt">
-            {" "}
-            No Updates <BiTaskX  size={20} color="#FF4646" />{" "}
-          </div>
-          <div className="imgctn">
-            <img className="emptyimg" src={emptyimg}></img>
-          </div>
-        </div>
-      )}
+      <>
+        {" "}
+        {noData == true ? (
+          <Spin />
+        ) : (
+          <>
+            {updateArr.length != 0 ? (
+              <div className="cardflexwrap">
+                {" "}
+                {updateArr.map((el) => (
+                  // <div style={{ width:'30%' }} >
+                  // </div>
+                  <EmployeeUpdatesCard
+                    data={el}
+                    updateArr={updateArr}
+                    setUpdateArr={setUpdateArr}
+                  />
+                ))}{" "}
+              </div>
+            ) : (
+              <div>
+                <div className="nodatatxt">
+                  {" "}
+                  No Updates <BiTaskX size={20} color="#FF4646" />{" "}
+                </div>
+                <div className="imgctn">
+                  <img className="emptyimg" src={emptyimg}></img>
+                </div>
+              </div>
+            )}
+          </>
+        )}{" "}
+      </>
     </div>
   );
 }

@@ -37,7 +37,7 @@
    scroll-behavior: smooth;
    /* border: 1px solid red; */
    display: flex;
-   align-items: center;
+   /* align-items: center; */
    flex-wrap: wrap;
-   justify-content: space-around;
+   /* justify-content: space-around; */
 }

@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
+import axios from 'axios';
 import { AiTwotoneDelete, AiOutlineDelete } from "react-icons/ai";
 import "./EmployeeUpdatesCard.css";
+import { useSelector } from "react-redux";
 
-function EmployeeUpdatesCard({ data }) {
+function EmployeeUpdatesCard({ data, fn, setUpdateArr, updateArr }) {
+  const userObj = useSelector((state) => state);
+
+  const handleDelete = async () => {
+    let responseObj = await axios({
+      method: "delete",
+      url: `http://localhost:5000/employee/deletetask/${data.taskId}`,
+      data: { empId: userObj.id },
+    });
+
+    let datax = updateArr.filter((item) => {
+      if (item.taskId != data.taskId) {
+        return item;
+      }
+    });
+    setUpdateArr(datax);
+    console.log(datax)
+  };
+
   return (
     <>
       {" "}
@@ -14,10 +34,11 @@ function EmployeeUpdatesCard({ data }) {
             <div className="headingtxt"> {data.taskHeading} </div>
             <small className="smalltxt">
               {" "}
-              {moment(data.taskCompletedDate).format("MMM Do YYYY")}{" "}
+              {/* {moment(data.taskCompletedDate).format("MMM Do YYYY")}{" "} */}
+              {data.taskCompletedDate}{" "}
             </small>
           </div>
-          <div style={{ height: "3rem"}}>
+          <div style={{ height: "3rem" }}>
             {" "}
             <small className="smalltxt"> Description : </small>{" "}
             {data.taskDescription.length > 80
@@ -28,7 +49,11 @@ function EmployeeUpdatesCard({ data }) {
             {" "}
             <span>
               {" "}
-              <AiOutlineDelete className="deleteicon" size={22} />{" "}
+              <AiOutlineDelete
+                onClick={() => handleDelete()}
+                className="deleteicon"
+                size={22}
+              />{" "}
             </span>{" "}
           </div>
         </div>

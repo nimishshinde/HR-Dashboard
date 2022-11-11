@@ -39,7 +39,7 @@ const Leave = () => {
     console.log("user obj from leave.js --> ", userObj);
     setEmployeeType(userObj.employeeType);
     getPending();
-  }, [allrequest]);
+  }, []);
 
   async function getPending() {
     try {

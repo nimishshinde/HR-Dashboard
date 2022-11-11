@@ -58,15 +58,12 @@ function EmployeeLeave() {
     updateUserDetails();
   }, [responseObj]);
 
-  useEffect(() => {}, [leaveObj]);
-
   const applyCliked = () => {
     showModal();
   };
 
   const showModal = () => {
     setVisible(true);
-    console.log("clicked");
   };
 
   const handleOk = () => {
@@ -82,14 +79,18 @@ function EmployeeLeave() {
   };
 
   const handleCalendarChange = (start, end) => {
+    let uniqueLeaveId = uuidv4();
+    // setLeaveObj({ ...leaveObj, leaveId: uniqueLeaveId });
     setLeaveObj((leaveObj) => ({
       ...leaveObj,
       dateOfLeave: moment(start[0]?._d).format("DD MMM YYYY"),
-    }));
-    setLeaveObj((leaveObj) => ({
-      ...leaveObj,
       endOfLeave: moment(start[1]?._d).format("DD MMM YYYY"),
+      leaveId: uniqueLeaveId,
     }));
+    // setLeaveObj((leaveObj) => ({
+    //   ...leaveObj,
+    //   endOfLeave: moment(start[1]?._d).format("DD MMM YYYY"),
+    // }));
 
     let StartDate = moment(start[0]?._d);
     let EndDate = moment(start[1]?._d);
@@ -154,8 +155,6 @@ function EmployeeLeave() {
     console.log(leaveObj, "from handle Leave Fn");
 
     try {
-      let uniqueLeaveId = uuidv4();
-      setLeaveObj((prevObj) => ({ ...prevObj, leaveId: uniqueLeaveId }));
       console.log(leaveObj.leaveId, "after clicking on the apply leave");
       if (
         leaveObj.reasonOfLeave != "" &&
@@ -164,17 +163,20 @@ function EmployeeLeave() {
         leaveObj.noofDaysLeaveRequired != "" &&
         leaveObj.leaveId != ""
       ) {
-        let response = axios({
+        let response = await axios({
           method: "post",
           url: "https://hr-dashboard-nimish.herokuapp.com/admin/leave",
           // url: "http://localhost:5000/admin/leave",
           data: leaveObj,
         });
 
-        console.log((await response).status === 200, "response from backend");
+        console.log(response.status === 200, "response from backend");
 
-        (await response).status === 200 && openNotification("bottomLeft");
-        setResponseObj((await response).data);
+        response.status === 200 && openNotification("bottomLeft");
+        setResponseObj(response.data);
+      } else {
+        alert("problem");
+        console.log(leaveObj);
       }
     } catch (error) {
       console.log(error.message);
@@ -187,7 +189,14 @@ function EmployeeLeave() {
 
   return (
     <>
-      <div style={{ width: "100%", display: "flex", justifyContent: "center", marginLeft:'0.6rem' }}>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          marginLeft: "0.6rem",
+        }}
+      >
         <div className="emplev">
           <div className="levdate">
             <RangePicker
@@ -252,7 +261,11 @@ function EmployeeLeave() {
                 className="btntext"
                 style={{ fontSize: "1rem" }}
                 // onClick={() => handleApplyLeave()}
-                onClick={() => handleReasoneOfLeave("Due to work lately I feel exhausted and want to relax for a sometime, I hope you grant me leave")}
+                onClick={() =>
+                  handleReasoneOfLeave(
+                    "Due to work lately I feel exhausted and want to relax for a sometime, I hope you grant me leave"
+                  )
+                }
               >
                 {" "}
                 Dummy Data{" "}

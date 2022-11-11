@@ -47,7 +47,7 @@ function EmployeePreviousLeave({ pendingObj }) {
         console.log(error);
       }
     })();
-  });
+  }, [pendingObj]);
 
   const showModal = () => {
     setVisible(true);
@@ -104,12 +104,17 @@ function EmployeePreviousLeave({ pendingObj }) {
                         <>
                           <div
                             style={{
-                              marginTop: "0.4rem",
+                              marginTop: "1rem",
                               width: "100%",
+                              display:'flex',
+                              justifyContent:'center',
+                              alignItems:'center',
                             }}
+                            className='forhover'
                           >
                             <div
                               className="pendingLeave"
+                              style={{ width:'90%' }}
                               onClick={() => setDataOfModal(index)}
                             >
                               <div
@@ -153,8 +158,8 @@ function EmployeePreviousLeave({ pendingObj }) {
 
                                 <div className="iconctnstyle">
                                   <MoreOutlined className="iconstyle more" />
-                                  <EditOutlined className="iconstyle edit" />
-                                  <DeleteOutlined className="iconstyle delete" />
+                                  {/* <EditOutlined className="iconstyle edit" />
+                                  <DeleteOutlined className="iconstyle delete" /> */}
                                 </div>
                               </div>
                             </div>

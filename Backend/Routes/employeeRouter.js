@@ -9,7 +9,6 @@ employeeRouter.route("/updatetask/:id").post(updateUserTask);
 employeeRouter.route("/updatetodo/:id").post(updateTodo);
 employeeRouter.route("/deletetask/:id").delete(deleteTask);
 
-
 // Employee Details from id -------------------------------------------------------------------------------------------------------------------------
 async function getEmpByDetails(req, res) {
   let empId = req.params.id;
@@ -22,7 +21,7 @@ async function getEmpByDetails(req, res) {
 }
 
 // get daily updates from id -------------------------------------------------------------------------------------------------------
-async function deleteTask (req, res){
+async function deleteTask(req, res) {
   let userTaskId = req.params.id;
   let userId = req.body.empId;
   console.log(userTaskId, userId);
@@ -35,21 +34,16 @@ async function deleteTask (req, res){
           taskCompletedArr: { taskId: userTaskId },
         },
       },
-      { new : true }
+      { new: true }
     );
-      console.log(responseObj)
-    res.json( { status:200 } )
-
-  } catch (error) {
-    
-  }
+    console.log(responseObj);
+    res.json({ status: 200 });
+  } catch (error) {}
 
   // res.json({userTaskId, userId})
-
-
 }
 
-async function getDailyUpdatesFromId (req, res){
+async function getDailyUpdatesFromId(req, res) {
   let empId = req.params.id;
 
   try {
@@ -87,7 +81,6 @@ async function updateUserTask(req, res) {
       errorObj: error.message,
     });
   }
-
 }
 
 async function updateCompletedTask(empId, newUpdatedtask) {
@@ -99,22 +92,26 @@ async function updateCompletedTask(empId, newUpdatedtask) {
       },
     },
     {
-      new: true
+      new: true,
     }
   );
   return newRes;
 }
 
-async function updateTodo(req, res){
+async function updateTodo(req, res) {
   let empId = req.params.id;
   let todoObj = req.body;
   console.log(todoObj);
 
-  let responseObj = await UserTaskModel.findOneAndUpdate({ employeId : empId }, {
-    $push : {
-      todoArr : todoObj,
-    }
-  } ,{ new:true });
+  let responseObj = await UserTaskModel.findOneAndUpdate(
+    { employeId: empId },
+    {
+      $push: {
+        todoArr: todoObj,
+      },
+    },
+    { new: true }
+  );
 
   res.json(responseObj);
 }

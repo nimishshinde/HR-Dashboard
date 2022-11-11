@@ -11,7 +11,7 @@ function EmployeeUpdatesCard({ data, fn, setUpdateArr, updateArr }) {
   const handleDelete = async () => {
     let responseObj = await axios({
       method: "delete",
-      url: `http://localhost:5000/employee/deletetask/${data.taskId}`,
+      url: `https://hr-dashboard-nimish.herokuapp.com/employee/deletetask/${data.taskId}`,
       data: { empId: userObj.id },
     });
 
